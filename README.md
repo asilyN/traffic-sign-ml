@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Traffic Sign Recognition ML
 
-## Getting Started
+A machine learning project for traffic sign recognition with a Next.js frontend and Flask backend API.
 
-First, run the development server:
+## Tech Stack
+
+- **Frontend**: Next.js 16, React 19, TypeScript, Tailwind CSS
+- **Backend**: Flask, Python 3
+- **ML Libraries**: OpenCV, scikit-learn, NumPy, Pandas, Pillow
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- Python 3.8+
+- Git
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd traffic-sign-ML
+```
+
+### 2. Install Root Dependencies
+
+```bash
+npm install
+```
+
+### 3. Install Frontend Dependencies
+
+```bash
+cd client
+npm install
+cd ..
+```
+
+### 4. Install Backend Dependencies
+
+```bash
+cd server
+pip install -r requirements.txt
+cd ..
+```
+
+## Running the Project
+
+### Option 1: Run Both Frontend and Backend Concurrently (Recommended)
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This command will start both:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: http://localhost:3000
+- **Backend**: http://localhost:5000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Option 2: Run Frontend Only
 
-## Learn More
+```bash
+cd client
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Access the frontend at http://localhost:3000
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Option 3: Run Backend Only
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+cd server
+python run.py
+```
 
-## Deploy on Vercel
+The API will be available at http://localhost:5000
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Option 4: Production Build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Frontend:
+
+```bash
+cd client
+npm run build
+npm start
+```
+
+## Available Scripts
+
+### Root Scripts
+
+- `npm run dev` - Run frontend and backend concurrently (development mode)
+- `npm run dev:backend` - Run backend server only
+- `npm run lint` - Lint TypeScript/TSX files
+- `npm run lint:fix` - Fix linting issues
+- `npm run lint:python` - Lint Python files
+- `npm run format` - Format code with Prettier
+- `npm run type-check` - Type check TypeScript
+
+### Frontend Scripts (from `client/` directory)
+
+- `npm run dev` - Start Next.js development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+
+## Project Structure
+
+```
+.
+├── client/              # Next.js frontend application
+│   ├── src/
+│   │   ├── app/        # Next.js app directory
+│   │   ├── components/ # React components
+│   │   ├── hooks/      # Custom React hooks
+│   │   ├── services/   # API services
+│   │   └── types/      # TypeScript types
+│   └── package.json
+├── server/             # Flask backend application
+│   ├── app/
+│   │   ├── api/       # API routes
+│   │   └── ml/        # ML models
+│   ├── requirements.txt
+│   └── run.py
+├── public/            # Static assets
+└── package.json
+```
+
+## Environment Setup
+
+Create a `.env.local` file in the `server/` directory if needed for environment variables:
+
+```bash
+FLASK_ENV=development
+```
+
+## Development Tips
+
+- Frontend auto-reloads on file changes
+- Backend will reload if debug mode is enabled in environment
+- Use `npm run lint:fix` to auto-fix code style issues
+- Run `npm run type-check` before committing to catch TypeScript errors
+
+## Additional Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Flask Documentation](https://flask.palletsprojects.com/)
+- [OpenCV Documentation](https://docs.opencv.org/)
