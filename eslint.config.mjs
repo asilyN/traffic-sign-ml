@@ -1,17 +1,33 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
-import nextTs from "eslint-config-next/typescript";
+import { defineConfig, globalIgnores } from 'eslint/config';
+import prettier from 'eslint-config-prettier';
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import pluginPrettier from 'eslint-plugin-prettier';
 
 const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  prettier,
+  {
+    plugins: {
+      prettier: pluginPrettier,
+    },
+    rules: {
+      'prettier/prettier': 'warn',
+      'max-lines': ['warn', { max: 300, skipBlankLines: true, skipComments: true }],
+    },
+  },
   globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
+    'node_modules/**',
+    '.next/**',
+    'build/**',
+    'dist/**',
+    '.venv/**',
+    'server/**',
+    'client/**',
+    '*.config.js',
+    '*.config.mjs',
+    '.husky/**',
   ]),
 ]);
 
