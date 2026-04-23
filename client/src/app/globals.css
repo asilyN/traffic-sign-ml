@@ -46,6 +46,11 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --font-heading: var(--font-mono);
   --font-mono: var(--font-mono);
+
+  /* App brand token — amber-yellow */
+  --color-brand:     oklch(0.85 0.18 85);
+  --color-brand-dim: oklch(0.85 0.18 85 / 15%);
+  --color-brand-glow:oklch(0.85 0.18 85 / 35%);
 }
 
 :root {
@@ -127,4 +132,23 @@
   html {
     @apply font-mono;
   }
+}
+
+@layer utilities {
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.4; transform: scale(0.75); }
+  }
+  @keyframes flash-fade {
+    from { opacity: 0.6; }
+    to   { opacity: 0; }
+  }
+  @keyframes slide-up {
+    from { transform: translateY(8px); opacity: 0; }
+    to   { transform: translateY(0);   opacity: 1; }
+  }
+
+  .animate-pulse-dot  { animation: pulse-dot 1.8s ease-in-out infinite; }
+  .animate-flash      { animation: flash-fade 0.2s ease-out forwards; }
+  .animate-slide-up   { animation: slide-up 0.25s ease forwards; }
 }
