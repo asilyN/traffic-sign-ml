@@ -1,0 +1,41 @@
+﻿class_id,class_name
+1,Stop
+2,No Entry
+3,Left Curve Ahead
+4,Right Curve Ahead
+5,Reverse Turn Ahead
+6,Slippery Road
+7,Road Work
+8,Pedestrian Crossing
+9,Children Crossing
+10,Bike Lane
+11,Turn Right
+12,Turn Left
+13,Straight Ahead Only
+14,Pass on Right
+15,Pass on Left
+16,Roundabout
+17,U-Turn
+18,Speed Limit (60 km/h)
+19,Speed Limit (70 km/h)
+20,No Blowing of Horn
+21,No U-Turn
+22,Speed Limit (15 km/h)
+23,No Left Turn
+24,No Right Turn
+25,No Straight Proceeding
+26,No Parking
+27,Intersection Ahead
+28,Side Road Junction (Right)
+29,Speed Limit (20 km/h)
+30,Speed Limit (40 km/h)
+31,Pass on Either Side
+32,Side Road Junction (Diagonal)
+33,Speed Limit (30 km/h)
+34,No Entry for Four-Wheeled Vehicles
+35,Hospital
+36,Do Not Block Intersection
+37,Railroad Crossing
+38,Parking Area
+39,No Stopping / No Waiting
+40,T-Junction
