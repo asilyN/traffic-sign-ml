@@ -5,7 +5,7 @@ import { useRef } from 'react';
 
 interface ImageInputProps {
   selectedImage: string | null;
-  onImageSelect: (imageUrl: string) => void;
+  onImageSelect: (imageUrl: string, file: File) => void;
   onDetect: () => void;
   isDetecting: boolean;
 }
@@ -24,7 +24,7 @@ export function ImageInput({
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        onImageSelect(event.target?.result as string);
+        onImageSelect(event.target?.result as string, file);
       };
       reader.readAsDataURL(file);
     }

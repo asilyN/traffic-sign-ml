@@ -6,13 +6,22 @@ export async function predictImage(blob: Blob): Promise<PredictionResult> {
   const formData = new FormData();
   formData.append("file", blob, "capture.jpg");
 
-  const res = await fetch(`${API_BASE}/predict`, {
+  const res = await fetch(`${API_BASE}/api/v1/predict`, {
     method: "POST",
     body: formData,
   });
 
   if (!res.ok) {
-    throw new Error(`Server error: ${res.status}`);
+    let message = `Server error: ${res.status}`;
+    try {
+      const payload = (await res.json()) as { error?: string };
+      if (payload.error) {
+        message = payload.error;
+      }
+    } catch {
+      // Keep generic message when body is not JSON.
+    }
+    throw new Error(message);
   }
 
   return res.json();

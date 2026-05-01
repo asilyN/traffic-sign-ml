@@ -5,6 +5,7 @@ import { Navbar } from '@/src/components/navbar';
 import { ImageInput } from '@/src/components/image-input';
 import { DetectionResults } from '@/src/components/detection-result';
 import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
+import { predictImage } from '@/src/lib/api';
 
 interface DetectionResult {
   signName: string;
@@ -12,53 +13,52 @@ interface DetectionResult {
   category: string;
 }
 
-const mockDetection = (imageUrl: string): DetectionResult => {
-  const signs = [
-    { signName: 'Stop Sign', category: 'Regulatory', confidence: 95 },
-    { signName: 'Yield Sign', category: 'Regulatory', confidence: 88 },
-    { signName: 'Speed Limit 50', category: 'Regulatory', confidence: 92 },
-    { signName: 'No Entry', category: 'Regulatory', confidence: 97 },
-    { signName: 'Pedestrian Crossing', category: 'Warning', confidence: 91 },
-    { signName: 'School Zone', category: 'Warning', confidence: 86 },
-    { signName: 'Roundabout Ahead', category: 'Warning', confidence: 89 },
-    { signName: 'One Way', category: 'Information', confidence: 93 },
-  ];
-
-  return signs[Math.floor(Math.random() * signs.length)];
-};
-
 export function DetectorPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isDetecting, setIsDetecting] = useState(false);
   const [currentResult, setCurrentResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleImageSelect = (imageUrl: string) => {
+  const handleImageSelect = (imageUrl: string, file: File) => {
     setSelectedImage(imageUrl);
+    setSelectedFile(file);
     setCurrentResult(null);
+    setErrorMessage(null);
   };
 
   const handleDetect = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage || !selectedFile) return;
 
     setIsDetecting(true);
+    setErrorMessage(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const prediction = await predictImage(selectedFile);
+      const result: DetectionResult = {
+        signName: prediction.prediction,
+        confidence: Math.round(prediction.confidence * 100),
+        category: 'ML Prediction',
+      };
+      setCurrentResult(result);
 
-    const result = mockDetection(selectedImage);
-    setCurrentResult(result);
-
-    const historyItem: HistoryItem = {
-      id: Date.now().toString(),
-      signName: result.signName,
-      confidence: result.confidence,
-      timestamp: new Date(),
-      imageUrl: selectedImage,
-      category: result.category,
-    };
-
-    setHistory((prev) => [historyItem, ...prev]);
-    setIsDetecting(false);
+      const historyItem: HistoryItem = {
+        id: Date.now().toString(),
+        signName: result.signName,
+        confidence: result.confidence,
+        timestamp: new Date(),
+        imageUrl: selectedImage,
+        category: result.category,
+      };
+      setHistory((prev) => [historyItem, ...prev]);
+    } catch (error) {
+      const fallback = 'Unable to detect sign. Please try another image.';
+      const message = error instanceof Error ? error.message : fallback;
+      setErrorMessage(message || fallback);
+    } finally {
+      setIsDetecting(false);
+    }
   };
 
   const handleHistoryItemClick = (item: HistoryItem) => {
@@ -83,6 +83,11 @@ export function DetectorPage() {
               onDetect={handleDetect}
               isDetecting={isDetecting}
             />
+            {errorMessage && (
+              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+                {errorMessage}
+              </div>
+            )}
           </div>
 
           <div className="lg:col-span-1 space-y-6">
