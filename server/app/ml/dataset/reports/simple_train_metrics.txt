@@ -1,83 +1,83 @@
 CNN Classification Training Metrics — Fully Improved
 ================================================================================
 Improvements applied:
-  [1]  Optimizer      : AdamW  lr=0.0003  wd=0.0001
-  [2]  Scheduler      : 3-ep warmup -> CosineAnnealing  eta_min=1e-6
-  [3]  Epochs         : 40 max
-  [4]  Label smooth   : 0.1
-  [5]  Class weights  : disabled
-  [6]  Normalisation  : ImageNet priors
-         mean=[0.48500001430511475, 0.4560000002384186, 0.4059999883174896]
-         std =[0.2290000021457672, 0.2240000069141388, 0.22499999403953552]
-  [7]  Spatial drop   : p=0.1
-  [8]  FC dropout     : 0.4 / 0.2
-  [9]  Residual skip  : block3->block4
-  [10] Block1 kernel  : 5x5
-  [11] Grad clip      : 1.0
-  [12] AMP            : False
-  [13] Early stop     : patience=10  min_delta=0.001  (best_state pre-seeded)
-  [14] Epoch default  : 40
-  [15] Metrics        : top-1 / top-3 / macro-F1
-  [16] Preview grid   : 10 images
-  [17] Augmentation   : rotation±12.0°  brightness/contrast±30%  translation 10%
-  [18] Confusion mat  : reports/confusion_matrix.png
-  [19] Architecture   : double conv in blocks 2 & 3
-  [20] AdaptivePool   : size-flexible (48/64/72 px)
-  [21] Monitor metric : val_acc
+  [1]  Optimizer     : AdamW lr=0.0003 wd=0.0001
+  [2]  Scheduler     : 3-ep warmup -> CosineAnnealing eta_min=1e-6
+  [3]  Epochs        : 40 max
+  [4]  Label smooth  : 0.1
+  [5]  Class weights : disabled
+  [6]  Normalisation : ImageNet priors
+       mean=[0.48500001430511475, 0.4560000002384186, 0.4059999883174896]
+       std =[0.2290000021457672, 0.2240000069141388, 0.22499999403953552]
+  [7]  Spatial drop  : p=0.1
+  [8]  FC dropout    : 0.4 / 0.2
+  [9]  Residual skip : block3->block4
+  [10] Block1 kernel : 5x5
+  [11] Grad clip     : 1.0
+  [12] AMP           : False
+  [13] Early stop    : patience=10 min_delta=0.001
+  [14] Epoch default : 40
+  [15] Metrics       : top-1 / top-3 / macro-F1
+  [16] Preview grid  : 10 images
+  [17] Augmentation  : rotation±12.0° brightness/contrast±30% translation10%
+  [18] Confusion mat : reports/confusion_matrix.png
+  [19] Architecture  : double conv in blocks 2 & 3
+  [20] AdaptivePool  : size-flexible (48/64/72 px)
+  [21] Monitor metric: val_acc
 
-Train dir       : Train_Augmented_Balanced
-Train samples   : 3783
-Val samples     : 951
-Image size      : 48x48 RGB
-Batch size      : 64
-Stopped early   : False
-Best val_acc     : 0.9926
-Final val acc   : 0.9926
-Top-3 val acc   : 0.9989
-Macro F1        : 0.9908
-Device          : cpu
+Train dir    : Train_Augmented_Balanced
+Train samples: 3849
+Val samples  : 963
+Image size   : 48x48 RGB
+Batch size   : 64
+Stopped early: False
+Best val_acc     : 0.9938
+Final val acc: 0.9938
+Top-3 val acc: 0.9990
+Macro F1     : 0.9938
+Device       : cpu
 
 [Epoch log]
-Epoch   1/40  train_loss=3.8245  train_acc=0.0547  val_loss=3.6583  val_acc=0.1809  lr=1.20e-04  (61.0s)
-Epoch   2/40  train_loss=3.3518  train_acc=0.1782  val_loss=2.8223  val_acc=0.4038  lr=2.10e-04  (59.0s)
-Epoch   3/40  train_loss=2.6541  train_acc=0.3571  val_loss=2.1544  val_acc=0.5699  lr=3.00e-04  (49.5s)
-Epoch   4/40  train_loss=2.1055  train_acc=0.5422  val_loss=1.7532  val_acc=0.7161  lr=2.99e-04  (50.6s)
-Epoch   5/40  train_loss=1.7240  train_acc=0.6786  val_loss=1.4221  val_acc=0.7886  lr=2.98e-04  (54.4s)
-Epoch   6/40  train_loss=1.4954  train_acc=0.7523  val_loss=1.2878  val_acc=0.8223  lr=2.95e-04  (52.6s)
-Epoch   7/40  train_loss=1.3420  train_acc=0.8160  val_loss=1.2140  val_acc=0.8686  lr=2.91e-04  (49.0s)
-Epoch   8/40  train_loss=1.2473  train_acc=0.8567  val_loss=1.1404  val_acc=0.8906  lr=2.87e-04  (48.4s)
-Epoch   9/40  train_loss=1.1701  train_acc=0.8808  val_loss=1.0981  val_acc=0.9054  lr=2.81e-04  (49.3s)
-Epoch  10/40  train_loss=1.1078  train_acc=0.9077  val_loss=1.0156  val_acc=0.9243  lr=2.74e-04  (50.4s)
-Epoch  11/40  train_loss=1.0422  train_acc=0.9289  val_loss=1.0292  val_acc=0.9264  lr=2.67e-04  (49.4s)
-Epoch  12/40  train_loss=1.0113  train_acc=0.9389  val_loss=0.9582  val_acc=0.9443  lr=2.58e-04  (48.5s)
-Epoch  13/40  train_loss=0.9767  train_acc=0.9474  val_loss=0.9523  val_acc=0.9537  lr=2.49e-04  (48.6s)
-Epoch  14/40  train_loss=0.9499  train_acc=0.9566  val_loss=0.9702  val_acc=0.9485  lr=2.39e-04  (48.8s)
-Epoch  15/40  train_loss=0.9285  train_acc=0.9635  val_loss=0.9120  val_acc=0.9569  lr=2.29e-04  (50.0s)
-Epoch  16/40  train_loss=0.8954  train_acc=0.9722  val_loss=0.8877  val_acc=0.9685  lr=2.18e-04  (51.2s)
-Epoch  17/40  train_loss=0.8918  train_acc=0.9725  val_loss=0.8770  val_acc=0.9674  lr=2.06e-04  (56.5s)
-Epoch  18/40  train_loss=0.8698  train_acc=0.9807  val_loss=0.8615  val_acc=0.9706  lr=1.94e-04  (49.9s)
-Epoch  19/40  train_loss=0.8573  train_acc=0.9833  val_loss=0.8699  val_acc=0.9685  lr=1.82e-04  (48.8s)
-Epoch  20/40  train_loss=0.8433  train_acc=0.9839  val_loss=0.8423  val_acc=0.9769  lr=1.69e-04  (48.8s)
-Epoch  21/40  train_loss=0.8364  train_acc=0.9865  val_loss=0.8327  val_acc=0.9811  lr=1.57e-04  (49.6s)
-Epoch  22/40  train_loss=0.8237  train_acc=0.9900  val_loss=0.8229  val_acc=0.9758  lr=1.44e-04  (50.7s)
-Epoch  23/40  train_loss=0.8212  train_acc=0.9894  val_loss=0.8153  val_acc=0.9832  lr=1.32e-04  (49.1s)
-Epoch  24/40  train_loss=0.8130  train_acc=0.9907  val_loss=0.8031  val_acc=0.9842  lr=1.19e-04  (48.9s)
-Epoch  25/40  train_loss=0.8061  train_acc=0.9942  val_loss=0.8066  val_acc=0.9800  lr=1.07e-04  (48.7s)
-Epoch  26/40  train_loss=0.7994  train_acc=0.9947  val_loss=0.8006  val_acc=0.9842  lr=9.48e-05  (48.8s)
-Epoch  27/40  train_loss=0.7929  train_acc=0.9947  val_loss=0.8015  val_acc=0.9853  lr=8.32e-05  (49.3s)
-Epoch  28/40  train_loss=0.7878  train_acc=0.9947  val_loss=0.7982  val_acc=0.9874  lr=7.21e-05  (49.4s)
-Epoch  29/40  train_loss=0.7842  train_acc=0.9974  val_loss=0.7956  val_acc=0.9863  lr=6.16e-05  (49.1s)
-Epoch  30/40  train_loss=0.7799  train_acc=0.9976  val_loss=0.7830  val_acc=0.9863  lr=5.17e-05  (48.1s)
-Epoch  31/40  train_loss=0.7777  train_acc=0.9971  val_loss=0.7825  val_acc=0.9863  lr=4.26e-05  (48.9s)
-Epoch  32/40  train_loss=0.7760  train_acc=0.9981  val_loss=0.7756  val_acc=0.9895  lr=3.42e-05  (48.8s)
-Epoch  33/40  train_loss=0.7699  train_acc=0.9989  val_loss=0.7780  val_acc=0.9884  lr=2.66e-05  (49.6s)
-Epoch  34/40  train_loss=0.7675  train_acc=0.9987  val_loss=0.7741  val_acc=0.9895  lr=2.00e-05  (48.1s)
-Epoch  35/40  train_loss=0.7679  train_acc=0.9981  val_loss=0.7720  val_acc=0.9916  lr=1.43e-05  (49.3s)
-Epoch  36/40  train_loss=0.7661  train_acc=0.9995  val_loss=0.7727  val_acc=0.9926  lr=9.54e-06  (48.5s)
-Epoch  37/40  train_loss=0.7666  train_acc=0.9984  val_loss=0.7733  val_acc=0.9905  lr=5.82e-06  (48.0s)
-Epoch  38/40  train_loss=0.7642  train_acc=0.9989  val_loss=0.7725  val_acc=0.9905  lr=3.15e-06  (49.1s)
-Epoch  39/40  train_loss=0.7646  train_acc=0.9989  val_loss=0.7736  val_acc=0.9895  lr=1.54e-06  (49.3s)
-Epoch  40/40  train_loss=0.7632  train_acc=0.9989  val_loss=0.7711  val_acc=0.9905  lr=1.00e-06  (47.9s)
+Epoch   1/40 train_loss=3.8227 train_acc=0.0520 val_loss=3.6663 val_acc=0.1838 lr=1.20e-04 (76.8s)
+Epoch   2/40 train_loss=3.3554 train_acc=0.1756 val_loss=2.8540 val_acc=0.3572 lr=2.10e-04 (65.2s)
+Epoch   3/40 train_loss=2.6664 train_acc=0.3622 val_loss=2.2155 val_acc=0.5306 lr=3.00e-04 (63.8s)
+Epoch   4/40 train_loss=2.1222 train_acc=0.5396 val_loss=1.6687 val_acc=0.7009 lr=2.99e-04 (73.4s)
+Epoch   5/40 train_loss=1.7176 train_acc=0.6799 val_loss=1.4611 val_acc=0.7809 lr=2.98e-04 (66.1s)
+Epoch   6/40 train_loss=1.5045 train_acc=0.7579 val_loss=1.3500 val_acc=0.8162 lr=2.95e-04 (66.1s)
+Epoch   7/40 train_loss=1.3530 train_acc=0.8101 val_loss=1.2073 val_acc=0.8712 lr=2.91e-04 (72.4s)
+Epoch   8/40 train_loss=1.2334 train_acc=0.8579 val_loss=1.1161 val_acc=0.9055 lr=2.87e-04 (67.1s)
+Epoch   9/40 train_loss=1.1729 train_acc=0.8797 val_loss=1.0874 val_acc=0.9086 lr=2.81e-04 (66.4s)
+Epoch  10/40 train_loss=1.0996 train_acc=0.9083 val_loss=1.0016 val_acc=0.9429 lr=2.74e-04 (66.5s)
+Epoch  11/40 train_loss=1.0462 train_acc=0.9270 val_loss=0.9931 val_acc=0.9377 lr=2.67e-04 (67.8s)
+Epoch  12/40 train_loss=1.0056 train_acc=0.9402 val_loss=0.9783 val_acc=0.9470 lr=2.58e-04 (65.6s)
+Epoch  13/40 train_loss=0.9597 train_acc=0.9566 val_loss=0.9700 val_acc=0.9605 lr=2.49e-04 (66.4s)
+Epoch  14/40 train_loss=0.9484 train_acc=0.9558 val_loss=0.9473 val_acc=0.9502 lr=2.39e-04 (66.7s)
+Epoch  15/40 train_loss=0.9227 train_acc=0.9657 val_loss=0.8950 val_acc=0.9709 lr=2.29e-04 (66.9s)
+Epoch  16/40 train_loss=0.9062 train_acc=0.9693 val_loss=0.9438 val_acc=0.9533 lr=2.18e-04 (65.6s)
+Epoch  17/40 train_loss=0.8859 train_acc=0.9779 val_loss=0.8965 val_acc=0.9647 lr=2.06e-04 (67.8s)
+Epoch  18/40 train_loss=0.8675 train_acc=0.9813 val_loss=0.8787 val_acc=0.9761 lr=1.94e-04 (66.5s)
+Epoch  19/40 train_loss=0.8561 train_acc=0.9831 val_loss=0.8682 val_acc=0.9709 lr=1.82e-04 (69.7s)
+Epoch  20/40 train_loss=0.8447 train_acc=0.9873 val_loss=0.8345 val_acc=0.9855 lr=1.69e-04 (66.2s)
+Epoch  21/40 train_loss=0.8367 train_acc=0.9888 val_loss=0.8622 val_acc=0.9678 lr=1.57e-04 (66.2s)
+Epoch  22/40 train_loss=0.8284 train_acc=0.9886 val_loss=0.8190 val_acc=0.9865 lr=1.44e-04 (65.7s)
+Epoch  23/40 train_loss=0.8153 train_acc=0.9909 val_loss=0.8149 val_acc=0.9844 lr=1.32e-04 (69.3s)
+Epoch  24/40 train_loss=0.8131 train_acc=0.9896 val_loss=0.8164 val_acc=0.9907 lr=1.19e-04 (65.7s)
+Epoch  25/40 train_loss=0.8031 train_acc=0.9935 val_loss=0.8220 val_acc=0.9782 lr=1.07e-04 (67.2s)
+Epoch  26/40 train_loss=0.7956 train_acc=0.9964 val_loss=0.8044 val_acc=0.9896 lr=9.48e-05 (65.5s)
+Epoch  27/40 train_loss=0.7940 train_acc=0.9951 val_loss=0.7875 val_acc=0.9907 lr=8.32e-05 (67.0s)
+Epoch  28/40 train_loss=0.7896 train_acc=0.9961 val_loss=0.7836 val_acc=0.9917 lr=7.21e-05 (79.6s)
+Epoch  29/40 train_loss=0.7826 train_acc=0.9979 val_loss=0.7915 val_acc=0.9896 lr=6.16e-05 (66.7s)
+Epoch  30/40 train_loss=0.7785 train_acc=0.9977 val_loss=0.7792 val_acc=0.9927 lr=5.17e-05 (66.2s)
+Epoch  31/40 train_loss=0.7790 train_acc=0.9979 val_loss=0.7792 val_acc=0.9927 lr=4.26e-05 (66.4s)
+Epoch  32/40 train_loss=0.7716 train_acc=0.9987 val_loss=0.7756 val_acc=0.9927 lr=3.42e-05 (66.4s)
+Epoch  33/40 train_loss=0.7701 train_acc=0.9990 val_loss=0.7759 val_acc=0.9938 lr=2.66e-05 (66.7s)
+Epoch  34/40 train_loss=0.7676 train_acc=0.9984 val_loss=0.7743 val_acc=0.9927 lr=2.00e-05 (66.2s)
+Epoch  35/40 train_loss=0.7672 train_acc=0.9992 val_loss=0.7715 val_acc=0.9927 lr=1.43e-05 (66.1s)
+Epoch  36/40 train_loss=0.7642 train_acc=0.9995 val_loss=0.7637 val_acc=0.9938 lr=9.54e-06 (66.2s)
+Epoch  37/40 train_loss=0.7651 train_acc=0.9990 val_loss=0.7650 val_acc=0.9938 lr=5.82e-06 (66.4s)
+Epoch  38/40 train_loss=0.7637 train_acc=0.9997 val_loss=0.7691 val_acc=0.9927 lr=3.15e-06 (65.4s)
+Epoch  39/40 train_loss=0.7614 train_acc=0.9990 val_loss=0.7675 val_acc=0.9938 lr=1.54e-06 (65.6s)
+Epoch  40/40 train_loss=0.7615 train_acc=0.9990 val_loss=0.7682 val_acc=0.9938 lr=1.00e-06 (65.5s)
 
 Validation Classification Report
 --------------------------------------------------------------------------------
@@ -88,9 +88,9 @@ Validation Classification Report
            3     1.0000    1.0000    1.0000        20
            4     1.0000    1.0000    1.0000        20
            5     1.0000    0.9500    0.9744        20
-           6     0.9524    1.0000    0.9756        20
-           7     1.0000    0.9500    0.9744        20
-           8     1.0000    0.9500    0.9744        20
+           6     1.0000    1.0000    1.0000        20
+           7     0.9500    0.9500    0.9500        20
+           8     1.0000    1.0000    1.0000        20
            9     1.0000    1.0000    1.0000        20
           10     1.0000    1.0000    1.0000        20
           11     1.0000    1.0000    1.0000        23
@@ -100,8 +100,8 @@ Validation Classification Report
           15     1.0000    1.0000    1.0000        20
           16     1.0000    1.0000    1.0000        20
           17     1.0000    1.0000    1.0000        20
-          18     0.9500    0.9500    0.9500        20
-          19     1.0000    1.0000    1.0000        20
+          18     1.0000    0.9000    0.9474        20
+          19     1.0000    0.9000    0.9474        20
           20     1.0000    1.0000    1.0000        20
           21     1.0000    1.0000    1.0000        20
           22     1.0000    1.0000    1.0000        20
@@ -111,11 +111,11 @@ Validation Classification Report
           26     1.0000    1.0000    1.0000        20
           27     1.0000    1.0000    1.0000        20
           28     1.0000    1.0000    1.0000        20
-          29     0.9091    1.0000    0.9524        20
-          30     0.9500    0.9500    0.9500        20
+          29     1.0000    1.0000    1.0000        20
+          30     0.8333    1.0000    0.9091        20
           31     1.0000    1.0000    1.0000        20
           32     1.0000    1.0000    1.0000        20
-          33     1.0000    0.7500    0.8571         8
+          33     1.0000    1.0000    1.0000        20
           34     1.0000    1.0000    1.0000        20
           35     1.0000    1.0000    1.0000        20
           36     1.0000    1.0000    1.0000        20
@@ -124,7 +124,7 @@ Validation Classification Report
           39     1.0000    1.0000    1.0000        20
           40     1.0000    1.0000    1.0000        20
           41     1.0000    1.0000    1.0000        20
-          42     0.9524    1.0000    0.9756        20
+          42     1.0000    1.0000    1.0000        20
           43     1.0000    1.0000    1.0000        20
           44     1.0000    1.0000    1.0000        20
           45     0.9524    1.0000    0.9756        20
@@ -132,10 +132,11 @@ Validation Classification Report
           47     1.0000    1.0000    1.0000        20
           48     1.0000    1.0000    1.0000        20
 
-    accuracy                         0.9926       951
-   macro avg     0.9930    0.9896    0.9908       951
-weighted avg     0.9930    0.9926    0.9925       951
+    accuracy                         0.9938       963
+   macro avg     0.9945    0.9938    0.9938       963
+weighted avg     0.9945    0.9938    0.9938       963
 
 
-Saved PyTorch model : models/simple_classifier.pt
-Saved joblib wrapper: models/simple_classifier.joblib
+Saved Keras model : models/simple_classifier.keras
+Saved H5 model    : models/simple_classifier.h5
+Saved meta JSON   : models/simple_classifier_meta.json
