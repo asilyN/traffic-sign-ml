@@ -39,7 +39,7 @@ export function DetectorPage() {
       const result: DetectionResult = {
         signName: prediction.prediction,
         confidence: Math.round(prediction.confidence * 100),
-        category: 'ML Prediction',
+        category: prediction.category ?? 'unknown',
       };
       setCurrentResult(result);
 

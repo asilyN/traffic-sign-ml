@@ -53,4 +53,3 @@ def predict():
         return jsonify({"error": str(exc)}), 503
     except Exception:
         return jsonify({"error": "Internal prediction error."}), 500
-

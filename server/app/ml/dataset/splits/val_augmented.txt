@@ -1,0 +1,963 @@
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002822 copy 2_original.png 45
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014649 copy_aug3.png 36
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015507_aug2.png 38
+Train_Augmented_Balanced/21/015_0009_aug1.png 21
+Train_Augmented_Balanced/37/047_1_0002 copy_aug1.png 37
+Train_Augmented_Balanced/12/00034_00001_00025.png 12
+Train_Augmented_Balanced/6/00023_00012_00008_aug5.png 6
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235647_original.png 41
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015143_original.png 34
+Train_Augmented_Balanced/17/031_0008_aug3.png 17
+Train_Augmented_Balanced/24/013_0009_original.png 24
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001516 copy_aug1.png 42
+Train_Augmented_Balanced/37/047_0006_j_aug3.png 37
+Train_Augmented_Balanced/18/005_1_0042_aug4.png 18
+Train_Augmented_Balanced/39/054_1_0050_aug1.png 39
+Train_Augmented_Balanced/9/00028_00013_00001_original.png 9
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002812 copy_aug2.png 45
+Train_Augmented_Balanced/29/00000_00005_00016_aug4.png 29
+Train_Augmented_Balanced/6/00023_00005_00010_aug3.png 6
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014143 copy 2_aug2.png 31
+Train_Augmented_Balanced/12/00034_00002_00002.png 12
+Train_Augmented_Balanced/30/003_0100_aug5.png 30
+Train_Augmented_Balanced/12/00034_00001_00015.png 12
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 002005 copy_aug3.png 44
+Train_Augmented_Balanced/6/00023_00004_00029_aug3.png 6
+Train_Augmented_Balanced/15/00039_00003_00009.png 15
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015507_aug4.png 38
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002801 copy 2_original.png 45
+Train_Augmented_Balanced/8/035_0012_aug5.png 8
+Train_Augmented_Balanced/8/035_1_0014_aug5.png 8
+Train_Augmented_Balanced/4/00020_00001_00007.png 4
+Train_Augmented_Balanced/1/00014_00003_00004_original.png 1
+Train_Augmented_Balanced/24/013_1_0010_aug4.png 24
+Train_Augmented_Balanced/29/00000_00000_00005_aug4.png 29
+Train_Augmented_Balanced/7/00025_00023_00020_aug3.png 7
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012138 copy 2_original.png 26
+Train_Augmented_Balanced/16/00040_00009_00022_original.png 16
+Train_Augmented_Balanced/4/00020_00002_00015.png 4
+Train_Augmented_Balanced/9/00028_00007_00005_aug3.png 9
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015201_original_aug22.png 34
+Train_Augmented_Balanced/33/00001_00040_00024_aug4.png 33
+Train_Augmented_Balanced/1/00014_00024_00024_aug4.png 1
+Train_Augmented_Balanced/7/00025_00038_00011_aug1.png 7
+Train_Augmented_Balanced/10/00029_00002_00019_aug1.png 10
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001641 copy_aug4.png 43
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015000_aug5.png 35
+Train_Augmented_Balanced/30/003_1_0019_aug1.png 30
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012629_aug3.png 28
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003200_aug3.png 47
+Train_Augmented_Balanced/4/00020_00001_00014.png 4
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003347 copy_aug2.png 48
+Train_Augmented_Balanced/39/054_0063_aug4.png 39
+Train_Augmented_Balanced/9/00028_00004_00006_aug3.png 9
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001709 copy_aug2.png 43
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014714_aug2.png 36
+Train_Augmented_Balanced/3/00019_00001_00021.png 3
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012159 copy 2_aug5.png 26
+Train_Augmented_Balanced/3/00019_00002_00003.png 3
+Train_Augmented_Balanced/17/031_0003_aug3.png 17
+Train_Augmented_Balanced/39/054_0067_aug5.png 39
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011731_aug1.png 27
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014945 copy 2_original.png 35
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004704 copy_original.png 46
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014640 copy_aug1.png 36
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012148 copy 2_aug3.png 26
+Train_Augmented_Balanced/24/013_1_0004_aug3.png 24
+Train_Augmented_Balanced/14/00038_00000_00028.png 14
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235725_aug2.png 41
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy_original.png 26
+Train_Augmented_Balanced/33/00001_00022_00009_original.png 33
+Train_Augmented_Balanced/3/00019_00001_00001.png 3
+Train_Augmented_Balanced/20/017_1_0015_aug2.png 20
+Train_Augmented_Balanced/30/003_0061_aug2.png 30
+Train_Augmented_Balanced/18/005_0081_aug1.png 18
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011900 copy 2_aug5.png 40
+Train_Augmented_Balanced/37/047_1_0001 copy_aug1.png 37
+Train_Augmented_Balanced/37/047_1_0003 copy_aug3.png 37
+Train_Augmented_Balanced/2/00017_00003_00017_aug4.png 2
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003353 copy 2_aug1.png 48
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013625_aug4.png 32
+Train_Augmented_Balanced/29/00000_00006_00007_original.png 29
+Train_Augmented_Balanced/13/00035_00004_00012_aug5.png 13
+Train_Augmented_Balanced/18/005_0031_original.png 18
+Train_Augmented_Balanced/20/017_0057_aug5.png 20
+Train_Augmented_Balanced/13/00035_00028_00005_original.png 13
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012611 copy 2_aug5.png 28
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004720_aug5.png 46
+Train_Augmented_Balanced/24/013_1_0013_aug4.png 24
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003200_original.png 47
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003143_original.png 47
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235706 copy_aug1.png 41
+Train_Augmented_Balanced/22/001_1_0006_aug1.png 22
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013628_aug1.png 32
+Train_Augmented_Balanced/2/00017_00034_00011_aug2.png 2
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014139 copy_aug5.png 31
+Train_Augmented_Balanced/33/00001_00010_00012_aug1.png 33
+Train_Augmented_Balanced/24/013_1_0007_aug1.png 24
+Train_Augmented_Balanced/8/035_0053_aug3.png 8
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742 copy 3_original.png 27
+Train_Augmented_Balanced/37/047_1_0006_1_j_aug5.png 37
+Train_Augmented_Balanced/29/00000_00002_00022_aug2.png 29
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001511 copy_original.png 42
+Train_Augmented_Balanced/17/031_0004_original.png 17
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011745 copy 4_aug3.png 27
+Train_Augmented_Balanced/8/035_1_0068_aug5.png 8
+Train_Augmented_Balanced/37/047_1_0001_original.png 37
+Train_Augmented_Balanced/20/017_0052_original.png 20
+Train_Augmented_Balanced/29/00000_00005_00020_aug3.png 29
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015141_aug1.png 34
+Train_Augmented_Balanced/18/005_1_0056_aug2.png 18
+Train_Augmented_Balanced/29/00000_00005_00017_aug3.png 29
+Train_Augmented_Balanced/6/00023_00014_00002_aug5.png 6
+Train_Augmented_Balanced/19/006_0024_aug3.png 19
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012156 copy_aug5.png 26
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014152 copy_aug2.png 31
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001916_aug1.png 42
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001709 copy 2_aug2.png 43
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014943_aug4.png 35
+Train_Augmented_Balanced/41/Screenshot 2026-05-01 004458_aug2.png 41
+Train_Augmented_Balanced/15/00039_00000_00003.png 15
+Train_Augmented_Balanced/21/015_0002_aug4.png 21
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143_original.png 26
+Train_Augmented_Balanced/30/003_0082_aug1.png 30
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014143 copy_aug4.png 31
+Train_Augmented_Balanced/29/00000_00001_00020_aug5.png 29
+Train_Augmented_Balanced/19/006_0038_aug3.png 19
+Train_Augmented_Balanced/25/010_1_0009_aug1.png 25
+Train_Augmented_Balanced/9/00028_00011_00000_aug4.png 9
+Train_Augmented_Balanced/10/00029_00002_00021_original.png 10
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004710_aug1.png 46
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011900 copy 2_aug4.png 40
+Train_Augmented_Balanced/1/00014_00018_00005_aug2.png 1
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011850 copy 3_aug4.png 40
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015003 copy_aug5.png 35
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012614 copy_aug2.png 28
+Train_Augmented_Balanced/5/00021_00004_00023_aug3.png 5
+Train_Augmented_Balanced/16/00040_00001_00017_aug4.png 16
+Train_Augmented_Balanced/21/015_0001_aug5.png 21
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014943 copy_original.png 35
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy 2_original.png 26
+Train_Augmented_Balanced/30/003_0016_original.png 30
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 004521_original.png 47
+Train_Augmented_Balanced/17/031_1_0007_aug3.png 17
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001941 copy_aug1.png 44
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 002005_original.png 44
+Train_Augmented_Balanced/21/015_1_0004_aug2.png 21
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy_aug4.png 26
+Train_Augmented_Balanced/7/00025_00049_00002_original.png 7
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014702 copy_aug4.png 36
+Train_Augmented_Balanced/4/00020_00003_00013.png 4
+Train_Augmented_Balanced/21/015_0002_original.png 21
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013543_aug3.png 32
+Train_Augmented_Balanced/9/00028_00001_00001_aug1.png 9
+Train_Augmented_Balanced/33/00001_00016_00024_aug5.png 33
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002848 copy 2_aug5.png 45
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004717 copy 2_original.png 46
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235647_aug5.png 41
+Train_Augmented_Balanced/12/00034_00002_00015.png 12
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012159_aug2.png 26
+Train_Augmented_Balanced/12/00034_00001_00003.png 12
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003203 copy_aug1.png 47
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003332_aug2.png 48
+Train_Augmented_Balanced/30/003_1_0003_aug5.png 30
+Train_Augmented_Balanced/23/011_1_0061.png 23
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001953_aug3.png 44
+Train_Augmented_Balanced/2/00017_00002_00026_aug5.png 2
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001509 copy_aug3.png 42
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011900 copy_aug3.png 40
+Train_Augmented_Balanced/8/035_1_0027_aug3.png 8
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001444_aug3.png 42
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011735 copy 3_aug4.png 27
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014656_aug1.png 36
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011745 copy 3_aug5.png 27
+Train_Augmented_Balanced/9/00028_00010_00007_aug4.png 9
+Train_Augmented_Balanced/8/035_1_0055_aug1.png 8
+Train_Augmented_Balanced/30/003_1_0037_aug3.png 30
+Train_Augmented_Balanced/8/035_1_0002_1_j_aug5.png 8
+Train_Augmented_Balanced/21/015_0007_aug5.png 21
+Train_Augmented_Balanced/12/00034_00000_00020.png 12
+Train_Augmented_Balanced/24/013_0003.png 24
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001559_aug3.png 43
+Train_Augmented_Balanced/5/00021_00005_00028_aug2.png 5
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012622 copy 2_aug2.png 28
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014652 copy_aug5.png 36
+Train_Augmented_Balanced/3/00019_00000_00007.png 3
+Train_Augmented_Balanced/24/013_1_0008_aug1.png 24
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011735 copy 3_aug2.png 27
+Train_Augmented_Balanced/11/00033_00002_00012.png 11
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003343 copy_aug2.png 48
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012611 copy_aug1.png 28
+Train_Augmented_Balanced/15/00039_00002_00017.png 15
+Train_Augmented_Balanced/17/031_1_0016_aug3.png 17
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001619 copy 2_aug4.png 43
+Train_Augmented_Balanced/3/00019_00003_00004.png 3
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012606 copy 3_aug5.png 28
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015000_original.png 35
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002808 copy_aug2.png 45
+Train_Augmented_Balanced/8/035_0052_aug1.png 8
+Train_Augmented_Balanced/10/00029_00003_00006_aug4.png 10
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011731 copy 2_original.png 27
+Train_Augmented_Balanced/26/2_aug5.jpg 26
+Train_Augmented_Balanced/23/011_1_0031.png 23
+Train_Augmented_Balanced/12/00034_00000_00019.png 12
+Train_Augmented_Balanced/15/00039_00001_00011.png 15
+Train_Augmented_Balanced/29/00000_00001_00021_aug4.png 29
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003335_aug2.png 48
+Train_Augmented_Balanced/14/00038_00002_00010.png 14
+Train_Augmented_Balanced/29/00000_00005_00014_original.png 29
+Train_Augmented_Balanced/10/00029_00001_00001_aug1.png 10
+Train_Augmented_Balanced/14/00038_00001_00013.png 14
+Train_Augmented_Balanced/11/00033_00001_00006.png 11
+Train_Augmented_Balanced/16/00040_00001_00007_aug3.png 16
+Train_Augmented_Balanced/5/00021_00001_00000_aug2.png 5
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015000 copy 2_original.png 35
+Train_Augmented_Balanced/2/00017_00010_00028_original.png 2
+Train_Augmented_Balanced/22/001_0008_original.png 22
+Train_Augmented_Balanced/30/003_1_0024_aug5.png 30
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003338 copy 2_aug1.png 48
+Train_Augmented_Balanced/4/00020_00002_00023.png 4
+Train_Augmented_Balanced/3/00019_00000_00008.png 3
+Train_Augmented_Balanced/22/001_0019_original.png 22
+Train_Augmented_Balanced/37/047_1_0005_aug3.png 37
+Train_Augmented_Balanced/22/001_0003_aug3.png 22
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015153_aug5_aug40.png 34
+Train_Augmented_Balanced/17/031_0016_aug3.png 17
+Train_Augmented_Balanced/10/00029_00008_00001_aug2.png 10
+Train_Augmented_Balanced/22/001_1_0003_aug5.png 22
+Train_Augmented_Balanced/33/00001_00006_00025_aug5.png 33
+Train_Augmented_Balanced/18/005_0068_aug1.png 18
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012606 copy 2_aug1.png 28
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013540_aug2.png 32
+Train_Augmented_Balanced/24/013_0007.png 24
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014645_aug2.png 36
+Train_Augmented_Balanced/10/00029_00001_00018_aug4.png 10
+Train_Augmented_Balanced/15/00039_00001_00003.png 15
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012148 copy_aug2.png 26
+Train_Augmented_Balanced/1/00014_00001_00010_aug5.png 1
+Train_Augmented_Balanced/1/00014_00017_00008_aug5.png 1
+Train_Augmented_Balanced/25/010_0030_aug4.png 25
+Train_Augmented_Balanced/13/00035_00024_00004_aug5.png 13
+Train_Augmented_Balanced/4/00020_00003_00015.png 4
+Train_Augmented_Balanced/1/00014_00001_00013_aug5.png 1
+Train_Augmented_Balanced/20/017_0050_aug3.png 20
+Train_Augmented_Balanced/18/005_0027_aug5.png 18
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013625_aug2.png 32
+Train_Augmented_Balanced/11/00033_00001_00010.png 11
+Train_Augmented_Balanced/19/006_0036_aug4.png 19
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013621_original_aug14.png 32
+Train_Augmented_Balanced/11/00033_00001_00024.png 11
+Train_Augmented_Balanced/2/00017_00020_00019_aug3.png 2
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014952 copy 2_aug4.png 35
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001614 copy_aug3.png 43
+Train_Augmented_Balanced/30/003_1_0095_aug4.png 30
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235643_aug1.png 41
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011844 copy_aug2.png 40
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013543_aug4_aug32.png 32
+Train_Augmented_Balanced/23/011_1_0062.png 23
+Train_Augmented_Balanced/8/035_0066_aug3.png 8
+Train_Augmented_Balanced/30/003_0027_aug5.png 30
+Train_Augmented_Balanced/33/00001_00070_00007_aug3.png 33
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003335_original.png 48
+Train_Augmented_Balanced/21/015_0001_aug2.png 21
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011850 copy 2_aug3.png 40
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001919_aug1.png 44
+Train_Augmented_Balanced/6/00023_00011_00025_original.png 6
+Train_Augmented_Balanced/30/003_0129_aug3.png 30
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742 copy 4_original.png 27
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235643 copy_aug3.png 41
+Train_Augmented_Balanced/25/010_1_0001_aug4.png 25
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015147_aug5.png 34
+Train_Augmented_Balanced/6/00023_00012_00020_aug4.png 6
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014152 copy_aug5.png 31
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002848_aug5.png 45
+Train_Augmented_Balanced/22/001_1_0013_original.png 22
+Train_Augmented_Balanced/29/00000_00003_00001_aug2.png 29
+Train_Augmented_Balanced/2/00017_00024_00000_aug3.png 2
+Train_Augmented_Balanced/5/00021_00007_00004_aug1.png 5
+Train_Augmented_Balanced/11/00033_00001_00014.png 11
+Train_Augmented_Balanced/1/00014_00016_00005_aug1.png 1
+Train_Augmented_Balanced/23/011_1_0060.png 23
+Train_Augmented_Balanced/39/054_1_0068_aug3.png 39
+Train_Augmented_Balanced/41/Screenshot 2026-05-01 004458_aug1.png 41
+Train_Augmented_Balanced/10/00029_00002_00007_aug4.png 10
+Train_Augmented_Balanced/20/017_1_0045_aug3.png 20
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742 copy_aug1.png 27
+Train_Augmented_Balanced/5/00021_00007_00004_aug2.png 5
+Train_Augmented_Balanced/5/00021_00000_00001_aug1.png 5
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012624 copy 3_aug3.png 28
+Train_Augmented_Balanced/37/047_1_0004_aug4.png 37
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003208_aug2.png 47
+Train_Augmented_Balanced/4/00020_00001_00027.png 4
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003353_aug3.png 48
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015201_aug5.png 34
+Train_Augmented_Balanced/18/005_0026_j_aug4.png 18
+Train_Augmented_Balanced/24/013_1_0001.png 24
+Train_Augmented_Balanced/12/00034_00002_00004.png 12
+Train_Augmented_Balanced/39/054_1_0089_aug1.png 39
+Train_Augmented_Balanced/29/00000_00000_00023_aug2.png 29
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003135_aug1.png 47
+Train_Augmented_Balanced/14/00038_00001_00007.png 14
+Train_Augmented_Balanced/1/00014_00012_00019_aug3.png 1
+Train_Augmented_Balanced/15/00039_00000_00026.png 15
+Train_Augmented_Balanced/11/00033_00003_00024.png 11
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015156_aug2.png 34
+Train_Augmented_Balanced/20/017_1_0014_aug1.png 20
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012614_aug1.png 28
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001452_aug5.png 42
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003146_aug2.png 47
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014952_aug5.png 35
+Train_Augmented_Balanced/3/00019_00002_00014.png 3
+Train_Augmented_Balanced/3/00019_00001_00019.png 3
+Train_Augmented_Balanced/3/00019_00002_00024.png 3
+Train_Augmented_Balanced/25/010_0029_aug4.png 25
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742 copy 3_aug4.png 27
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003211_aug5.png 47
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015439 copy_aug4.png 38
+Train_Augmented_Balanced/30/003_1_0086_aug3.png 30
+Train_Augmented_Balanced/14/00038_00001_00005.png 14
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001959_aug3.png 44
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015439_aug4.png 38
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003157 copy_aug2.png 47
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742 copy 3_aug5.png 27
+Train_Augmented_Balanced/15/00039_00001_00029.png 15
+Train_Augmented_Balanced/15/00039_00001_00024.png 15
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003353 copy_aug1.png 48
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012156 copy_aug4.png 26
+Train_Augmented_Balanced/39/054_1_0014_aug3.png 39
+Train_Augmented_Balanced/11/00033_00003_00002.png 11
+Train_Augmented_Balanced/25/010_0006_aug1.png 25
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014652_aug1.png 36
+Train_Augmented_Balanced/17/031_1_0015_original.png 17
+Train_Augmented_Balanced/8/035_1_0010_aug4.png 8
+Train_Augmented_Balanced/16/00040_00006_00006_aug4.png 16
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012159 copy_original.png 26
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004655 copy_aug5.png 46
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001923_aug2.png 44
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003146 copy_aug1.png 47
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001923 copy 2_aug2.png 44
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013625_aug1.png 32
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003200 copy_aug4.png 47
+Train_Augmented_Balanced/37/047_0004_aug3.png 37
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235706_aug3.png 41
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014939 copy 2_aug1.png 35
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011857 copy_aug3.png 40
+Train_Augmented_Balanced/10/00029_00003_00004_original.png 10
+Train_Augmented_Balanced/29/00000_00004_00022_aug4.png 29
+Train_Augmented_Balanced/29/00000_00000_00027_aug4.png 29
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015454 copy 2_aug4.png 38
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 004517_aug5.png 47
+Train_Augmented_Balanced/21/015_0005_aug4.png 21
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012604 copy_aug3.png 28
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014228 copy_aug3.png 31
+Train_Augmented_Balanced/21/015_1_0001_aug1.png 21
+Train_Augmented_Balanced/21/015_0005_aug2.png 21
+Train_Augmented_Balanced/29/00000_00002_00018_original.png 29
+Train_Augmented_Balanced/29/00000_00000_00016_aug4.png 29
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002842 copy_aug1.png 45
+Train_Augmented_Balanced/20/017_0056_aug4.png 20
+Train_Augmented_Balanced/39/054_1_0042_aug4.png 39
+Train_Augmented_Balanced/4/00020_00002_00026.png 4
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014933 copy 2_original.png 35
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy 2_aug3.png 26
+Train_Augmented_Balanced/37/047_0005_aug5.png 37
+Train_Augmented_Balanced/12/00034_00002_00028.png 12
+Train_Augmented_Balanced/11/00033_00001_00017.png 11
+Train_Augmented_Balanced/19/006_1_0008_aug3.png 19
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742_aug4.png 27
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002816_aug1.png 45
+Train_Augmented_Balanced/16/00040_00007_00011_aug5.png 16
+Train_Augmented_Balanced/29/00000_00003_00019_aug2.png 29
+Train_Augmented_Balanced/15/00039_00002_00001.png 15
+Train_Augmented_Balanced/11/00033_00002_00001.png 11
+Train_Augmented_Balanced/23/011_1_0032.png 23
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011844 copy 3_aug5.png 40
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012624_aug5.png 28
+Train_Augmented_Balanced/26/1_original.jpg 26
+Train_Augmented_Balanced/16/00040_00000_00017_original.png 16
+Train_Augmented_Balanced/6/00023_00014_00012_aug1.png 6
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012614 copy 2_original.png 28
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003208 copy_aug4.png 47
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015143_aug1.png 34
+Train_Augmented_Balanced/5/00021_00007_00015_aug3.png 5
+Train_Augmented_Balanced/22/001_1_0002_aug2.png 22
+Train_Augmented_Balanced/24/013_1_0007.png 24
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015153_aug2.png 34
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011745 copy 4_original.png 27
+Train_Augmented_Balanced/12/00034_00003_00014.png 12
+Train_Augmented_Balanced/12/00034_00002_00024.png 12
+Train_Augmented_Balanced/5/00021_00002_00026_original.png 5
+Train_Augmented_Balanced/29/00000_00002_00023_aug1.png 29
+Train_Augmented_Balanced/24/013_0008 - Copy.png 24
+Train_Augmented_Balanced/6/00023_00001_00019_aug5.png 6
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002718_aug5.png 45
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003157 copy_aug4.png 47
+Train_Augmented_Balanced/11/00033_00001_00005.png 11
+Train_Augmented_Balanced/29/00000_00005_00021_aug3.png 29
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015444 copy 2_aug3.png 38
+Train_Augmented_Balanced/26/2_aug1.jpg 26
+Train_Augmented_Balanced/6/00023_00003_00018_aug4.png 6
+Train_Augmented_Balanced/16/00040_00009_00027_aug3.png 16
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014952 copy 2_aug5.png 35
+Train_Augmented_Balanced/1/00014_00003_00000_aug3.png 1
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011735 copy 3_aug5.png 27
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012138 copy_aug4.png 26
+Train_Augmented_Balanced/11/00033_00002_00007.png 11
+Train_Augmented_Balanced/5/00021_00006_00010_aug4.png 5
+Train_Augmented_Balanced/23/011_1_0039.png 23
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014656 copy_aug5.png 36
+Train_Augmented_Balanced/18/005_0034_aug4.png 18
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003347 copy 2_aug4.png 48
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014238_aug2.png 31
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 002501 copy_aug1.png 43
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003143_aug5.png 47
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015158_aug2.png 34
+Train_Augmented_Balanced/14/00038_00001_00021.png 14
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015150_aug1_aug16.png 34
+Train_Augmented_Balanced/5/00021_00006_00025_aug1.png 5
+Train_Augmented_Balanced/5/005_1_0035_aug3.png 5
+Train_Augmented_Balanced/2/00017_00012_00004_aug2.png 2
+Train_Augmented_Balanced/15/00039_00001_00025.png 15
+Train_Augmented_Balanced/37/047_0002_aug3.png 37
+Train_Augmented_Balanced/12/00034_00001_00027.png 12
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014936_aug3.png 35
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015158_aug5.png 34
+Train_Augmented_Balanced/21/015_0010_aug4.png 21
+Train_Augmented_Balanced/13/00035_00024_00016_aug3.png 13
+Train_Augmented_Balanced/33/00001_00067_00012_aug1.png 33
+Train_Augmented_Balanced/4/00020_00001_00012.png 4
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001452 copy 2_aug4.png 42
+Train_Augmented_Balanced/21/015_1_0009_aug2.png 21
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235708_aug4.png 41
+Train_Augmented_Balanced/5/00021_00001_00017_aug3.png 5
+Train_Augmented_Balanced/4/00020_00002_00028.png 4
+Train_Augmented_Balanced/20/017_0058_original.png 20
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235643 copy_aug1.png 41
+Train_Augmented_Balanced/20/017_0054_aug5.png 20
+Train_Augmented_Balanced/8/035_0038_original.png 8
+Train_Augmented_Balanced/39/054_1_0070_aug4.png 39
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014649 copy_aug1.png 36
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003203_aug4.png 47
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy_aug1.png 26
+Train_Augmented_Balanced/8/035_1_0036_original.png 8
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012631 copy 3_original.png 28
+Train_Augmented_Balanced/10/00029_00003_00000_aug2.png 10
+Train_Augmented_Balanced/18/005_0044_aug1.png 18
+Train_Augmented_Balanced/17/031_0007_aug2.png 17
+Train_Augmented_Balanced/5/00021_00010_00014_aug2.png 5
+Train_Augmented_Balanced/23/011_0020.png 23
+Train_Augmented_Balanced/20/017_0008_aug1.png 20
+Train_Augmented_Balanced/13/00035_00037_00014_original.png 13
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003353 copy 2_aug4.png 48
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011745 copy 4_aug2.png 27
+Train_Augmented_Balanced/37/047_1_0003_aug2.png 37
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011735_aug4.png 27
+Train_Augmented_Balanced/21/015_1_0007_aug1.png 21
+Train_Augmented_Balanced/17/031_1_0014_aug3.png 17
+Train_Augmented_Balanced/13/00035_00018_00017_aug3.png 13
+Train_Augmented_Balanced/6/00023_00009_00021_aug2.png 6
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001916_aug4.png 42
+Train_Augmented_Balanced/6/00023_00005_00020_aug1.png 6
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003347_aug1.png 48
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235643_original.png 41
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003143_aug2.png 47
+Train_Augmented_Balanced/41/Screenshot 2026-05-01 004502_aug2.png 41
+Train_Augmented_Balanced/16/00040_00000_00005_aug2.png 16
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003211_aug4.png 47
+Train_Augmented_Balanced/3/00019_00000_00002.png 3
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014645 copy_aug2.png 36
+Train_Augmented_Balanced/25/010_1_0034_aug4.png 25
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011900 copy 3_aug4.png 40
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015444 copy_aug5.png 38
+Train_Augmented_Balanced/26/2_aug4.jpg 26
+Train_Augmented_Balanced/2/00017_00017_00015_aug3.png 2
+Train_Augmented_Balanced/21/015_0003_original.png 21
+Train_Augmented_Balanced/5/00021_00000_00000_aug2.png 5
+Train_Augmented_Balanced/13/00035_00039_00018_aug3.png 13
+Train_Augmented_Balanced/24/013_1_0009_original.png 24
+Train_Augmented_Balanced/13/00035_00035_00029_aug4.png 13
+Train_Augmented_Balanced/5/00021_00009_00017_aug1.png 5
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy_aug5.png 26
+Train_Augmented_Balanced/21/015_1_0007_original.png 21
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001601 copy_aug1.png 43
+Train_Augmented_Balanced/30/003_1_0063_aug3.png 30
+Train_Augmented_Balanced/39/054_0082_aug5.png 39
+Train_Augmented_Balanced/23/011_0029.png 23
+Train_Augmented_Balanced/20/017_0008_aug4.png 20
+Train_Augmented_Balanced/33/00001_00050_00022_aug2.png 33
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014711_original.png 36
+Train_Augmented_Balanced/2/00017_00030_00028_aug5.png 2
+Train_Augmented_Balanced/23/011_0031.png 23
+Train_Augmented_Balanced/39/054_1_0131_aug3.png 39
+Train_Augmented_Balanced/4/00020_00001_00006.png 4
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013537_aug1.png 32
+Train_Augmented_Balanced/18/005_0086_aug1.png 18
+Train_Augmented_Balanced/5/00021_00004_00014_aug4.png 5
+Train_Augmented_Balanced/16/00040_00002_00012_aug2.png 16
+Train_Augmented_Balanced/2/00017_00018_00004_aug5.png 2
+Train_Augmented_Balanced/39/054_1_0110_aug3.png 39
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014709 copy_aug4.png 36
+Train_Augmented_Balanced/29/00000_00002_00029_aug1.png 29
+Train_Augmented_Balanced/19/006_0036_aug1.png 19
+Train_Augmented_Balanced/33/00001_00002_00012_aug5.png 33
+Train_Augmented_Balanced/2/00017_00023_00003_aug1.png 2
+Train_Augmented_Balanced/39/054_0049_original.png 39
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001452 copy 2_aug3.png 42
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014649_aug3.png 36
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015444 copy_aug4.png 38
+Train_Augmented_Balanced/10/00029_00003_00014_original.png 10
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235706_aug1.png 41
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015158_aug4_aug26.png 34
+Train_Augmented_Balanced/16/00040_00000_00019_aug5.png 16
+Train_Augmented_Balanced/26/1_aug2.jpg 26
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014233_original.png 31
+Train_Augmented_Balanced/5/00021_00008_00022_original.png 5
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003203 copy_aug3.png 47
+Train_Augmented_Balanced/12/00034_00003_00005.png 12
+Train_Augmented_Balanced/8/035_0073_original.png 8
+Train_Augmented_Balanced/21/015_1_0002_original.png 21
+Train_Augmented_Balanced/5/005_0077_aug2.png 5
+Train_Augmented_Balanced/14/00038_00003_00017.png 14
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002812 copy_aug4.png 45
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014640 copy_aug5.png 36
+Train_Augmented_Balanced/30/003_0029_aug2.png 30
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001709 copy 2_original.png 43
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011847 copy_aug4.png 40
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001941 copy_aug3.png 44
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003143 copy_original.png 47
+Train_Augmented_Balanced/6/00023_00002_00012_aug5.png 6
+Train_Augmented_Balanced/29/00000_00002_00005_aug4.png 29
+Train_Augmented_Balanced/23/011_1_0029.png 23
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004714 copy 2_aug2.png 46
+Train_Augmented_Balanced/2/00017_00004_00004_aug1.png 2
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015201_aug1_aug2.png 34
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014702_aug2.png 36
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014238 copy 2_aug4.png 31
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011857 copy 2_aug5.png 40
+Train_Augmented_Balanced/15/00039_00002_00003.png 15
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015204_aug4.png 34
+Train_Augmented_Balanced/4/00020_00002_00000.png 4
+Train_Augmented_Balanced/16/00040_00001_00025_aug5.png 16
+Train_Augmented_Balanced/13/00035_00000_00019_aug1.png 13
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015444_aug5.png 38
+Train_Augmented_Balanced/23/011_0005.png 23
+Train_Augmented_Balanced/17/031_0007_aug4.png 17
+Train_Augmented_Balanced/39/054_1_0019_original.png 39
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002822 copy_aug5.png 45
+Train_Augmented_Balanced/15/00039_00000_00004.png 15
+Train_Augmented_Balanced/10/00029_00001_00005_aug5.png 10
+Train_Augmented_Balanced/13/00035_00003_00012_aug5.png 13
+Train_Augmented_Balanced/37/047_1_0003 copy_aug5.png 37
+Train_Augmented_Balanced/24/013_0005_aug5.png 24
+Train_Augmented_Balanced/9/00028_00009_00003_aug4.png 9
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003211_aug2.png 47
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015003 copy_aug3.png 35
+Train_Augmented_Balanced/6/00023_00014_00029_aug5.png 6
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012624_original.png 28
+Train_Augmented_Balanced/16/00040_00005_00004_aug3.png 16
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013537_aug4_aug9.png 32
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002822 copy 2_aug5.png 45
+Train_Augmented_Balanced/4/00020_00002_00025.png 4
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004720_aug2.png 46
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014143 copy 2_aug3.png 31
+Train_Augmented_Balanced/5/005_0036_aug1.png 5
+Train_Augmented_Balanced/19/006_1_0001_aug1.png 19
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002713_aug4.png 45
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011903 copy 2_aug2.png 40
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015147_aug4.png 34
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002848 copy 2_aug4.png 45
+Train_Augmented_Balanced/23/011_1_0026.png 23
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014137_aug2.png 31
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001619 copy_aug3.png 43
+Train_Augmented_Balanced/6/00023_00011_00014_aug4.png 6
+Train_Augmented_Balanced/24/013_1_0012 - Copy.png 24
+Train_Augmented_Balanced/17/031_0019_aug5.png 17
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235655 copy_original.png 41
+Train_Augmented_Balanced/17/031_1_0014_aug5.png 17
+Train_Augmented_Balanced/12/00034_00001_00005.png 12
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014939_aug1.png 35
+Train_Augmented_Balanced/37/047_1_0004_aug5.png 37
+Train_Augmented_Balanced/21/015_0009_aug2.png 21
+Train_Augmented_Balanced/19/006_0002_aug4.png 19
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014933 copy_aug4.png 35
+Train_Augmented_Balanced/24/013_0007_aug2.png 24
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014233 copy 2_aug3.png 31
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001609 copy_aug1.png 43
+Train_Augmented_Balanced/39/054_0123_aug5.png 39
+Train_Augmented_Balanced/6/00023_00009_00012_original.png 6
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012622_aug4.png 28
+Train_Augmented_Balanced/8/035_1_0054_aug2.png 8
+Train_Augmented_Balanced/24/013_0008_aug3.png 24
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014228 copy 2_aug4.png 31
+Train_Augmented_Balanced/3/00019_00001_00023.png 3
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014656_aug2.png 36
+Train_Augmented_Balanced/37/047_1_0002 copy_aug5.png 37
+Train_Augmented_Balanced/29/00000_00002_00001_aug2.png 29
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015439 copy_aug5.png 38
+Train_Augmented_Balanced/9/00028_00005_00021_aug4.png 9
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004655_aug3.png 46
+Train_Augmented_Balanced/4/00020_00002_00008.png 4
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015150_aug1.png 34
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011903 copy 3_original.png 40
+Train_Augmented_Balanced/24/013_1_0009_aug3.png 24
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003343 copy_aug1.png 48
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015444_original.png 38
+Train_Augmented_Balanced/3/00019_00002_00022.png 3
+Train_Augmented_Balanced/14/00038_00003_00002.png 14
+Train_Augmented_Balanced/22/001_1_0005_aug5.png 22
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004710 copy 2_aug4.png 46
+Train_Augmented_Balanced/4/00020_00001_00025.png 4
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001509 copy 2_aug4.png 42
+Train_Augmented_Balanced/14/00038_00002_00011.png 14
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014943_original.png 35
+Train_Augmented_Balanced/14/00038_00000_00024.png 14
+Train_Augmented_Balanced/19/006_1_0011_aug1.png 19
+Train_Augmented_Balanced/24/013_1_0006.png 24
+Train_Augmented_Balanced/19/006_0001_aug1.png 19
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011731 copy_original.png 27
+Train_Augmented_Balanced/2/00017_00014_00022_aug4.png 2
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014939 copy_original.png 35
+Train_Augmented_Balanced/10/00029_00001_00012_aug3.png 10
+Train_Augmented_Balanced/16/00040_00003_00007_aug5.png 16
+Train_Augmented_Balanced/8/035_0038_aug4.png 8
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001509 copy_aug1.png 42
+Train_Augmented_Balanced/17/031_0009_aug2.png 17
+Train_Augmented_Balanced/10/00029_00001_00023_aug3.png 10
+Train_Augmented_Balanced/7/00025_00043_00003_aug1.png 7
+Train_Augmented_Balanced/7/00025_00027_00013_aug4.png 7
+Train_Augmented_Balanced/15/00039_00000_00023.png 15
+Train_Augmented_Balanced/6/00023_00010_00002_aug1.png 6
+Train_Augmented_Balanced/5/00021_00009_00007_aug2.png 5
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003146_aug1.png 47
+Train_Augmented_Balanced/18/005_1_0054_aug4.png 18
+Train_Augmented_Balanced/17/031_1_0008_aug4.png 17
+Train_Augmented_Balanced/1/00014_00001_00013_aug3.png 1
+Train_Augmented_Balanced/37/047_1_0001_aug3.png 37
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015442 copy 2_aug1.png 38
+Train_Augmented_Balanced/33/00001_00031_00026_aug1.png 33
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014233 copy 2_original.png 31
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001941 copy_original.png 44
+Train_Augmented_Balanced/25/010_0004_aug2.png 25
+Train_Augmented_Balanced/2/00017_00013_00029_original.png 2
+Train_Augmented_Balanced/39/054_0155_aug1.png 39
+Train_Augmented_Balanced/14/00038_00002_00026.png 14
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001709 copy_aug5.png 43
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001614 copy_aug4.png 43
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003146_original.png 47
+Train_Augmented_Balanced/17/031_0020_aug2.png 17
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742_aug2.png 27
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015156_original.png 34
+Train_Augmented_Balanced/2/00017_00022_00023_aug3.png 2
+Train_Augmented_Balanced/18/005_1_0023_aug3.png 18
+Train_Augmented_Balanced/33/00001_00065_00026_aug5.png 33
+Train_Augmented_Balanced/6/00023_00014_00015_aug2.png 6
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001935_aug4.png 44
+Train_Augmented_Balanced/30/003_1_0006_original.png 30
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003128_aug1.png 47
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003143 copy_aug5.png 47
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014652_aug5.png 36
+Train_Augmented_Balanced/14/00038_00001_00006.png 14
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014146 copy 2_original.png 31
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012138_aug1.png 26
+Train_Augmented_Balanced/14/00038_00001_00019.png 14
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015204_aug2.png 34
+Train_Augmented_Balanced/5/00021_00006_00015_original.png 5
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015454 copy 2_aug1.png 38
+Train_Augmented_Balanced/16/00040_00009_00001_aug1.png 16
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004704 copy 2_aug1.png 46
+Train_Augmented_Balanced/21/015_1_0011_1_j_aug4.png 21
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013534_original.png 32
+Train_Augmented_Balanced/10/00029_00004_00029_original.png 10
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014809_aug3.png 36
+Train_Augmented_Balanced/24/013_1_0011.png 24
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015003_aug2.png 35
+Train_Augmented_Balanced/9/00028_00008_00019_aug5.png 9
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001946 copy 2_original.png 44
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015147_aug1_aug43.png 34
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012156_original.png 26
+Train_Augmented_Balanced/14/00038_00002_00021.png 14
+Train_Augmented_Balanced/26/0_aug5.jpg 26
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012622 copy 3_aug5.png 28
+Train_Augmented_Balanced/10/00029_00002_00016_aug5.png 10
+Train_Augmented_Balanced/4/00020_00003_00016.png 4
+Train_Augmented_Balanced/4/00020_00001_00009.png 4
+Train_Augmented_Balanced/9/00028_00015_00026_aug1.png 9
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014705_aug1.png 36
+Train_Augmented_Balanced/18/005_1_0033_aug3.png 18
+Train_Augmented_Balanced/3/00019_00002_00028.png 3
+Train_Augmented_Balanced/10/00029_00007_00025_aug2.png 10
+Train_Augmented_Balanced/2/00017_00009_00019_aug2.png 2
+Train_Augmented_Balanced/15/00039_00002_00027.png 15
+Train_Augmented_Balanced/7/00025_00043_00012_aug3.png 7
+Train_Augmented_Balanced/14/00038_00003_00028.png 14
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003350 copy_aug4.png 48
+Train_Augmented_Balanced/11/00033_00003_00023.png 11
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011844 copy_aug1.png 40
+Train_Augmented_Balanced/8/035_0055_aug1.png 8
+Train_Augmented_Balanced/19/006_0035_aug4.png 19
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013543_aug5_aug39.png 32
+Train_Augmented_Balanced/9/00028_00017_00008_original.png 9
+Train_Augmented_Balanced/19/006_1_0004_aug4.png 19
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013531_aug3.png 32
+Train_Augmented_Balanced/29/00000_00006_00008_aug2.png 29
+Train_Augmented_Balanced/20/017_0046_original.png 20
+Train_Augmented_Balanced/1/00014_00004_00007_original.png 1
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015439_aug2.png 38
+Train_Augmented_Balanced/17/031_0003_aug4.png 17
+Train_Augmented_Balanced/37/047_1_0003 copy_aug2.png 37
+Train_Augmented_Balanced/7/00025_00048_00014_aug5.png 7
+Train_Augmented_Balanced/18/005_1_0004_original.png 18
+Train_Augmented_Balanced/11/00033_00001_00007.png 11
+Train_Augmented_Balanced/4/00020_00002_00006.png 4
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014228 copy_original.png 31
+Train_Augmented_Balanced/14/00038_00002_00014.png 14
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011847 copy 3_aug4.png 40
+Train_Augmented_Balanced/24/013_1_0013_original.png 24
+Train_Augmented_Balanced/19/006_0021_original.png 19
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011850 copy 2_aug1.png 40
+Train_Augmented_Balanced/7/00025_00028_00011_original.png 7
+Train_Augmented_Balanced/18/005_0093_aug1.png 18
+Train_Augmented_Balanced/9/00028_00015_00021_aug1.png 9
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015147_aug2_aug33.png 34
+Train_Augmented_Balanced/9/00028_00001_00028_aug1.png 9
+Train_Augmented_Balanced/8/035_0057_aug4.png 8
+Train_Augmented_Balanced/20/017_0009_aug1.png 20
+Train_Augmented_Balanced/23/011_0016.png 23
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002842_aug5.png 45
+Train_Augmented_Balanced/20/017_1_0051_original.png 20
+Train_Augmented_Balanced/8/035_1_0064_aug3.png 8
+Train_Augmented_Balanced/10/00029_00005_00010_aug4.png 10
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004704_original.png 46
+Train_Augmented_Balanced/18/005_0096_aug4.png 18
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 002507 copy 2_aug5.png 43
+Train_Augmented_Balanced/39/054_0081_aug2.png 39
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014952 copy 2_aug3.png 35
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 002501 copy_aug5.png 43
+Train_Augmented_Balanced/6/00023_00004_00015_original.png 6
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014656_original.png 36
+Train_Augmented_Balanced/29/00000_00006_00002_aug1.png 29
+Train_Augmented_Balanced/1/00014_00025_00016_aug3.png 1
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013540_original.png 32
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015454_aug1.png 38
+Train_Augmented_Balanced/11/00033_00002_00005.png 11
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002718_aug1.png 45
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 004517_aug1.png 47
+Train_Augmented_Balanced/22/001_0013_aug5.png 22
+Train_Augmented_Balanced/24/013_1_0002.png 24
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002845 copy_aug3.png 45
+Train_Augmented_Balanced/24/013_1_0014_original.png 24
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015502 copy_aug1.png 38
+Train_Augmented_Balanced/6/00023_00015_00005_aug5.png 6
+Train_Augmented_Balanced/2/00017_00017_00011_aug1.png 2
+Train_Augmented_Balanced/3/00019_00001_00013.png 3
+Train_Augmented_Balanced/24/013_1_0010.png 24
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015452_aug2.png 38
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012614_aug3.png 28
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004714_aug2.png 46
+Train_Augmented_Balanced/37/047_1_0006_1_j_aug3.png 37
+Train_Augmented_Balanced/7/00025_00018_00024_aug5.png 7
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001601_aug4.png 43
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012614 copy 3_aug4.png 28
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001452_aug4.png 42
+Train_Augmented_Balanced/9/00028_00005_00005_aug2.png 9
+Train_Augmented_Balanced/15/00039_00000_00011.png 15
+Train_Augmented_Balanced/11/00033_00002_00014.png 11
+Train_Augmented_Balanced/4/00020_00002_00021.png 4
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004704 copy_aug1.png 46
+Train_Augmented_Balanced/25/010_1_0029_aug5.png 25
+Train_Augmented_Balanced/9/00028_00016_00027_aug1.png 9
+Train_Augmented_Balanced/30/003_1_0063_aug1.png 30
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011735_aug5.png 27
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014705_aug2.png 36
+Train_Augmented_Balanced/13/00035_00030_00023_aug3.png 13
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012138_aug3.png 26
+Train_Augmented_Balanced/25/010_0017_aug3.png 25
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015006_aug5.png 35
+Train_Augmented_Balanced/39/054_0034_aug5.png 39
+Train_Augmented_Balanced/10/00029_00003_00023_aug5.png 10
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011745 copy 2_aug1.png 27
+Train_Augmented_Balanced/21/015_1_0003_aug5.png 21
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015204_original.png 34
+Train_Augmented_Balanced/15/00039_00001_00017.png 15
+Train_Augmented_Balanced/25/010_1_0024_aug4.png 25
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014238_original.png 31
+Train_Augmented_Balanced/4/00020_00003_00019.png 4
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003350_original.png 48
+Train_Augmented_Balanced/2/00017_00013_00017_aug3.png 2
+Train_Augmented_Balanced/39/054_1_0029_aug4.png 39
+Train_Augmented_Balanced/14/00038_00004_00000.png 14
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235708_aug2.png 41
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011731 copy_aug5.png 27
+Train_Augmented_Balanced/10/00029_00008_00020_aug3.png 10
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014645_aug5.png 36
+Train_Augmented_Balanced/30/003_0030_aug2.png 30
+Train_Augmented_Balanced/5/005_0083_original.png 5
+Train_Augmented_Balanced/16/00040_00007_00001_aug5.png 16
+Train_Augmented_Balanced/6/00023_00014_00027_original.png 6
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003335 copy 2_aug1.png 48
+Train_Augmented_Balanced/39/054_0134_aug5.png 39
+Train_Augmented_Balanced/11/00033_00000_00014.png 11
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011903_aug5.png 40
+Train_Augmented_Balanced/25/010_0016_original.png 25
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015156_original_aug36.png 34
+Train_Augmented_Balanced/24/013_1_0022_1_j_aug2.png 24
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011857_aug1.png 40
+Train_Augmented_Balanced/17/031_1_0001_aug1.png 17
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004717 copy 2_aug4.png 46
+Train_Augmented_Balanced/29/00000_00003_00007_original.png 29
+Train_Augmented_Balanced/15/00039_00002_00026.png 15
+Train_Augmented_Balanced/9/00028_00007_00022_aug4.png 9
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014756_aug1.png 36
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001516 copy_aug4.png 42
+Train_Augmented_Balanced/24/013_0009 - Copy.png 24
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011850_aug1.png 40
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235706_original.png 41
+Train_Augmented_Balanced/20/017_1_0042_aug2.png 20
+Train_Augmented_Balanced/8/035_1_0001_aug3.png 8
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012143 copy_aug2.png 26
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001709 copy 2_aug3.png 43
+Train_Augmented_Balanced/39/054_1_0134_original.png 39
+Train_Augmented_Balanced/9/00028_00002_00026_aug2.png 9
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001619 copy 2_aug3.png 43
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011847_original.png 40
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011745 copy 4_aug4.png 27
+Train_Augmented_Balanced/15/00039_00001_00021.png 15
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001619_aug2.png 43
+Train_Augmented_Balanced/6/00023_00000_00016_aug5.png 6
+Train_Augmented_Balanced/15/00039_00003_00007.png 15
+Train_Augmented_Balanced/20/017_1_0023_original.png 20
+Train_Augmented_Balanced/33/00001_00040_00029_aug5.png 33
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004650 copy 2_aug2.png 46
+Train_Augmented_Balanced/20/017_1_0059_aug2.png 20
+Train_Augmented_Balanced/3/00019_00000_00025.png 3
+Train_Augmented_Balanced/39/054_1_0132_aug4.png 39
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012611 copy 3_original.png 28
+Train_Augmented_Balanced/23/011_0018.png 23
+Train_Augmented_Balanced/24/013_1_0006 - Copy.png 24
+Train_Augmented_Balanced/9/00028_00006_00007_aug2.png 9
+Train_Augmented_Balanced/9/00028_00010_00000_aug5.png 9
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001448 copy 2_aug4.png 42
+Train_Augmented_Balanced/33/00001_00062_00003_aug5.png 33
+Train_Augmented_Balanced/37/047_1_0002 copy_original.png 37
+Train_Augmented_Balanced/23/011_1_0055.png 23
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015143_aug5.png 34
+Train_Augmented_Balanced/33/00001_00009_00003_original.png 33
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015448_aug5.png 38
+Train_Augmented_Balanced/4/00020_00000_00026.png 4
+Train_Augmented_Balanced/25/010_0009_aug4.png 25
+Train_Augmented_Balanced/19/006_0035_aug3.png 19
+Train_Augmented_Balanced/8/035_0049_aug2.png 8
+Train_Augmented_Balanced/39/054_0093_aug2.png 39
+Train_Augmented_Balanced/24/013_1_0009_aug2.png 24
+Train_Augmented_Balanced/25/010_0033_aug5.png 25
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003214_aug4.png 47
+Train_Augmented_Balanced/14/00038_00002_00015.png 14
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015201_aug2_aug18.png 34
+Train_Augmented_Balanced/17/031_1_0005_aug2.png 17
+Train_Augmented_Balanced/22/001_1_0009_aug1.png 22
+Train_Augmented_Balanced/11/00033_00000_00018.png 11
+Train_Augmented_Balanced/6/00023_00013_00016_aug3.png 6
+Train_Augmented_Balanced/17/031_1_0006_original.png 17
+Train_Augmented_Balanced/6/00023_00014_00009_original.png 6
+Train_Augmented_Balanced/13/00035_00036_00021_aug1.png 13
+Train_Augmented_Balanced/19/006_0008_aug5.png 19
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001935 copy_aug1.png 44
+Train_Augmented_Balanced/33/00001_00060_00012_aug1.png 33
+Train_Augmented_Balanced/23/011_1_0028.png 23
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015156_aug5_aug39.png 34
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015147_aug1.png 34
+Train_Augmented_Balanced/16/00040_00010_00014_aug1.png 16
+Train_Augmented_Balanced/42/Screenshot 2026-05-01 001458 copy 2_aug1.png 42
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014146 copy 2_aug5.png 31
+Train_Augmented_Balanced/7/00025_00042_00012_aug2.png 7
+Train_Augmented_Balanced/37/047_1_0006_1_j copy_aug5.png 37
+Train_Augmented_Balanced/11/00033_00000_00012.png 11
+Train_Augmented_Balanced/37/047_1_0005_aug5.png 37
+Train_Augmented_Balanced/3/00019_00002_00006.png 3
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235702 copy_aug1.png 41
+Train_Augmented_Balanced/6/00023_00010_00024_aug3.png 6
+Train_Augmented_Balanced/7/00025_00001_00022_original.png 7
+Train_Augmented_Balanced/12/00034_00003_00001.png 12
+Train_Augmented_Balanced/22/001_1_0014_original.png 22
+Train_Augmented_Balanced/33/00001_00063_00012_original.png 33
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012606 copy_aug1.png 28
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013543_original_aug36.png 32
+Train_Augmented_Balanced/1/00014_00015_00014_aug4.png 1
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001953 copy_aug4.png 44
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012622 copy 3_aug1.png 28
+Train_Augmented_Balanced/13/00035_00033_00002_aug1.png 13
+Train_Augmented_Balanced/12/00034_00002_00019.png 12
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002845 copy_original.png 45
+Train_Augmented_Balanced/19/006_1_0007_aug5.png 19
+Train_Augmented_Balanced/17/031_1_0009_aug1.png 17
+Train_Augmented_Balanced/12/00034_00001_00007.png 12
+Train_Augmented_Balanced/19/006_0002_aug5.png 19
+Train_Augmented_Balanced/20/017_1_0012_aug2.png 20
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 002507_original.png 43
+Train_Augmented_Balanced/7/00025_00019_00029_aug2.png 7
+Train_Augmented_Balanced/4/00020_00001_00024.png 4
+Train_Augmented_Balanced/18/005_1_0063_aug1.png 18
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011742_aug1.png 27
+Train_Augmented_Balanced/48/Screenshot 2026-05-01 003353_aug5.png 48
+Train_Augmented_Balanced/10/00029_00005_00017_original.png 10
+Train_Augmented_Balanced/22/001_1_0016_original.png 22
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001935 copy_aug5.png 44
+Train_Augmented_Balanced/33/00001_00001_00011_aug5.png 33
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011850_original.png 40
+Train_Augmented_Balanced/19/006_0005_aug1.png 19
+Train_Augmented_Balanced/37/047_1_0003_aug3.png 37
+Train_Augmented_Balanced/45/Screenshot 2026-05-01 002808_aug2.png 45
+Train_Augmented_Balanced/23/011_1_0043.png 23
+Train_Augmented_Balanced/27/Screenshot 2026-04-28 011735 copy_aug5.png 27
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015448 copy_aug4.png 38
+Train_Augmented_Balanced/1/00014_00009_00020_aug2.png 1
+Train_Augmented_Balanced/46/Screenshot 2026-05-01 004642_aug3.png 46
+Train_Augmented_Balanced/16/00040_00007_00025_aug4.png 16
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013540_aug5_aug13.png 32
+Train_Augmented_Balanced/22/001_1_0007_aug1.png 22
+Train_Augmented_Balanced/21/015_1_0002_aug2.png 21
+Train_Augmented_Balanced/33/00001_00000_00003_original.png 33
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 014936 copy 2_aug5.png 35
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012611 copy_aug3.png 28
+Train_Augmented_Balanced/11/00033_00001_00023.png 11
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012622 copy 2_aug4.png 28
+Train_Augmented_Balanced/30/003_0129_aug5.png 30
+Train_Augmented_Balanced/14/00038_00003_00022.png 14
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014139 copy 2_original.png 31
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015000_aug1.png 35
+Train_Augmented_Balanced/15/00039_00001_00004.png 15
+Train_Augmented_Balanced/44/Screenshot 2026-05-01 001953_aug5.png 44
+Train_Augmented_Balanced/41/Screenshot 2026-04-30 235659 copy_aug5.png 41
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015505_original.png 38
+Train_Augmented_Balanced/23/011_0017.png 23
+Train_Augmented_Balanced/20/017_1_0008_aug3.png 20
+Train_Augmented_Balanced/26/Screenshot 2026-04-28 012159 copy 2_aug4.png 26
+Train_Augmented_Balanced/8/035_1_0001_aug2.png 8
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014806_aug3.png 36
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015147_aug2.png 34
+Train_Augmented_Balanced/10/00029_00007_00025_aug1.png 10
+Train_Augmented_Balanced/25/010_1_0032_aug1.png 25
+Train_Augmented_Balanced/18/005_1_0027_aug3.png 18
+Train_Augmented_Balanced/34/Screenshot 2026-04-28 015150_aug3.png 34
+Train_Augmented_Balanced/28/Screenshot 2026-04-28 012614 copy 2_aug5.png 28
+Train_Augmented_Balanced/32/Screenshot 2026-04-28 013543_aug1.png 32
+Train_Augmented_Balanced/19/006_1_0012_original.png 19
+Train_Augmented_Balanced/13/00035_00026_00018_aug1.png 13
+Train_Augmented_Balanced/35/Screenshot 2026-04-28 015006 copy 2_aug1.png 35
+Train_Augmented_Balanced/47/Screenshot 2026-05-01 003128_aug4.png 47
+Train_Augmented_Balanced/4/00020_00003_00007.png 4
+Train_Augmented_Balanced/7/00025_00022_00003_aug1.png 7
+Train_Augmented_Balanced/2/00017_00028_00013_aug5.png 2
+Train_Augmented_Balanced/31/Screenshot 2026-04-28 014139 copy 2_aug3.png 31
+Train_Augmented_Balanced/30/003_1_0079_aug4.png 30
+Train_Augmented_Balanced/16/00040_00007_00011_aug3.png 16
+Train_Augmented_Balanced/24/013_1_0011 - Copy.png 24
+Train_Augmented_Balanced/10/00029_00002_00019_aug5.png 10
+Train_Augmented_Balanced/36/Screenshot 2026-04-28 014640_aug4.png 36
+Train_Augmented_Balanced/38/Screenshot 2026-04-28 015452_aug3.png 38
+Train_Augmented_Balanced/40/Screenshot 2026-04-28 011847_aug5.png 40
+Train_Augmented_Balanced/6/00023_00003_00010_aug5.png 6
+Train_Augmented_Balanced/13/00035_00022_00025_aug1.png 13
+Train_Augmented_Balanced/37/047_1_0005 copy_aug4.png 37
+Train_Augmented_Balanced/43/Screenshot 2026-05-01 001709_aug5.png 43
+Train_Augmented_Balanced/17/031_1_0004_aug1.png 17

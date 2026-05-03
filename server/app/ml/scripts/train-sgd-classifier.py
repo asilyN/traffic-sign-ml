@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """
-Simple baseline traffic-sign classifier training.
+SGD (Stochastic Gradient Descent) traffic-sign classifier training.
 
 Uses (defaults):
 - splits/train.txt
 - splits/val.txt
 
 Outputs:
-- reports/simple_train_metrics.txt
-- models/simple_classifier.joblib
+- reports/sgd_train_metrics.txt
+- models/sgd_classifier.joblib
 """
 
 from __future__ import annotations
@@ -223,7 +223,7 @@ def main() -> None:
     train_acc = accuracy_score(y_train, train_pred)
     val_acc = accuracy_score(y_val, val_pred)
 
-    model_path = models / "simple_classifier.joblib"
+    model_path = models / "sgd_classifier.joblib"
     joblib.dump(
         {
             "pipeline": clf,
@@ -245,11 +245,11 @@ def main() -> None:
     )
 
     report_text = classification_report(y_val, val_pred, digits=4, zero_division=0)
-    metrics_path = reports / "simple_train_metrics.txt"
+    metrics_path = reports / "sgd_train_metrics.txt"
     metrics_path.write_text(
         "\n".join(
             [
-                "Simple Classification Training Metrics",
+                "SGD Classification Training Metrics",
                 "=" * 80,
                 f"Train samples: {len(y_train)}",
                 f"Val samples: {len(y_val)}",

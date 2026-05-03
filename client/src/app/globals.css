@@ -1,3 +1,4 @@
+/* Bare specifiers; next.config.ts resolveAlias points into client/node_modules (monorepo root breaks relative paths). */
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
