@@ -7,8 +7,8 @@ export interface HistoryItem {
   signName: string;
   confidence: number;
   timestamp: Date;
-  imageUrl: string;
   category: string;
+  thumbnail?: string; // Small compressed image preview (optional)
 }
 
 interface DetectionHistoryProps {
@@ -45,23 +45,30 @@ export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps
             <button
               key={item.id}
               onClick={() => onItemClick(item)}
-              className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-[#2563EB] hover:bg-[#eff6ff] transition-all group"
+              className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-[#2563EB] hover:bg-[#eff6ff] transition-all group text-left"
             >
-              <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                <img
-                  src={item.imageUrl}
-                  alt={item.signName}
-                  className="w-full h-full object-cover"
-                />
+              {/* Display thumbnail if available, else show badge */}
+              <div className="w-12 h-12 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                {item.thumbnail ? (
+                  <img
+                    src={item.thumbnail}
+                    alt={item.signName}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#F97316] flex items-center justify-center text-white font-semibold text-sm">
+                    {item.signName.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </div>
-              <div className="flex-1 text-left">
-                <h4 className="text-[#111827] group-hover:text-[#2563EB] transition-colors">
+              <div className="flex-1 min-w-0">
+                <h4 className="text-[#111827] group-hover:text-[#2563EB] transition-colors truncate">
                   {item.signName}
                 </h4>
                 <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[#6B7280]">{item.confidence}%</span>
-                  <span className="text-[#6B7280]">•</span>
-                  <span className="text-[#6B7280]">{formatTime(item.timestamp)}</span>
+                  <span className="text-[#6B7280] text-sm">{item.confidence}%</span>
+                  <span className="text-[#6B7280] text-sm">•</span>
+                  <span className="text-[#6B7280] text-sm">{formatTime(item.timestamp)}</span>
                 </div>
               </div>
             </button>

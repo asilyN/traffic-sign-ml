@@ -1,0 +1,6 @@
+{
+  "include": ["server/app"],
+  "venvPath": ".",
+  "venv": ".venv",
+  "pythonVersion": "3.13"
+}

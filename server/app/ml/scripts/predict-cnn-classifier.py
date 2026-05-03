@@ -15,8 +15,9 @@ import argparse
 import json
 import warnings
 from pathlib import Path
+from typing import cast
 
-import joblib
+import h5py
 import numpy as np
 import torch
 import torch.nn as nn
@@ -26,28 +27,35 @@ SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".ppm", ".webp"}
 
 
 class SimpleConvNet(nn.Module):
-    """Lightweight CNN for 32x32 grayscale traffic sign images."""
+    """Lightweight CNN for traffic sign images."""
 
     def __init__(self, num_classes: int = 48):
         super().__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(1, 32, kernel_size=3, padding=1),
+            nn.Conv2d(3, 32, kernel_size=3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),  # 64 -> 32
+            
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.BatchNorm2d(64),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),  # 32 -> 16
             
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.BatchNorm2d(128),
             nn.ReLU(inplace=True),
             nn.MaxPool2d(kernel_size=2, stride=2),  # 16 -> 8
             
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),  # 8 -> 4
         )
         self.classifier = nn.Sequential(
-            nn.Linear(128 * 4 * 4, 256),
+            nn.Linear(256 * 8 * 8, 512),
             nn.ReLU(inplace=True),
             nn.Dropout(0.5),
-            nn.Linear(256, num_classes),
+            nn.Linear(512, num_classes),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -68,8 +76,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--model-path",
         type=Path,
-        default=Path("models/cnn_classifier.joblib"),
-        help="Model path relative to root.",
+        default=Path("models/cnn_classifier.h5"),
+        help="Model path relative to root (HDF5 format).",
     )
     parser.add_argument(
         "--image",
@@ -97,10 +105,16 @@ def parse_args() -> argparse.Namespace:
 def load_image_feature(image_path: Path, size: int) -> np.ndarray:
     try:
         with Image.open(image_path) as img:
-            arr = np.asarray(img.convert("L").resize((size, size), Image.BILINEAR), dtype=np.float32)
+            arr = np.asarray(img.convert("RGB").resize((size, size), Image.Resampling.LANCZOS), dtype=np.float32)
     except (UnidentifiedImageError, OSError, ValueError) as exc:
         raise RuntimeError(f"Unreadable image: {image_path}") from exc
-    return arr.reshape(1, 1, size, size) / 255.0
+    
+    # Normalize using ImageNet mean/std per channel
+    mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
+    std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
+    arr = arr / 255.0
+    arr = (arr - mean) / std
+    return arr.transpose(2, 0, 1).reshape(1, 3, size, size)
 
 
 def compute_confidence(logits: np.ndarray, pred_idx: int, indices: list[int]) -> float:
@@ -178,9 +192,9 @@ def resolve_model_path(root: Path, model_path_arg: Path) -> Path:
 
     candidates = [
         (root / model_path_arg).resolve(),
-        (root / "models" / "cnn_classifier.joblib").resolve(),
+        (root / "models" / "cnn_classifier.h5").resolve(),
         (Path(".").resolve() / model_path_arg).resolve(),
-        (Path(".").resolve() / "server" / "app" / "ml" / "dataset" / "models" / "cnn_classifier.joblib").resolve(),
+        (Path(".").resolve() / "server" / "app" / "ml" / "dataset" / "models" / "cnn_classifier.h5").resolve(),
     ]
     for candidate in candidates:
         if candidate.exists():
@@ -190,7 +204,7 @@ def resolve_model_path(root: Path, model_path_arg: Path) -> Path:
     raise FileNotFoundError(
         "Model not found. Searched:\n"
         f"{searched}\n"
-        "Run train-cnn-classifier.py or train-cnn-classifier-original.py first."
+        "Run train-cnn-classifier.py first."
     )
 
 
@@ -236,6 +250,29 @@ def get_device(device_arg: str) -> torch.device:
     return torch.device(device_arg)
 
 
+def load_labels_from_json(root: Path) -> dict[int, dict[str, str]]:
+    """Load labels from labels.json file at server/app/ml/labels.json (parent of dataset)."""
+    # labels.json is at root.parent/labels.json (one level up from dataset root)
+    labels_file = root.parent / "labels.json"
+    
+    if labels_file.exists():
+        try:
+            payload = json.loads(labels_file.read_text(encoding="utf-8"))
+            metadata: dict[int, dict[str, str]] = {}
+            for row in payload.get("classes", []):
+                class_id = int(row["class_id"])
+                metadata[class_id] = {
+                    "class_id": str(class_id),
+                    "class_name": str(row.get("class_name", f"class_{class_id}")),
+                    "category": str(row.get("category", "unknown")),
+                }
+            return metadata
+        except (json.JSONDecodeError, KeyError, ValueError):
+            pass
+    
+    return {}
+
+
 def main() -> None:
     args = parse_args()
     root = resolve_dataset_root(args.root)
@@ -257,14 +294,36 @@ def main() -> None:
 
     device = get_device(args.device)
 
-    bundle = joblib.load(model_path)
-    image_size = int(bundle.get("image_size", 32))
-    num_classes = int(bundle.get("num_classes", 48))
-    label_metadata = bundle.get("label_metadata", {})
-    labels_present = bundle.get("labels_present", list(range(1, 49)))
+    # Load model from HDF5 file
+    with h5py.File(model_path, "r") as f:  # type: ignore
+        # Load metadata from attributes
+        image_size = int(f.attrs.get("image_size", 32))  # type: ignore
+        num_classes = int(f.attrs.get("num_classes", 48))  # type: ignore
+        
+        # Load labels present
+        labels_present_array: np.ndarray = f["labels_present"][()]  # type: ignore
+        labels_present = labels_present_array.tolist()
+        
+        # Load model state dictionary
+        model_state: dict[str, torch.Tensor] = {}
+        model_state_group = f["model_state"]  # type: ignore
+        for key in model_state_group.keys():  # type: ignore
+            model_state[key] = torch.from_numpy(np.array(model_state_group[key]))  # type: ignore
+
+    # Load label metadata from labels.json (preferred) or from model
+    label_metadata = load_labels_from_json(root)
+    if not label_metadata:
+        # Fallback: try to load from HDF5
+        try:
+            with h5py.File(model_path, "r") as f:  # type: ignore
+                label_meta_bytes: bytes = f["label_metadata"][()]  # type: ignore
+                label_meta_str = label_meta_bytes.decode("utf-8")
+                label_metadata = json.loads(label_meta_str)
+        except Exception:
+            label_metadata = {}
 
     model = SimpleConvNet(num_classes=num_classes).to(device)
-    model.load_state_dict(bundle["model_state"])
+    model.load_state_dict(model_state)
     model.eval()
 
     x = torch.from_numpy(load_image_feature(image_path, image_size)).to(device)
