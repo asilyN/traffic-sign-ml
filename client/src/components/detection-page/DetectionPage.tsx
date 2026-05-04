@@ -89,27 +89,9 @@ export function DetectorPage() {
     setErrorMessage(null);
     setUploadPredictions(null);
 
-    // Fetch detections for preview
-    if (imageUrl && file && file.size > 0) {
-      try {
-        const detectionResult = await detectImage(file);
-        if (detectionResult.detections && detectionResult.detections.length > 0) {
-          // Convert detections to predictions format for preview
-          const topPredictions = detectionResult.detections
-            .sort((a, b) => b.classification_confidence - a.classification_confidence)
-            .slice(0, 3)
-            .map((det) => ({
-              class_name: det.class_name,
-              confidence: det.classification_confidence,
-              category: det.category,
-            }));
-          setUploadPredictions(topPredictions);
-        }
-      } catch (error) {
-        console.error('Failed to fetch detections for preview:', error);
-        setUploadPredictions(null);
-      }
-    }
+    // Skip automatic detection on upload
+    // User must click "Detect Sign" button to run detection
+    // This prevents unnecessary YOLO detection which can be slow/inaccurate
   };
 
   const handleSwitchToCamera = () => {
