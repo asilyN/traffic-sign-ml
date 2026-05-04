@@ -1,6 +1,0 @@
-{
-  "builder": "heroku/python",
-  "config": {
-    "PYTHON_RUNTIME": "python-3.11"
-  }
-}
