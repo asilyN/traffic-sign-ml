@@ -79,9 +79,6 @@ From your terminal:
 git clone https://github.com/yourusername/traffic-sign-ml.git
 cd traffic-sign-ml
 
-# Install root dependencies
-npm install
-
 # Install frontend dependencies
 cd client && npm install && cd ..
 
