@@ -1,6 +1,8 @@
 'use client';
 
-import { CheckCircle2, AlertTriangle } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { getInstructionForSign } from '@/src/lib/api';
 
 interface DetectionResult {
   predictions: Array<{
@@ -16,6 +18,26 @@ interface DetectionResultsProps {
 }
 
 export function DetectionResults({ result }: DetectionResultsProps) {
+  const [topInstruction, setTopInstruction] = useState<string | null>(null);
+
+  // Fetch instruction for top prediction
+  useEffect(() => {
+    if (!result || result.predictions.length === 0) {
+      setTopInstruction(null);
+      return;
+    }
+
+    const topClassName = result.predictions[0].class_name;
+    getInstructionForSign(topClassName)
+      .then((instruction) => {
+        setTopInstruction(instruction);
+      })
+      .catch((err) => {
+        console.error('Failed to fetch instruction:', err);
+        setTopInstruction(null);
+      });
+  }, [result?.predictions[0]?.class_name]);
+
   if (!result) {
     return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -63,10 +85,21 @@ export function DetectionResults({ result }: DetectionResultsProps) {
                 </span>
               )}
             </div>
-          </div>
-        </div>
+           </div>
+         </div>
 
-        {/* Status section */}
+        {/* Instruction section */}
+        {topInstruction && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
+            <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-blue-900 mb-1">What to do:</p>
+              <p className="text-sm text-blue-800">{topInstruction}</p>
+            </div>
+          </div>
+        )}
+
+         {/* Status section */}
         <div className="border-t border-gray-200 pt-4">
           <div className="space-y-2">
             <div className="flex justify-between">

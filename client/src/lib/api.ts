@@ -84,3 +84,39 @@ export async function detectImage(blob: Blob): Promise<DetectionResult> {
 
   return handleResponse<DetectionResult>(res);
 }
+
+/* -----------------------------
+   LABELS API
+------------------------------ */
+export interface Label {
+  class_id: number;
+  class_name: string;
+  category: 'prohibitory' | 'warning' | 'mandatory' | 'informational';
+  instruction: string;
+}
+
+export interface LabelsResponse {
+  version: number;
+  classes: Label[];
+}
+
+let cachedLabels: LabelsResponse | null = null;
+
+export async function fetchLabels(): Promise<LabelsResponse> {
+  if (cachedLabels) {
+    return cachedLabels;
+  }
+
+  const res = await fetch(`${API_BASE}/app/ml/labels.json`);
+  cachedLabels = await handleResponse<LabelsResponse>(res);
+  return cachedLabels;
+}
+
+/**
+ * Get instruction for a traffic sign by class name
+ */
+export async function getInstructionForSign(className: string): Promise<string | null> {
+  const labels = await fetchLabels();
+  const label = labels.classes.find((l) => l.class_name === className);
+  return label?.instruction ?? null;
+}
