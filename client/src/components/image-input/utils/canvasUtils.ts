@@ -1,4 +1,4 @@
-import { Detection } from '@/src/lib/api';
+import { Detection } from '@/lib/api';
 
 export function drawBoxes(
   canvas: HTMLCanvasElement,

@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useCallback, useEffect } from 'react';
-import { detectImage, Detection } from '@/src/lib/api';
+import { detectImage, Detection } from '@/lib/api';
 import { TabSelector } from './TabSelector';
 import { CameraView } from './CameraView';
 import { UploadView } from './UploadView';

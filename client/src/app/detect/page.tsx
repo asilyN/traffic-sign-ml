@@ -1,6 +1,6 @@
 'use client';
 
-import { DetectorPage } from '@/src/components';
+import { DetectorPage } from '@/components';
 
 export default function DetectPage() {
   return <DetectorPage />;

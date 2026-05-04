@@ -1,6 +1,6 @@
 import { FlipHorizontal, Loader2, Scan } from 'lucide-react';
 import { useRef } from 'react';
-import { Detection } from '@/src/lib/api';
+import { Detection } from '@/lib/api';
 import { CameraPermissionError } from './CameraPermissionError';
 import { DetectionListItem } from './DetectionListItem';
 

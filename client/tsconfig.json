@@ -19,8 +19,7 @@
       }
     ],
     "paths": {
-      "@/lib/*": ["./src/lib/*"],
-      "@/*": ["./*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": [
@@ -30,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "backend/requirements.text"  ],
+  ],
   "exclude": ["node_modules"]
 }

@@ -17,7 +17,7 @@ import {
   MID_RING_TICKS,
 } from '@/lib/landing-page';
 import { cn } from '@/lib/utils';
-import mascotImage from '@/src/images/traffic-sign-mascot.png';
+import mascotImage from '@/images/traffic-sign-mascot.png';
 
 export function LandingPage() {
   const router = useRouter();

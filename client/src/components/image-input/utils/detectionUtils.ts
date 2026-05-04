@@ -1,4 +1,4 @@
-import { detectImage, Detection } from '@/src/lib/api';
+import { detectImage, Detection } from '@/lib/api';
 import { drawBoxes } from './canvasUtils';
 
 export async function performDetection(

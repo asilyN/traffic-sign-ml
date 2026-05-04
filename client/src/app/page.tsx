@@ -1,6 +1,6 @@
 'use client';
 
-import { LandingPage } from '@/src/components';
+import { LandingPage } from '@/components';
 
 export default function Home() {
   return <LandingPage />;

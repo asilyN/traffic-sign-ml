@@ -2,7 +2,7 @@
 
 import { CheckCircle2, Info, Scan, Target } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { getInstructionForSign } from '@/src/lib/api';
+import { getInstructionForSign } from '@/lib/api';
 
 interface DetectionResult {
   predictions: Array<{
