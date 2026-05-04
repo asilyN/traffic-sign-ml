@@ -1,0 +1,36 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "services": {
+    "backend": {
+      "builder": "heroku/python",
+      "root": "server",
+      "config": {
+        "PYTHON_RUNTIME": "python-3.11"
+      },
+      "startCommand": "python run.py",
+      "healthcheck": {
+        "interval": 30,
+        "timeout": 10,
+        "retries": 3,
+        "path": "/api/health"
+      },
+      "variables": {
+        "FLASK_ENV": "production",
+        "PORT": "8000"
+      }
+    },
+    "frontend": {
+      "builder": "heroku/nodejs",
+      "root": "client",
+      "config": {
+        "NODE_ENV": "production",
+        "NODE_VERSION": "20.11.0"
+      },
+      "buildCommand": "npm ci && npm run build",
+      "startCommand": "npm run start",
+      "variables": {
+        "NEXT_PUBLIC_API_URL": "http://backend:8000"
+      }
+    }
+  }
+}
