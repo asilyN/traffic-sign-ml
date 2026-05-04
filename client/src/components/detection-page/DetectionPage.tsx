@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { Navbar } from '@/src/components/navbar';
+import Link from 'next/link';
+import { ChevronLeft } from 'lucide-react';
 import { ImageInput } from '@/src/components/image-input';
 import { DetectionResults } from '@/src/components/detection-result';
 import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
-import { predictImage, Detection } from '@/src/lib/api';
+import { predictImage, type Detection } from '@/src/lib/api';
 
 interface DetectionResult {
   predictions: Array<{
@@ -28,29 +29,21 @@ export function DetectorPage() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  // For cancelling in-flight requests
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const isMountedRef = useRef(true);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-      // Cancel any pending requests on unmount
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
-
-  const handleImageSelect = useCallback((imageUrl: string, file: File) => {
+  const handleImageSelect = (imageUrl: string | null, file: File | null) => {
     setSelectedImage(imageUrl);
     setSelectedFile(file);
     setCurrentResult(null);
     setErrorMessage(null);
   }, []);
 
-  const handleDetect = useCallback(async () => {
-    if (!selectedImage || !selectedFile) return;
+  const handleSwitchToCamera = useCallback(() => {
+    setSelectedImage(null);
+    setSelectedFile(null);
+    setErrorMessage(null);
+  }, []);
+
+  const handleDetect = async () => {
+    if (!selectedImage || !selectedFile || selectedFile.size === 0) return;
 
     // Cancel previous request if any
     if (abortControllerRef.current) {
@@ -65,7 +58,6 @@ export function DetectorPage() {
 
     try {
       const prediction = await predictImage(selectedFile);
-      // Get top 3 predictions (including the main one)
       const topPredictions = [
         { class_name: prediction.prediction, confidence: prediction.confidence },
         ...(prediction.other_predictions?.slice(0, 2) ?? []),
@@ -102,36 +94,30 @@ export function DetectorPage() {
     }
   };
 
-  // Handle manual frame capture from camera
-  const handleFrameCapture = useCallback(
-    (imageUrl: string, detections: Detection[]) => {
-      if (detections.length === 0) return;
+  const handleFrameCapture = useCallback((imageUrl: string, detections: Detection[]) => {
+    if (detections.length === 0) return;
 
-      // Get top 3 predictions
-      const topPredictions = detections.slice(0, 3).map((det) => ({
-        class_name: det.class_name,
-        confidence: det.classification_confidence,
-        category: det.category,
-      }));
+    const topPredictions = detections.slice(0, 3).map((det) => ({
+      class_name: det.class_name,
+      confidence: det.classification_confidence,
+      category: det.category,
+    }));
 
-      const result: DetectionResult = {
-        predictions: topPredictions,
-        status: 'success',
-      };
-      setCurrentResult(result);
+    const result: DetectionResult = {
+      predictions: topPredictions,
+      status: 'success',
+    };
+    setCurrentResult(result);
 
-      // Add to history with full detection data (bounding boxes + predictions)
-      const historyItem: HistoryItem = {
-        id: Date.now().toString(),
-        predictions: topPredictions,
-        detections: detections, // Save full detection data including bboxes
-        timestamp: new Date(),
-        imageUrl: imageUrl,
-      };
-      setHistory((prev) => [historyItem, ...prev]);
-    },
-    []
-  );
+    const historyItem: HistoryItem = {
+      id: Date.now().toString(),
+      predictions: topPredictions,
+      detections,
+      timestamp: new Date(),
+      imageUrl,
+    };
+    setHistory((prev) => [historyItem, ...prev]);
+  }, []);
 
   const handleHistoryItemClick = (item: HistoryItem) => {
     const result: DetectionResult = {
@@ -143,27 +129,61 @@ export function DetectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <Navbar />
+    <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
+      <header className="bg-white border-b border-[#E5E7EB]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-3">
+          <div className="flex items-center justify-between gap-4">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1 text-[15px] text-[#64748B] hover:text-[#0F172A] transition-colors shrink-0"
+            >
+              <ChevronLeft className="w-5 h-5" aria-hidden />
+              Back
+            </Link>
+            <div className="font-semibold text-lg tracking-tight">
+              <span className="text-[#0F172A]">Traffic</span>
+              <span className="text-[#F97316]">Scan</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-[#64748B] shrink-0">
+              <span
+                className="inline-flex h-2 w-2 rounded-full bg-[#F97316] animate-pulse-dot"
+                aria-hidden
+              />
+              Real-time detection
+            </div>
+          </div>
+        </div>
+      </header>
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="mb-8">
+          <p className="text-[11px] font-semibold tracking-[0.2em] text-[#F97316] uppercase mb-2">
+            Detection
+          </p>
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+            <span className="text-[#0F172A]">Sign </span>
+            <span className="text-[#F97316]">Analyzer</span>
+          </h1>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_minmax(300px,36%)] gap-8 items-start">
+          <div className="space-y-4">
             <ImageInput
               selectedImage={selectedImage}
               onImageSelect={handleImageSelect}
+              onSwitchToCamera={handleSwitchToCamera}
               onDetect={handleDetect}
               isDetecting={isDetecting}
               onFrameCapture={handleFrameCapture}
             />
             {errorMessage && (
-              <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
+              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-red-700 text-sm">
                 {errorMessage}
               </div>
             )}
           </div>
 
-          <div className="lg:col-span-1 space-y-6">
+          <div className="space-y-6 lg:sticky lg:top-8">
             <DetectionResults result={currentResult} />
             <DetectionHistory history={history} onItemClick={handleHistoryItemClick} />
           </div>

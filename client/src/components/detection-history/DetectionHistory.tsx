@@ -41,46 +41,49 @@ export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-[#111827] mb-4">Detection History</h2>
+    <div className="rounded-2xl border border-[#E8ECF2] bg-white p-6 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.12)]">
+      <div className="flex items-center gap-2 mb-5">
+        <Clock className="w-5 h-5 text-[#F97316]" strokeWidth={2} />
+        <h2 className="text-[#0F172A] font-semibold text-[17px] tracking-tight">
+          Detection History
+        </h2>
+      </div>
 
       {history.length === 0 ? (
-        <div className="text-center py-12">
-          <Clock className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-[#6B7280]">No history yet</p>
-          <p className="text-[#6B7280] mt-1">Your detections will appear here</p>
+        <div className="text-center py-10 px-4">
+          <Clock
+            className="w-11 h-11 text-[#CBD5E1] mx-auto mb-3"
+            strokeWidth={1.25}
+          />
+          <p className="text-[#64748B] text-sm">No detections yet.</p>
         </div>
       ) : (
-        <div className="space-y-3 max-h-96 overflow-y-auto">
+        <div className="space-y-2 max-h-[min(420px,55vh)] overflow-y-auto pr-1">
           {history.map((item) => (
             <button
               key={item.id}
+              type="button"
               onClick={() => onItemClick(item)}
-              className="w-full flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-[#2563EB] hover:bg-[#eff6ff] transition-all group text-left"
+              className="w-full flex items-center gap-3 p-3 rounded-xl border border-[#EEF2F6] bg-[#FAFBFC] hover:border-[#F97316]/40 hover:bg-white hover:shadow-sm transition-all text-left group"
             >
-              <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
+              <div className="w-14 h-14 shrink-0 rounded-xl overflow-hidden bg-[#EEF2F6] ring-1 ring-black/4">
                 <img
                   src={item.imageUrl}
                   alt={item.predictions[0]?.class_name || 'Detection'}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex-1 text-left min-w-0">
-                <h4 className="text-[#111827] group-hover:text-[#2563EB] transition-colors truncate">
+              <div className="flex-1 min-w-0">
+                <p className="text-[#0F172A] font-semibold text-sm truncate group-hover:text-[#F97316] transition-colors">
                   {item.predictions[0]?.class_name || 'Unknown'}
-                </h4>
-                <div className="flex items-center gap-2 mt-1 text-sm">
-                  <span className="text-[#6B7280]">
-                    {(item.predictions[0]?.confidence * 100).toFixed(0)}%
+                </p>
+                <div className="flex items-center gap-2 mt-1 text-xs text-[#64748B]">
+                  <span className="font-medium text-[#F97316]">
+                    {((item.predictions[0]?.confidence ?? 0) * 100).toFixed(0)}%
                   </span>
-                  <span className="text-[#6B7280]">•</span>
-                  <span className="text-[#6B7280]">{formatTime(item.timestamp)}</span>
+                  <span aria-hidden>·</span>
+                  <span>{formatTime(item.timestamp)}</span>
                 </div>
-                {item.predictions.length > 1 && (
-                  <div className="text-xs text-[#9CA3AF] mt-1 truncate">
-                    +{item.predictions.length - 1} more predictions
-                  </div>
-                )}
               </div>
             </button>
           ))}

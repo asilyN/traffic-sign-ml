@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle2, AlertTriangle, Info } from 'lucide-react';
+import { CheckCircle2, Info, Scan, Target } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { getInstructionForSign } from '@/src/lib/api';
 
@@ -20,7 +20,6 @@ interface DetectionResultsProps {
 export function DetectionResults({ result }: DetectionResultsProps) {
   const [topInstruction, setTopInstruction] = useState<string | null>(null);
 
-  // Fetch instruction for top prediction
   useEffect(() => {
     if (!result || result.predictions.length === 0) {
       setTopInstruction(null);
@@ -38,109 +37,123 @@ export function DetectionResults({ result }: DetectionResultsProps) {
       });
   }, [result?.predictions[0]?.class_name]);
 
-  if (!result) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h2 className="text-[#111827] mb-4">Detection Results</h2>
-        <div className="text-center py-12">
-          <AlertTriangle className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-          <p className="text-[#6B7280]">No detection results yet</p>
-          <p className="text-[#6B7280] mt-1">Use camera or upload an image to see results</p>
-        </div>
-      </div>
-    );
-  }
-
-  const topPrediction = result.predictions[0];
-  const confidenceColor =
-    topPrediction.confidence >= 0.9
-      ? '#10B981'
-      : topPrediction.confidence >= 0.7
-        ? '#F97316'
-        : '#6B7280';
-  const badgeColor =
-    topPrediction.confidence >= 0.9
-      ? 'bg-[#10B981]'
-      : topPrediction.confidence >= 0.7
-        ? 'bg-[#F97316]'
-        : 'bg-[#6B7280]';
-
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h2 className="text-[#111827] mb-4">Detection Results</h2>
-
-      <div className="space-y-4">
-        {/* Top prediction */}
-        <div className="flex items-start gap-3">
-          <CheckCircle2 className="w-6 h-6 mt-1 flex-shrink-0" style={{ color: confidenceColor }} />
-          <div className="flex-1">
-            <h3 className="text-[#111827] font-semibold">{topPrediction.class_name}</h3>
-            <div className="flex items-center gap-2 mt-2">
-              <span className={`${badgeColor} text-white px-3 py-1 rounded-full text-sm`}>
-                {(topPrediction.confidence * 100).toFixed(1)}%
-              </span>
-              {topPrediction.category && (
-                <span className="bg-gray-100 text-[#6B7280] px-3 py-1 rounded-full text-sm">
-                  {topPrediction.category}
-                </span>
-              )}
-            </div>
-           </div>
-         </div>
-
-        {/* Instruction section */}
-        {topInstruction && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex gap-3">
-            <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-            <div className="flex-1">
-              <p className="text-sm font-semibold text-blue-900 mb-1">What to do:</p>
-              <p className="text-sm text-blue-800">{topInstruction}</p>
-            </div>
-          </div>
-        )}
-
-         {/* Status section */}
-        <div className="border-t border-gray-200 pt-4">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-[#6B7280]">Detection Status</span>
-              <span className="text-[#111827] font-medium">{result.status === 'success' ? 'Success' : 'Failed'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-[#6B7280]">Confidence</span>
-              <span className="text-[#111827] font-medium">{(topPrediction.confidence * 100).toFixed(1)}%</span>
-            </div>
-            {result.instruction ? (
-              <div className="pt-2 border-t border-gray-100 mt-2">
-                <p className="text-[#6B7280] text-sm font-medium mb-1">What to do</p>
-                <p className="text-[#111827] text-sm leading-relaxed">{result.instruction}</p>
-              </div>
-            ) : null}
-          </div>
+    <div className="rounded-2xl border border-[#E8ECF2] bg-white p-6 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.12)]">
+      <div className="flex items-center justify-between gap-3 mb-6">
+        <div className="flex items-center gap-2">
+          <Target className="w-5 h-5 text-[#F97316]" strokeWidth={2} />
+          <h2 className="text-[#0F172A] font-semibold text-[17px] tracking-tight">
+            Detection Results
+          </h2>
         </div>
-
-        {/* All predictions section */}
-        {result.predictions.length > 0 && (
-          <div className="border-t border-gray-200 pt-4">
-            <h4 className="text-[#111827] font-semibold mb-3">Top Predictions</h4>
-            <div className="space-y-2">
-              {result.predictions.slice(0, 3).map((pred, idx) => (
-                <div key={idx} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[#111827] font-medium truncate">{idx + 1}. {pred.class_name}</p>
-                    {pred.category && (
-                      <p className="text-[#6B7280] text-xs">{pred.category}</p>
-                    )}
-                  </div>
-                  <span className="text-[#F97316] font-semibold ml-2 flex-shrink-0">
-                    {(pred.confidence * 100).toFixed(1)}%
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+        {result && result.predictions.length > 0 && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 text-emerald-700 px-2.5 py-1 text-xs font-semibold ring-1 ring-emerald-200/80">
+            <CheckCircle2 className="w-3.5 h-3.5" />
+            Success
+          </span>
         )}
       </div>
+
+      {!result || result.predictions.length === 0 ? (
+        <div className="text-center py-10 px-4">
+          <div className="mx-auto mb-4 inline-flex rounded-2xl bg-[#FFF7ED] p-4 ring-1 ring-[#F97316]/15">
+            <Scan className="w-10 h-10 text-[#F97316]" strokeWidth={1.75} />
+          </div>
+          <p className="text-[#64748B] text-sm leading-relaxed max-w-[260px] mx-auto">
+            Capture or upload a sign, then tap{' '}
+            <span className="font-semibold text-[#0F172A]">Capture &amp; Detect</span>
+            {' '}or{' '}
+            <span className="font-semibold text-[#0F172A]">Detect Sign</span>.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-5">
+          {(() => {
+            const topPrediction = result.predictions[0];
+            const pct = topPrediction.confidence * 100;
+            const badgeBg =
+              topPrediction.confidence >= 0.9
+                ? 'bg-emerald-500'
+                : topPrediction.confidence >= 0.7
+                  ? 'bg-[#F97316]'
+                  : 'bg-[#64748B]';
+
+            return (
+              <>
+                <div>
+                  <div className="flex flex-wrap items-baseline gap-2 mb-3">
+                    <h3 className="text-xl font-bold text-[#0F172A] tracking-tight">
+                      {topPrediction.class_name}
+                    </h3>
+                    <span
+                      className={`${badgeBg} text-white text-sm font-bold px-2.5 py-0.5 rounded-lg`}
+                    >
+                      {pct.toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="h-2 rounded-full bg-[#EEF2F6] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-[#F97316] transition-[width] duration-300"
+                      style={{ width: `${Math.min(100, pct)}%` }}
+                    />
+                  </div>
+                </div>
+
+                {topInstruction && (
+                  <div className="rounded-xl bg-sky-50 border border-sky-100 px-4 py-3 flex gap-3">
+                    <Info className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-semibold text-sky-950 mb-1">
+                        What to do:
+                      </p>
+                      <p className="text-sm text-sky-900 leading-snug">{topInstruction}</p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex flex-wrap gap-2">
+                  <div className="rounded-xl bg-[#F8FAFC] border border-[#E8ECF2] px-3 py-2 text-xs">
+                    <span className="text-[#64748B]">Detection Status </span>
+                    <span className="font-semibold text-emerald-600">Success</span>
+                  </div>
+                  <div className="rounded-xl bg-[#F8FAFC] border border-[#E8ECF2] px-3 py-2 text-xs">
+                    <span className="text-[#64748B]">Confidence </span>
+                    <span className="font-semibold text-[#F97316]">{pct.toFixed(1)}%</span>
+                  </div>
+                </div>
+
+                <div className="border-t border-[#EEF2F6] pt-4">
+                  <h4 className="text-sm font-semibold text-[#0F172A] mb-3">
+                    Top Predictions
+                  </h4>
+                  <ol className="space-y-2">
+                    {result.predictions.slice(0, 3).map((pred, idx) => {
+                      const isTop = idx === 0;
+                      return (
+                        <li
+                          key={idx}
+                          className="flex items-center justify-between gap-2 rounded-xl bg-[#F8FAFC] border border-[#E8ECF2] px-3 py-2.5"
+                        >
+                          <span
+                            className={`text-sm font-medium truncate ${isTop ? 'text-emerald-600' : 'text-red-500'}`}
+                          >
+                            {idx + 1}. {pred.class_name}
+                          </span>
+                          <span
+                            className={`text-sm font-bold tabular-nums shrink-0 ${isTop ? 'text-emerald-600' : 'text-red-500'}`}
+                          >
+                            {(pred.confidence * 100).toFixed(1)}%
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
+              </>
+            );
+          })()}
+        </div>
+      )}
     </div>
   );
 }
