@@ -29,6 +29,13 @@ export function UploadView({
 }: UploadViewProps) {
   return (
     <div className="space-y-4">
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/*"
+        onChange={onFileChange}
+        className="hidden"
+      />
       {!selectedImage ? (
         <>
           <button
@@ -53,13 +60,6 @@ export function UploadView({
               <span className="h-px w-10 bg-[#E2E8F0]" aria-hidden />
             </p>
           </button>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/png,image/jpeg,image/webp,image/*"
-            onChange={onFileChange}
-            className="hidden"
-          />
           <button
             type="button"
             onClick={onFileClick}

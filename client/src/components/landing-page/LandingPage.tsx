@@ -236,7 +236,7 @@ export function LandingPage() {
                 </div>
                 <div>
                   <p className="text-[10px] leading-none text-slate-400 sm:text-xs">Speed</p>
-                  <p className="text-xs font-bold sm:text-sm" style={{ color: BRAND_ORANGE }}>&lt;0.5s</p>
+                  <p className="text-xs font-bold sm:text-sm" style={{ color: BRAND_ORANGE }}>&lt;3s</p>
                 </div>
               </div>
 
