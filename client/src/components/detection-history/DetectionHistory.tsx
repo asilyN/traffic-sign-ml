@@ -9,6 +9,11 @@ export interface HistoryItem {
   timestamp: Date;
   imageUrl: string;
   category: string;
+  otherPredictions?: Array<{
+    class_id: number;
+    class_name: string;
+    confidence: number;
+  }>;
 }
 
 interface DetectionHistoryProps {

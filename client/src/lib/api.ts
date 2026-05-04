@@ -48,12 +48,19 @@ export async function predictImage(blob: Blob): Promise<PredictionResult> {
 /* -----------------------------
    DETECTION TYPES
 ------------------------------ */
+export interface OtherPrediction {
+  class_id: number;
+  class_name: string;
+  confidence: number;
+}
+
 export interface Detection {
   bbox: [number, number, number, number];
   class_name: string;
   category: string;
   detection_confidence: number;
   classification_confidence: number;
+  other_predictions?: OtherPrediction[];
 }
 
 export interface DetectionResult {

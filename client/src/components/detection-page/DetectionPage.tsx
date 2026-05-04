@@ -11,6 +11,11 @@ interface DetectionResult {
   signName: string;
   confidence: number;
   category: string;
+  otherPredictions?: Array<{
+    class_id: number;
+    class_name: string;
+    confidence: number;
+  }>;
 }
 
 export function DetectorPage() {
@@ -40,6 +45,11 @@ export function DetectorPage() {
         signName: prediction.prediction,
         confidence: Math.round(prediction.confidence * 100),
         category: 'ML Prediction',
+        otherPredictions: prediction.other_predictions?.map((p) => ({
+          class_id: p.class_id,
+          class_name: p.class_name,
+          confidence: Math.round(p.confidence * 100),
+        })),
       };
       setCurrentResult(result);
 
@@ -50,6 +60,7 @@ export function DetectorPage() {
         timestamp: new Date(),
         imageUrl: selectedImage,
         category: result.category,
+        otherPredictions: result.otherPredictions,
       };
       setHistory((prev) => [historyItem, ...prev]);
     } catch (error) {
@@ -67,6 +78,7 @@ export function DetectorPage() {
       signName: item.signName,
       confidence: item.confidence,
       category: item.category,
+      otherPredictions: item.otherPredictions,
     });
   };
 
