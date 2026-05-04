@@ -125,52 +125,42 @@ export function ImageInput({
     }
   }, [cameraActive, selectedImage, runContinuousDetection]);
 
-  // ── Cleanup on unmount ───────────────────────────────────────────────────────
-  const captureFrameForManualScan = useCallback(async () => {
-    const video = videoRef.current;
-    const capture = captureCanvasRef.current;
-    if (!video || !capture || isScanning) return;
+   // ── Cleanup on unmount ───────────────────────────────────────────────────────
+   const captureFrameForManualScan = useCallback(async () => {
+     const video = videoRef.current;
+     const capture = captureCanvasRef.current;
+     if (!video || !capture || isScanning) return;
 
-    // Pause continuous detection
-    if (detectionIntervalRef.current) {
-      clearInterval(detectionIntervalRef.current);
-      detectionIntervalRef.current = null;
-    }
+     capture.width = video.videoWidth;
+     capture.height = video.videoHeight;
+     capture.getContext('2d')?.drawImage(video, 0, 0);
 
-    capture.width = video.videoWidth;
-    capture.height = video.videoHeight;
-    capture.getContext('2d')?.drawImage(video, 0, 0);
+     capture.toBlob(async (blob) => {
+       if (!blob) return;
+       setIsScanning(true);
+       try {
+         const data = await detectImage(blob);
+         const dets: Detection[] = data.detections ?? [];
 
-    capture.toBlob(async (blob) => {
-      if (!blob) return;
-      setIsScanning(true);
-      try {
-        const data = await detectImage(blob);
-        const dets: Detection[] = data.detections ?? [];
-        
-        // Freeze current detections on canvas
-        setDetections(dets);
-        drawBoxes(dets);
+         if (dets.length > 0) {
+           // Sort by confidence and get top 3
+           const topDets = dets.sort((a, b) => b.classification_confidence - a.classification_confidence).slice(0, 3);
 
-        if (dets.length > 0) {
-          // Sort by confidence and get top 3
-          const topDets = dets.sort((a, b) => b.classification_confidence - a.classification_confidence).slice(0, 3);
-
-          // Convert blob to data URL for history
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const imageUrl = e.target?.result as string;
-            onFrameCapture?.(imageUrl, topDets);
-          };
-          reader.readAsDataURL(blob);
-        }
-      } catch (err) {
-        console.error('Manual scan detection failed:', err);
-      } finally {
-        setIsScanning(false);
-      }
-    }, 'image/jpeg', 0.92);
-  }, [isScanning, onFrameCapture, drawBoxes]);
+           // Convert blob to data URL for history
+           const reader = new FileReader();
+           reader.onload = (e) => {
+             const imageUrl = e.target?.result as string;
+             onFrameCapture?.(imageUrl, topDets);
+           };
+           reader.readAsDataURL(blob);
+         }
+       } catch (err) {
+         console.error('Manual scan detection failed:', err);
+       } finally {
+         setIsScanning(false);
+       }
+     }, 'image/jpeg', 0.92);
+   }, [isScanning, onFrameCapture]);
 
   // ── Camera start/stop ─────────────────────────────────────────────────────
   const startCamera = useCallback(async (facing: 'environment' | 'user' = facingMode) => {
@@ -371,11 +361,11 @@ export function ImageInput({
                       <p className="text-xs font-semibold text-[#111827] mb-2">Top 3 Predictions:</p>
                       {[det, ...(det.other_predictions || [])].slice(0, 3).map((pred, idx) => (
                         <div key={idx} className="flex justify-between text-xs">
-                          <span className="text-[#111827]">
-                            {idx + 1}. {pred.class_name || det.class_name}
-                          </span>
+                           <span className="text-[#111827]">
+                             {idx + 1}. {pred.class_name || det.class_name}
+                           </span>
                            <span className="font-semibold text-[#F97316]">
-                             {((pred.confidence || det.classification_confidence) * 100).toFixed(1)}%
+                             {(("confidence" in pred ? pred.confidence : det.classification_confidence) * 100).toFixed(1)}%
                            </span>
                         </div>
                       ))}

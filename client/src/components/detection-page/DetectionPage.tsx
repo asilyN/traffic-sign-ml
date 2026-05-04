@@ -24,12 +24,34 @@ export function DetectorPage() {
   const [currentResult, setCurrentResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [uploadPredictions, setUploadPredictions] = useState<
+    Array<{
+      class_name: string;
+      confidence: number;
+    }> | null
+  >(null);
 
-  const handleImageSelect = (imageUrl: string, file: File) => {
+  const handleImageSelect = async (imageUrl: string, file: File) => {
     setSelectedImage(imageUrl);
     setSelectedFile(file);
     setCurrentResult(null);
     setErrorMessage(null);
+    setUploadPredictions(null);
+
+    // Fetch predictions for preview
+    if (imageUrl && file.size > 0) {
+      try {
+        const prediction = await predictImage(file);
+        const topPredictions = [
+          { class_name: prediction.prediction, confidence: prediction.confidence },
+          ...(prediction.other_predictions?.slice(0, 2) ?? []),
+        ].slice(0, 3);
+        setUploadPredictions(topPredictions);
+      } catch (error) {
+        console.error('Failed to fetch predictions for preview:', error);
+        setUploadPredictions(null);
+      }
+    }
   };
 
   const handleDetect = async () => {
