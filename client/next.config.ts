@@ -1,6 +1,5 @@
-import path from "path";
-import { fileURLToPath } from "url";
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
+import path from 'path';
 
 const clientDir =
   typeof __dirname !== "undefined"
@@ -10,23 +9,8 @@ const clientDir =
 const nodeModules = path.join(clientDir, "node_modules");
 
 const nextConfig: NextConfig = {
-  // Monorepo: parent lockfile; keep bundler root and CSS resolution on this app.
   turbopack: {
-    root: clientDir,
-    resolveAlias: {
-      tailwindcss: path.join(nodeModules, "tailwindcss/index.css"),
-      "tw-animate-css": path.join(nodeModules, "tw-animate-css/dist/tw-animate.css"),
-      "shadcn/tailwind.css": path.join(nodeModules, "shadcn/dist/tailwind.css"),
-    },
-  },
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      tailwindcss: path.join(nodeModules, "tailwindcss/index.css"),
-      "tw-animate-css": path.join(nodeModules, "tw-animate-css/dist/tw-animate.css"),
-      "shadcn/tailwind.css": path.join(nodeModules, "shadcn/dist/tailwind.css"),
-    };
-    return config;
+    root: path.resolve(__dirname),
   },
 };
 
