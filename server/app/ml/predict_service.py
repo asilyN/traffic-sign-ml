@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-import os
+import warnings
 from io import BytesIO
 from pathlib import Path
 from typing import Any, cast
@@ -11,148 +11,38 @@ import torch
 import torch.nn as nn
 from PIL import Image, UnidentifiedImageError
 
+try:
+    import tensorflow as tf
+except ImportError as e:
+    raise ImportError("tensorflow is required: pip install tensorflow") from e
+
 
 class PredictionError(Exception):
     """Raised when prediction cannot be completed."""
 
 
-def _label_metadata_int_keys(raw: object) -> dict[int, dict[str, object]]:
-    """HDF5/embeds JSON uses string keys; predictions use int class ids."""
-    if not isinstance(raw, dict):
-        return {}
-    out: dict[int, dict[str, object]] = {}
-    for k, v in raw.items():
-        try:
-            ik = int(k)
-        except (TypeError, ValueError):
-            continue
-        if isinstance(v, dict):
-            out[ik] = cast(dict[str, object], v)
-    return out
-
-
-def _softmax_1d(logits: np.ndarray) -> np.ndarray:
-    shifted = logits - np.max(logits)
-    exp_vals = np.exp(shifted)
-    denom = np.sum(exp_vals)
-    if not np.isfinite(denom) or denom <= 0:
-        return np.zeros_like(logits, dtype=np.float64)
-    return exp_vals / denom
-
-
-class SimpleConvNet(nn.Module):
-    """Lightweight CNN for 32x32 RGB traffic sign images."""
-
-    def __init__(self, num_classes: int = 48):
-        super().__init__()
-        self.features = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.BatchNorm2d(256),
-            nn.ReLU(inplace=True),
-        )
-        self.classifier = nn.Sequential(
-            nn.Linear(256 * 8 * 8, 512),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
-            nn.Linear(512, num_classes),
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.features(x)
-        x = x.view(x.size(0), -1)
-        x = self.classifier(x)
-        return x
-
-
-class TunableConvNet(nn.Module):
-    """Same architecture as train-cnn-classifier-tune (configurable width + head)."""
-
-    def __init__(
-        self,
-        num_classes: int,
-        base_channels: int,
-        dropout: float,
-        fc_hidden: int,
-    ):
-        super().__init__()
-        c1, c2, c3, c4 = base_channels, base_channels * 2, base_channels * 4, base_channels * 8
-        self.features = nn.Sequential(
-            nn.Conv2d(3, c1, kernel_size=3, padding=1),
-            nn.BatchNorm2d(c1),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(c1, c2, kernel_size=3, padding=1),
-            nn.BatchNorm2d(c2),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(c2, c3, kernel_size=3, padding=1),
-            nn.BatchNorm2d(c3),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Conv2d(c3, c4, kernel_size=3, padding=1),
-            nn.BatchNorm2d(c4),
-            nn.ReLU(inplace=True),
-        )
-        flat = c4 * 8 * 8
-        self.classifier = nn.Sequential(
-            nn.Linear(flat, fc_hidden),
-            nn.ReLU(inplace=True),
-            nn.Dropout(dropout),
-            nn.Linear(fc_hidden, num_classes),
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.features(x)
-        x = x.view(x.size(0), -1)
-        return self.classifier(x)
-
-
 class PredictorService:
     def __init__(self, model_path: Path | None = None) -> None:
-        server_root = Path(__file__).resolve().parents[2]  # .../server
-        models_dir = server_root / "app" / "ml" / "dataset" / "models"
-        tuned_path = models_dir / "cnn_classifier_tuned.h5"
-        base_path = models_dir / "cnn_classifier.h5"
+        server_root     = Path(__file__).resolve().parents[2]   # .../server
+        models_dir      = server_root / "app" / "ml" / "dataset" / "models"
+        self.model_path = model_path or (models_dir / "simple_classifier.h5")
+        self.meta_path  = models_dir / "simple_classifier_meta.json"
 
-        if model_path is not None:
-            self.model_path = Path(model_path).resolve()
-        else:
-            env_raw = os.environ.get("CNN_MODEL_PATH", "").strip()
-            if env_raw:
-                self.model_path = Path(env_raw).expanduser().resolve()
-            elif tuned_path.exists():
-                self.model_path = tuned_path
-            else:
-                self.model_path = base_path
-        
-        self._bundle = None
-        self._model = None  # For CNN
-        self._image_size = 32
-        self._label_metadata: dict[int, dict[str, object]] = {}
-        self._device = torch.device("cpu")
+        self._model      = None
+        self._meta       = None
+        self._image_size = 48        # overridden by meta.json
+        self._norm_mean  = np.array([0.485, 0.456, 0.406], dtype=np.float32)
+        self._norm_std   = np.array([0.229, 0.224, 0.225], dtype=np.float32)
 
-    def reload_model(self, model_path: Path | None = None) -> None:
-        """Drop cached weights and optionally switch the on-disk model path."""
-        if model_path is not None:
-            self.model_path = Path(model_path).resolve()
-        self._bundle = None
-        self._model = None
+        # idx (0-based model output index) → original class_id (int)
+        self._idx_to_class_id: dict[int, int] = {}
 
+        # original class_id (int) → {class_name, category, ...}
+        self._label_metadata: dict[int, dict] = {}
+
+    
+    
+    # ------------------------------------------------------------------
     def is_ready(self) -> tuple[bool, str]:
         try:
             self._ensure_loaded()
@@ -160,145 +50,105 @@ class PredictorService:
         except Exception as exc:
             return False, str(exc)
 
+    # ------------------------------------------------------------------
     def _ensure_loaded(self) -> None:
-        if self._bundle is not None:
+        if self._model is not None:
             return
+
         if not self.model_path.exists():
             raise FileNotFoundError(f"Model not found: {self.model_path}")
-        
-        # Load from HDF5 format (cnn_classifier.h5)
-        self._load_from_hdf5()
 
-    def _load_from_hdf5(self) -> None:
-        """Load model from HDF5 format (cnn_classifier.h5)."""
-        import h5py
-        
-        with h5py.File(self.model_path, "r") as f:  # type: ignore
-            # Load metadata from attributes
-            self._image_size = int(f.attrs.get("image_size", 32))  # type: ignore
-            num_classes = int(f.attrs.get("num_classes", 48))  # type: ignore
+        # Load with custom_objects so the label-smoothing loss deserialises cleanly
+        self._model = tf.keras.models.load_model(
+            self.model_path, compile=False
+        )
 
-            model_class_raw = f.attrs.get("model_class", "SimpleConvNet")
-            if isinstance(model_class_raw, bytes):
-                model_class = model_class_raw.decode("utf-8")
-            else:
-                model_class = str(model_class_raw)
+        if not self.meta_path.exists():
+            raise PredictionError(
+                "Meta JSON is required for inference. "
+                f"Missing: {self.meta_path}"
+            )
 
-            tunable_arch: dict[str, object] | None = None
-            arch_raw = f.attrs.get("tunable_arch")
-            if arch_raw is not None:
-                if isinstance(arch_raw, bytes):
-                    arch_raw = arch_raw.decode("utf-8")
-                tunable_arch = json.loads(str(arch_raw))
+        self._meta = json.loads(self.meta_path.read_text(encoding="utf-8"))
 
-            # Load model state dictionary
-            model_state: dict[str, torch.Tensor] = {}
-            model_state_group = f["model_state"]  # type: ignore
-            for key in model_state_group.keys():  # type: ignore
-                model_state[key] = torch.from_numpy(np.array(model_state_group[key]))  # type: ignore
+        # ── image size & normalisation (must match training exactly) ──────────
+        self._image_size = int(self._meta.get("image_size", 48))
+        self._norm_mean  = np.array(
+            self._meta.get("norm_mean", [0.485, 0.456, 0.406]),
+            dtype=np.float32,
+        )
+        self._norm_std = np.array(
+            self._meta.get("norm_std", [0.229, 0.224, 0.225]),
+            dtype=np.float32,
+        )
 
-            # Load label metadata from HDF5
-            try:
-                label_meta_bytes: bytes = f["label_metadata"][()]  # type: ignore
-                label_meta_str = label_meta_bytes.decode("utf-8")
-                self._label_metadata = _label_metadata_int_keys(json.loads(label_meta_str))
-            except Exception:
-                self._label_metadata = {}
-        
-        # Try to load labels from labels.json (preferred, more up-to-date)
-        try:
-            server_root = Path(__file__).resolve().parents[2]  # .../server
-            labels_json_path = server_root / "app" / "ml" / "labels.json"
-            if labels_json_path.exists():
-                with open(labels_json_path, "r", encoding="utf-8") as f:
-                    labels_data = json.load(f)
-                    # Convert from classes array to dict keyed by class_id
-                    for row in labels_data.get("classes", []):
-                        class_id = int(row["class_id"])
-                        self._label_metadata[class_id] = {
-                            "class_id": str(class_id),
-                            "class_name": str(row.get("class_name", f"class_{class_id}")),
-                            "category": str(row.get("category", "unknown")),
-                            "instruction": str(row.get("instruction", "")),
-                        }
-        except Exception:
-            pass
-        
-        # Create and load model
-        self._model_type = "cnn"
-        if model_class == "TunableConvNet" and tunable_arch is not None:
-            bc = int(cast(Any, tunable_arch["base_channels"]))
-            dr = float(cast(Any, tunable_arch["dropout"]))
-            fh = int(cast(Any, tunable_arch["fc_hidden"]))
-            self._model = TunableConvNet(
-                num_classes=num_classes,
-                base_channels=bc,
-                dropout=dr,
-                fc_hidden=fh,
-            ).to(self._device)
-        else:
-            self._model = SimpleConvNet(num_classes=num_classes).to(self._device)
-        self._model.load_state_dict(model_state)
-        self._model.eval()
-        self._bundle = {"model_state": model_state}  # Store for reference
+        # ── idx_to_label: str(model_output_idx) → original_class_id (int) ────
+        # Stored in meta.json as {"0": 1, "1": 3, ...} (string keys, int values)
+        self._idx_to_class_id = {
+            int(k): int(v)
+            for k, v in self._meta.get("idx_to_label", {}).items()
+        }
 
-    def _load_image_feature(self, image_bytes: bytes) -> np.ndarray:
-        """RGB preprocessing for CNN."""
+        # ── label_metadata: str(original_class_id) → {class_name, category} ─
+        # Stored as {"1": {"class_name": "Stop", ...}, "3": {...}, ...}
+        self._label_metadata = {
+            int(k): v
+            for k, v in self._meta.get("label_metadata", {}).items()
+        }
+
+    # ------------------------------------------------------------------
+    def _preprocess(self, image_bytes: bytes) -> np.ndarray:
+        """
+        Mirrors build_arrays() / load_image() in train2.py exactly:
+          1. Convert to RGB
+          2. Resize to image_size × image_size with BILINEAR interpolation
+          3. float32, divide by 255
+          4. Subtract norm_mean, divide by (norm_std + 1e-7)
+          5. Add batch dim → (1, size, size, 3)
+        """
         try:
             with Image.open(BytesIO(image_bytes)) as img:
-                arr = np.asarray(
-                    img.convert("RGB").resize((self._image_size, self._image_size), Image.Resampling.LANCZOS),
-                    dtype=np.float32,
+                img = img.convert("RGB").resize(
+                    (self._image_size, self._image_size), Image.BILINEAR
                 )
+                arr = np.asarray(img, dtype=np.float32) / 255.0
         except (UnidentifiedImageError, OSError, ValueError) as exc:
             raise PredictionError("Unreadable image file.") from exc
-        
-        # Normalize using ImageNet mean/std per channel
-        mean = np.array([0.485, 0.456, 0.406], dtype=np.float32)
-        std = np.array([0.229, 0.224, 0.225], dtype=np.float32)
-        arr = arr / 255.0
-        arr = (arr - mean) / std
-        # Return as (1, 3, H, W) for CNN
-        return arr.transpose(2, 0, 1).reshape(1, 3, self._image_size, self._image_size)
 
+        arr = (arr - self._norm_mean) / (self._norm_std + 1e-7)
+        return np.expand_dims(arr, axis=0)   # (1, H, W, 3)
+
+    # ------------------------------------------------------------------
     def predict_from_bytes(self, image_bytes: bytes) -> dict[str, object]:
         if not image_bytes:
             raise PredictionError("Empty file content.")
 
         self._ensure_loaded()
-        x = self._load_image_feature(image_bytes)
+        x = self._preprocess(image_bytes)
 
-        # CNN prediction
-        assert self._model is not None, "Model not loaded"
-        x_tensor = torch.from_numpy(x).to(self._device)
-        with torch.no_grad():
-            logits = self._model(x_tensor).cpu().numpy()[0]
-        
-        pred_idx = int(np.argmax(logits))
-        pred_class = pred_idx + 1  # Convert from 0-47 to 1-48
-        
-        # Compute confidence from logits
-        logits = logits - np.max(logits)
-        exp_vals = np.exp(logits)
-        probs = exp_vals / np.sum(exp_vals)
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            # Model outputs raw logits — apply softmax to get probabilities
+            logits = self._model.predict(x, verbose=0)[0]   # (num_classes,)
+
+        probs      = tf.nn.softmax(logits).numpy()
+        pred_idx   = int(np.argmax(probs))         # 0-based model output index
         confidence = float(probs[pred_idx])
 
+        # Step 1: model output index → original class_id used in the dataset
+        class_id = self._idx_to_class_id.get(pred_idx, pred_idx + 1)
+
+        # Step 2: original class_id → human-readable metadata
         meta = self._label_metadata.get(
-            pred_class,
-            {
-                "class_id": pred_class,
-                "class_name": f"class_{pred_class}",
-                "category": "unknown",
-                "instruction": "",
-            },
+            class_id,
+            {"class_name": f"class_{class_id}", "category": "unknown"},
         )
 
         instruction_text = str(meta.get("instruction", ""))
 
         return {
-            "prediction": str(meta.get("class_name", f"class_{pred_class}")),
-            "confidence": round(float(confidence), 4),
-            "label_index": pred_class,
-            "category": str(meta.get("category", "unknown")),
-            "instruction": instruction_text,
+            "prediction":  str(meta.get("class_name", f"class_{class_id}")),
+            "confidence":  round(confidence, 4),
+            "label_index": class_id,   # original 1-based dataset class id
+            "category":    str(meta.get("category", "unknown")),
         }
