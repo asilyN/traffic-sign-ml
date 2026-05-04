@@ -26,6 +26,49 @@ from PIL import Image, UnidentifiedImageError
 SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".ppm", ".webp"}
 
 
+class TunableConvNet(nn.Module):
+    """CNN with configurable width (must match train-cnn-classifier-tune)."""
+
+    def __init__(
+        self,
+        num_classes: int,
+        base_channels: int,
+        dropout: float,
+        fc_hidden: int,
+    ):
+        super().__init__()
+        c1, c2, c3, c4 = base_channels, base_channels * 2, base_channels * 4, base_channels * 8
+        self.features = nn.Sequential(
+            nn.Conv2d(3, c1, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(c1, c2, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c2),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(c2, c3, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c3),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(c3, c4, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c4),
+            nn.ReLU(inplace=True),
+        )
+        flat = c4 * 8 * 8
+        self.classifier = nn.Sequential(
+            nn.Linear(flat, fc_hidden),
+            nn.ReLU(inplace=True),
+            nn.Dropout(dropout),
+            nn.Linear(fc_hidden, num_classes),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        return self.classifier(x)
+
+
 class SimpleConvNet(nn.Module):
     """Lightweight CNN for traffic sign images."""
 
@@ -265,6 +308,7 @@ def load_labels_from_json(root: Path) -> dict[int, dict[str, str]]:
                     "class_id": str(class_id),
                     "class_name": str(row.get("class_name", f"class_{class_id}")),
                     "category": str(row.get("category", "unknown")),
+                    "instruction": str(row.get("instruction", "")),
                 }
             return metadata
         except (json.JSONDecodeError, KeyError, ValueError):
@@ -299,18 +343,38 @@ def main() -> None:
         # Load metadata from attributes
         image_size = int(f.attrs.get("image_size", 32))  # type: ignore
         num_classes = int(f.attrs.get("num_classes", 48))  # type: ignore
-        
+        model_class_raw = f.attrs.get("model_class", "SimpleConvNet")
+        if isinstance(model_class_raw, bytes):
+            model_class = model_class_raw.decode("utf-8")
+        else:
+            model_class = str(model_class_raw)
+        tunable_arch: dict[str, object] | None = None
+        arch_raw = f.attrs.get("tunable_arch")
+        if arch_raw is not None:
+            if isinstance(arch_raw, bytes):
+                arch_raw = arch_raw.decode("utf-8")
+            tunable_arch = json.loads(str(arch_raw))
+
         # Load labels present
         labels_present_array: np.ndarray = f["labels_present"][()]  # type: ignore
         labels_present = labels_present_array.tolist()
-        
+
         # Load model state dictionary
         model_state: dict[str, torch.Tensor] = {}
         model_state_group = f["model_state"]  # type: ignore
         for key in model_state_group.keys():  # type: ignore
             model_state[key] = torch.from_numpy(np.array(model_state_group[key]))  # type: ignore
 
-    # Load label metadata from labels.json (preferred) or from model
+    if model_class == "TunableConvNet" and tunable_arch is not None:
+        model = TunableConvNet(
+            num_classes=num_classes,
+            base_channels=int(tunable_arch["base_channels"]),
+            dropout=float(tunable_arch["dropout"]),
+            fc_hidden=int(tunable_arch["fc_hidden"]),
+        ).to(device)
+    else:
+        model = SimpleConvNet(num_classes=num_classes).to(device)
+    model.load_state_dict(model_state)
     label_metadata = load_labels_from_json(root)
     if not label_metadata:
         # Fallback: try to load from HDF5
@@ -318,12 +382,23 @@ def main() -> None:
             with h5py.File(model_path, "r") as f:  # type: ignore
                 label_meta_bytes: bytes = f["label_metadata"][()]  # type: ignore
                 label_meta_str = label_meta_bytes.decode("utf-8")
-                label_metadata = json.loads(label_meta_str)
+                raw_meta = json.loads(label_meta_str)
+            label_metadata = {}
+            for k, v in raw_meta.items():
+                try:
+                    ik = int(k)
+                except (TypeError, ValueError):
+                    continue
+                if isinstance(v, dict):
+                    label_metadata[ik] = {
+                        "class_id": str(v.get("class_id", ik)),
+                        "class_name": str(v.get("class_name", f"class_{ik}")),
+                        "category": str(v.get("category", "unknown")),
+                        "instruction": str(v.get("instruction", "")),
+                    }
         except Exception:
             label_metadata = {}
 
-    model = SimpleConvNet(num_classes=num_classes).to(device)
-    model.load_state_dict(model_state)
     model.eval()
 
     x = torch.from_numpy(load_image_feature(image_path, image_size)).to(device)
@@ -337,14 +412,21 @@ def main() -> None:
 
     meta = label_metadata.get(
         pred_class,
-        {"class_id": pred_class, "class_name": f"class_{pred_class}", "category": "unknown"},
+        {
+            "class_id": str(pred_class),
+            "class_name": f"class_{pred_class}",
+            "category": "unknown",
+            "instruction": "",
+        },
     )
+    instruction_text = str(meta.get("instruction", ""))
     result = {
         "image_path": image_path.as_posix(),
         "class_id": pred_class,
         "class_name": str(meta.get("class_name", f"class_{pred_class}")),
         "category": str(meta.get("category", "unknown")),
         "confidence": round(confidence, 4),
+        "instruction": instruction_text,
         "status": "success",
     }
 

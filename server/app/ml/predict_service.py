@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import json
-import warnings
+import os
 from io import BytesIO
 from pathlib import Path
+from typing import Any, cast
 
-import joblib
 import numpy as np
 import torch
 import torch.nn as nn
@@ -14,6 +14,21 @@ from PIL import Image, UnidentifiedImageError
 
 class PredictionError(Exception):
     """Raised when prediction cannot be completed."""
+
+
+def _label_metadata_int_keys(raw: object) -> dict[int, dict[str, object]]:
+    """HDF5/embeds JSON uses string keys; predictions use int class ids."""
+    if not isinstance(raw, dict):
+        return {}
+    out: dict[int, dict[str, object]] = {}
+    for k, v in raw.items():
+        try:
+            ik = int(k)
+        except (TypeError, ValueError):
+            continue
+        if isinstance(v, dict):
+            out[ik] = cast(dict[str, object], v)
+    return out
 
 
 def _softmax_1d(logits: np.ndarray) -> np.ndarray:
@@ -64,16 +79,66 @@ class SimpleConvNet(nn.Module):
         return x
 
 
+class TunableConvNet(nn.Module):
+    """Same architecture as train-cnn-classifier-tune (configurable width + head)."""
+
+    def __init__(
+        self,
+        num_classes: int,
+        base_channels: int,
+        dropout: float,
+        fc_hidden: int,
+    ):
+        super().__init__()
+        c1, c2, c3, c4 = base_channels, base_channels * 2, base_channels * 4, base_channels * 8
+        self.features = nn.Sequential(
+            nn.Conv2d(3, c1, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c1),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(c1, c2, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c2),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(c2, c3, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c3),
+            nn.ReLU(inplace=True),
+            nn.MaxPool2d(kernel_size=2, stride=2),
+            nn.Conv2d(c3, c4, kernel_size=3, padding=1),
+            nn.BatchNorm2d(c4),
+            nn.ReLU(inplace=True),
+        )
+        flat = c4 * 8 * 8
+        self.classifier = nn.Sequential(
+            nn.Linear(flat, fc_hidden),
+            nn.ReLU(inplace=True),
+            nn.Dropout(dropout),
+            nn.Linear(fc_hidden, num_classes),
+        )
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = self.features(x)
+        x = x.view(x.size(0), -1)
+        return self.classifier(x)
+
+
 class PredictorService:
     def __init__(self, model_path: Path | None = None) -> None:
         server_root = Path(__file__).resolve().parents[2]  # .../server
-        # Use only cnn_classifier.h5 model
-        h5_path = server_root / "app" / "ml" / "dataset" / "models" / "cnn_classifier.h5"
-        
-        if model_path:
-            self.model_path = model_path
+        models_dir = server_root / "app" / "ml" / "dataset" / "models"
+        tuned_path = models_dir / "cnn_classifier_tuned.h5"
+        base_path = models_dir / "cnn_classifier.h5"
+
+        if model_path is not None:
+            self.model_path = Path(model_path).resolve()
         else:
-            self.model_path = h5_path
+            env_raw = os.environ.get("CNN_MODEL_PATH", "").strip()
+            if env_raw:
+                self.model_path = Path(env_raw).expanduser().resolve()
+            elif tuned_path.exists():
+                self.model_path = tuned_path
+            else:
+                self.model_path = base_path
         
         self._bundle = None
         self._model = None  # For CNN
@@ -112,22 +177,31 @@ class PredictorService:
             # Load metadata from attributes
             self._image_size = int(f.attrs.get("image_size", 32))  # type: ignore
             num_classes = int(f.attrs.get("num_classes", 48))  # type: ignore
-            
-            # Load labels present
-            labels_present_array: np.ndarray = f["labels_present"][()]  # type: ignore
-            labels_present = labels_present_array.tolist()
-            
+
+            model_class_raw = f.attrs.get("model_class", "SimpleConvNet")
+            if isinstance(model_class_raw, bytes):
+                model_class = model_class_raw.decode("utf-8")
+            else:
+                model_class = str(model_class_raw)
+
+            tunable_arch: dict[str, object] | None = None
+            arch_raw = f.attrs.get("tunable_arch")
+            if arch_raw is not None:
+                if isinstance(arch_raw, bytes):
+                    arch_raw = arch_raw.decode("utf-8")
+                tunable_arch = json.loads(str(arch_raw))
+
             # Load model state dictionary
             model_state: dict[str, torch.Tensor] = {}
             model_state_group = f["model_state"]  # type: ignore
             for key in model_state_group.keys():  # type: ignore
                 model_state[key] = torch.from_numpy(np.array(model_state_group[key]))  # type: ignore
-            
+
             # Load label metadata from HDF5
             try:
                 label_meta_bytes: bytes = f["label_metadata"][()]  # type: ignore
                 label_meta_str = label_meta_bytes.decode("utf-8")
-                self._label_metadata = json.loads(label_meta_str)
+                self._label_metadata = _label_metadata_int_keys(json.loads(label_meta_str))
             except Exception:
                 self._label_metadata = {}
         
@@ -145,13 +219,25 @@ class PredictorService:
                             "class_id": str(class_id),
                             "class_name": str(row.get("class_name", f"class_{class_id}")),
                             "category": str(row.get("category", "unknown")),
+                            "instruction": str(row.get("instruction", "")),
                         }
         except Exception:
             pass
         
         # Create and load model
         self._model_type = "cnn"
-        self._model = SimpleConvNet(num_classes=num_classes).to(self._device)
+        if model_class == "TunableConvNet" and tunable_arch is not None:
+            bc = int(cast(Any, tunable_arch["base_channels"]))
+            dr = float(cast(Any, tunable_arch["dropout"]))
+            fh = int(cast(Any, tunable_arch["fc_hidden"]))
+            self._model = TunableConvNet(
+                num_classes=num_classes,
+                base_channels=bc,
+                dropout=dr,
+                fc_hidden=fh,
+            ).to(self._device)
+        else:
+            self._model = SimpleConvNet(num_classes=num_classes).to(self._device)
         self._model.load_state_dict(model_state)
         self._model.eval()
         self._bundle = {"model_state": model_state}  # Store for reference
@@ -199,12 +285,20 @@ class PredictorService:
 
         meta = self._label_metadata.get(
             pred_class,
-            {"class_id": pred_class, "class_name": f"class_{pred_class}", "category": "unknown"},
+            {
+                "class_id": pred_class,
+                "class_name": f"class_{pred_class}",
+                "category": "unknown",
+                "instruction": "",
+            },
         )
+
+        instruction_text = str(meta.get("instruction", ""))
 
         return {
             "prediction": str(meta.get("class_name", f"class_{pred_class}")),
             "confidence": round(float(confidence), 4),
             "label_index": pred_class,
             "category": str(meta.get("category", "unknown")),
+            "instruction": instruction_text,
         }

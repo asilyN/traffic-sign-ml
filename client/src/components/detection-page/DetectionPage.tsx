@@ -12,6 +12,7 @@ interface DetectionResult {
   signName: string;
   confidence: number;
   category: string;
+  instruction?: string;
 }
 
 // Max history items to keep in memory (prevent unbounded growth)
@@ -80,10 +81,13 @@ export function DetectorPage() {
       // Check if component is still mounted before updating state
       if (!isMountedRef.current) return;
 
+      const instruction = prediction.instruction?.trim() || '';
+
       const result: DetectionResult = {
         signName: prediction.prediction,
         confidence: Math.round(prediction.confidence * 100),
         category: prediction.category ?? 'unknown',
+        instruction: instruction || undefined,
       };
       setCurrentResult(result);
 
@@ -93,6 +97,7 @@ export function DetectorPage() {
         confidence: result.confidence,
         timestamp: new Date(),
         category: result.category,
+        instruction: result.instruction,
         thumbnail: undefined, // Will be set asynchronously
       };
 
@@ -134,6 +139,7 @@ export function DetectorPage() {
       signName: item.signName,
       confidence: item.confidence,
       category: item.category,
+      instruction: item.instruction,
     });
   }, []);
 

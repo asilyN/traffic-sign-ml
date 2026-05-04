@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+from typing import Any, cast
 
 import joblib
 import numpy as np
@@ -244,7 +245,9 @@ def main() -> None:
         model_path,
     )
 
-    report_text = classification_report(y_val, val_pred, digits=4, zero_division=0)
+    report_text = classification_report(
+        y_val, val_pred, digits=4, zero_division=cast(Any, 0.0)
+    )
     metrics_path = reports / "sgd_train_metrics.txt"
     metrics_path.write_text(
         "\n".join(

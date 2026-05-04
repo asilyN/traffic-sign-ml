@@ -8,6 +8,7 @@ export interface HistoryItem {
   confidence: number;
   timestamp: Date;
   category: string;
+  instruction?: string;
   thumbnail?: string; // Small compressed image preview (optional)
 }
 

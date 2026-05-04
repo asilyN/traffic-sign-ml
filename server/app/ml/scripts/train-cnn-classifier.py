@@ -8,7 +8,7 @@ Uses (defaults):
 
 Outputs (defaults; override with --model-out / --metrics-out):
 - reports/cnn_train_metrics.txt
-- models/cnn_classifier.joblib
+- models/cnn_classifier.h5
 
 For original Train/ data only, run train-cnn-classifier-original.py.
 """
@@ -18,10 +18,9 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
-from typing import cast, Optional
+from typing import Any, cast
 
 import h5py
-import joblib
 import numpy as np
 import torch
 import torch.nn as nn
@@ -137,7 +136,7 @@ def parse_args() -> argparse.Namespace:
         "--model-out",
         type=str,
         default="cnn_classifier.h5",
-        help="Model filename inside dataset models/ directory. Supports .h5 and .joblib.",
+        help="Model path under models/; always written as HDF5 (.h5).",
     )
     parser.add_argument(
         "--metrics-out",
@@ -354,8 +353,8 @@ def main() -> None:
     train_acc = accuracy_score(train_labels, train_preds)
     val_acc = accuracy_score(val_labels, val_preds)
 
-    # Save model
-    model_path = models / args.model_out
+    # Save model (HDF5 only; .h5 enforced for predict-cnn-classifier compatibility)
+    model_path = (models / Path(args.model_out)).with_suffix(".h5")
     print(f"Saving model to {model_path}...")
     model_data = {
         "model_state": model.state_dict(),
@@ -376,13 +375,12 @@ def main() -> None:
         },
     }
 
-    if model_path.suffix == ".h5":
-        save_model_h5(model_path, model_data)
-    else:
-        joblib.dump(model_data, model_path)
+    save_model_h5(model_path, model_data)
     print("Model saved.")
 
-    report_text = classification_report(val_labels, val_preds, digits=4, zero_division=0)
+    report_text = classification_report(
+        val_labels, val_preds, digits=4, zero_division=cast(Any, 0.0)
+    )
     metrics_path = reports / args.metrics_out
     print(f"Saving metrics to {metrics_path}...")
     metrics_lines: list[str] = [

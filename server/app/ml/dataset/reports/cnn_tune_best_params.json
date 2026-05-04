@@ -1,0 +1,13 @@
+{
+  "best_params": {
+    "base_channels": 32,
+    "dropout": 0.2949721611208636,
+    "fc_hidden": 256,
+    "lr": 0.000633326877532184,
+    "weight_decay": 2.6471141828218185e-06,
+    "batch_size": 64
+  },
+  "best_trial_value": 0.9865005192107996,
+  "n_trials": 12,
+  "trial_epochs": 6
+}

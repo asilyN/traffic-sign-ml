@@ -1,3 +1,6 @@
+/* TrafficScan landing: Syne + Inter (used by LandingPage inline font-family). */
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+
 /* Bare specifiers; next.config.ts resolveAlias points into client/node_modules (monorepo root breaks relative paths). */
 @import "tailwindcss";
 @import "tw-animate-css";
@@ -152,4 +155,99 @@
   .animate-pulse-dot  { animation: pulse-dot 1.8s ease-in-out infinite; }
   .animate-flash      { animation: flash-fade 0.2s ease-out forwards; }
   .animate-slide-up   { animation: slide-up 0.25s ease forwards; }
+}
+
+/* ── Landing page: mascot stage, rings, floating badges ── */
+@keyframes landing-spin-slow {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes landing-spin-slow-rev {
+  to { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+@keyframes landing-scan-sweep {
+  to { transform: rotate(360deg); }
+}
+@keyframes landing-pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.6; transform: scale(1.3); }
+}
+@keyframes landing-badge-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-7px) scale(1.04); }
+}
+
+.scan-pulse {
+  animation: landing-pulse-dot 1.4s ease-in-out infinite;
+}
+.badge-float {
+  animation: landing-badge-float 3s ease-in-out infinite;
+}
+
+.mascot-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(260px, 54vw, 520px);
+}
+
+.ring-outer {
+  position: absolute;
+  width: 84%;
+  height: 84%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: landing-spin-slow 18s linear infinite;
+}
+.ring-mid {
+  position: absolute;
+  width: 65%;
+  height: 65%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: landing-spin-slow-rev 24s linear infinite;
+}
+.ring-inner {
+  position: absolute;
+  width: 45%;
+  height: 45%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+}
+.scan-circle {
+  position: absolute;
+  width: 65%;
+  height: 65%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.stat-chip {
+  display: none;
+}
+@media (min-width: 380px) {
+  .stat-chip {
+    display: flex;
+  }
+}
+
+.badge-text {
+  font-size: 9px;
+}
+@media (min-width: 480px) {
+  .badge-text {
+    font-size: 11px;
+  }
+}
+@media (min-width: 768px) {
+  .badge-text {
+    font-size: 13px;
+  }
 }

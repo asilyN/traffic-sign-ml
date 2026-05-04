@@ -6,6 +6,7 @@ interface DetectionResult {
   signName: string;
   confidence: number;
   category: string;
+  instruction?: string;
 }
 
 interface DetectionResultsProps {
@@ -69,6 +70,12 @@ export function DetectionResults({ result }: DetectionResultsProps) {
               <span className="text-[#6B7280]">Accuracy</span>
               <span className="text-[#111827]">{result.confidence}%</span>
             </div>
+            {result.instruction ? (
+              <div className="pt-2 border-t border-gray-100 mt-2">
+                <p className="text-[#6B7280] text-sm font-medium mb-1">What to do</p>
+                <p className="text-[#111827] text-sm leading-relaxed">{result.instruction}</p>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
