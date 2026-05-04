@@ -103,78 +103,87 @@ export function DetectorPage() {
   };
 
    const handleDetect = async () => {
-     if (!selectedImage || !selectedFile || selectedFile.size === 0) return;
+      if (!selectedImage || !selectedFile || selectedFile.size === 0) return;
 
-     // Cancel previous request if any
-     if (abortControllerRef.current) {
-       abortControllerRef.current.abort();
-     }
+      // Cancel previous request if any
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
 
-     // Create new abort controller for this request
-     abortControllerRef.current = new AbortController();
+      // Create new abort controller for this request
+      abortControllerRef.current = new AbortController();
 
-     setIsDetecting(true);
-     setErrorMessage(null);
+      setIsDetecting(true);
+      setErrorMessage(null);
 
-     try {
-       // Use direct prediction (CNN only) for uploaded images
-       const predictionResult = await predictImage(selectedFile);
-       
-       // Convert prediction to detection format for consistency
-       const detection = {
-         bbox: [0, 0, 1, 1] as [number, number, number, number],
-         class_name: predictionResult.prediction,
-         category: predictionResult.category,
-         detection_confidence: predictionResult.confidence,
-         classification_confidence: predictionResult.confidence,
-         other_predictions: predictionResult.other_predictions,
-       };
+      try {
+        // Use direct prediction (CNN only) for uploaded images
+        const predictionResult = await predictImage(selectedFile);
+        
+        // Convert prediction to detection format for consistency
+        const detection = {
+          bbox: [0, 0, 1, 1] as [number, number, number, number],
+          class_name: predictionResult.prediction,
+          category: predictionResult.category,
+          detection_confidence: predictionResult.confidence,
+          classification_confidence: predictionResult.confidence,
+          other_predictions: predictionResult.other_predictions,
+        };
 
-       // Get top 3 predictions including the main prediction
-       const topPredictions = [
-         {
-           class_name: detection.class_name,
-           confidence: detection.classification_confidence,
-           category: detection.category,
-         },
-         ...detection.other_predictions.slice(0, 2).map((pred) => ({
-           class_name: pred.class_name,
-           confidence: pred.confidence,
-           category: predictionResult.category,
-         })),
-       ].slice(0, 3);
+        // Get top 3 predictions including the main prediction
+        const topPredictions = [
+          {
+            class_name: detection.class_name,
+            confidence: detection.classification_confidence,
+            category: detection.category,
+          },
+          ...detection.other_predictions.slice(0, 2).map((pred) => ({
+            class_name: pred.class_name,
+            confidence: pred.confidence,
+            category: predictionResult.category,
+          })),
+        ].slice(0, 3);
 
-       const result: DetectionResult = {
-         predictions: topPredictions,
-         status: 'success',
-       };
-       setCurrentResult(result);
+        const result: DetectionResult = {
+          predictions: topPredictions,
+          status: 'success',
+        };
+        
+        if (isMountedRef.current) {
+          setCurrentResult(result);
+        }
 
-       const historyItem: HistoryItem = {
-         id: Date.now().toString(),
-         predictions: topPredictions,
-         detections: [detection],
-         timestamp: new Date(),
-         imageUrl: selectedImage,
-       };
-       setHistory((prev) => [historyItem, ...prev].slice(0, MAX_HISTORY_ITEMS));
-     } catch (error) {
-       // Don't show error if request was intentionally aborted
-       if (error instanceof Error && error.name === 'AbortError') {
-         return;
-       }
+        const historyItem: HistoryItem = {
+          id: Date.now().toString(),
+          predictions: topPredictions,
+          detections: [detection],
+          timestamp: new Date(),
+          imageUrl: selectedImage,
+        };
+        
+        if (isMountedRef.current) {
+          setHistory((prev) => [historyItem, ...prev].slice(0, MAX_HISTORY_ITEMS));
+        }
+      } catch (error) {
+        // Don't show error if request was intentionally aborted
+        if (error instanceof Error && error.name === 'AbortError') {
+          if (isMountedRef.current) {
+            setIsDetecting(false);
+          }
+          return;
+        }
 
-       if (!isMountedRef.current) return;
+        if (!isMountedRef.current) return;
 
-       const fallback = 'Unable to detect sign. Please try another image.';
-       const message = error instanceof Error ? error.message : fallback;
-       setErrorMessage(message || fallback);
-     } finally {
-       if (isMountedRef.current) {
-         setIsDetecting(false);
-       }
-     }
-   };
+        const fallback = 'Unable to detect sign. Please try another image.';
+        const message = error instanceof Error ? error.message : fallback;
+        setErrorMessage(message || fallback);
+      } finally {
+        if (isMountedRef.current) {
+          setIsDetecting(false);
+        }
+      }
+    };
 
   // Handle manual frame capture from camera
   const handleFrameCapture = useCallback((imageUrl: string, detections: Detection[]) => {

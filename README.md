@@ -34,7 +34,6 @@ An intelligent traffic sign recognition system using machine learning. Upload an
   - Saved in Keras/H5 format for inference
   - High accuracy predictions with confidence scores (top-1, top-3, macro-F1)
   - Detailed instruction prompts for detected signs
-  - Batch prediction support
   
 - 📱 **Cross-Platform**
   - Progressive Web App ready
