@@ -4,19 +4,10 @@ import json
 import warnings
 from io import BytesIO
 from pathlib import Path
-from typing import Any
-
 import numpy as np
 from PIL import Image, UnidentifiedImageError
 
-try:
-    import tensorflow as tf
-except ImportError as e:
-    raise ImportError("tensorflow is required: pip install tensorflow") from e
-
-
-class PredictionError(Exception):
-    """Raised when prediction cannot be completed."""
+from app.ml.prediction_errors import PredictionError
 
 
 class PredictorService:
@@ -55,6 +46,11 @@ class PredictorService:
 
         if not self.model_path.exists():
             raise FileNotFoundError(f"Model not found: {self.model_path}")
+
+        try:
+            import tensorflow as tf
+        except ImportError as e:
+            raise ImportError("tensorflow is required: pip install tensorflow") from e
 
         # Load with custom_objects so the label-smoothing loss deserialises cleanly
         self._model = tf.keras.models.load_model(
@@ -122,6 +118,8 @@ class PredictorService:
             raise PredictionError("Empty file content.")
 
         self._ensure_loaded()
+        import tensorflow as tf
+
         x = self._preprocess(image_bytes)
 
         with warnings.catch_warnings():

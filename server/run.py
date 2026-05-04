@@ -1,12 +1,13 @@
 import os
+
 from dotenv import load_dotenv
-from app import create_app
 
 load_dotenv()
 
-app = create_app()
+if __name__ == "__main__":
+    from app import create_app
 
-if __name__ == '__main__':
-    debug = os.getenv('FLASK_ENV') == 'development'
-    port = int(os.getenv('PORT', 5000))
-    app.run(debug=debug, host='0.0.0.0', port=port)
+    app = create_app()
+    debug = os.getenv("FLASK_ENV") == "development"
+    port = int(os.getenv("PORT", 5000))
+    app.run(debug=debug, host="0.0.0.0", port=port)
