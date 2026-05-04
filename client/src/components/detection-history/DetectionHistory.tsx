@@ -84,6 +84,11 @@ export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps
                   <span aria-hidden>·</span>
                   <span>{formatTime(item.timestamp)}</span>
                 </div>
+                {item.predictions.length > 1 && (
+                  <div className="text-xs text-[#9CA3AF] mt-1 truncate">
+                    +{item.predictions.length - 1} more predictions
+                  </div>
+                )}
               </div>
             </button>
           ))}

@@ -30,28 +30,35 @@ export function DetectorPage() {
   const [currentResult, setCurrentResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [uploadPredictions, setUploadPredictions] = useState<
+    Array<{
+      class_name: string;
+      confidence: number;
+    }> | null
+  >(null);
 
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const isMountedRef = useRef(true);
-
-  useEffect(() => {
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, []);
-
-  const handleImageSelect = useCallback((imageUrl: string | null, file: File | null) => {
+  const handleImageSelect = async (imageUrl: string, file: File) => {
     setSelectedImage(imageUrl);
     setSelectedFile(file);
     setCurrentResult(null);
     setErrorMessage(null);
-  }, []);
+    setUploadPredictions(null);
 
-  const handleSwitchToCamera = useCallback(() => {
-    setSelectedImage(null);
-    setSelectedFile(null);
-    setErrorMessage(null);
-  }, []);
+    // Fetch predictions for preview
+    if (imageUrl && file.size > 0) {
+      try {
+        const prediction = await predictImage(file);
+        const topPredictions = [
+          { class_name: prediction.prediction, confidence: prediction.confidence },
+          ...(prediction.other_predictions?.slice(0, 2) ?? []),
+        ].slice(0, 3);
+        setUploadPredictions(topPredictions);
+      } catch (error) {
+        console.error('Failed to fetch predictions for preview:', error);
+        setUploadPredictions(null);
+      }
+    }
+  };
 
   const handleDetect = async () => {
     if (!selectedImage || !selectedFile || selectedFile.size === 0) return;
@@ -69,6 +76,7 @@ export function DetectorPage() {
 
     try {
       const prediction = await predictImage(selectedFile);
+      // Get top 3 predictions (including the main one)
       const topPredictions = [
         { class_name: prediction.prediction, confidence: prediction.confidence },
         ...(prediction.other_predictions?.slice(0, 2) ?? []),
@@ -105,30 +113,36 @@ export function DetectorPage() {
     }
   };
 
-  const handleFrameCapture = useCallback((imageUrl: string, detections: Detection[]) => {
-    if (detections.length === 0) return;
+  // Handle manual frame capture from camera
+  const handleFrameCapture = useCallback(
+    (imageUrl: string, detections: Detection[]) => {
+      if (detections.length === 0) return;
 
-    const topPredictions = detections.slice(0, 3).map((det) => ({
-      class_name: det.class_name,
-      confidence: det.classification_confidence,
-      category: det.category,
-    }));
+      // Get top 3 predictions
+      const topPredictions = detections.slice(0, 3).map((det) => ({
+        class_name: det.class_name,
+        confidence: det.classification_confidence,
+        category: det.category,
+      }));
 
-    const result: DetectionResult = {
-      predictions: topPredictions,
-      status: 'success',
-    };
-    setCurrentResult(result);
+      const result: DetectionResult = {
+        predictions: topPredictions,
+        status: 'success',
+      };
+      setCurrentResult(result);
 
-    const historyItem: HistoryItem = {
-      id: Date.now().toString(),
-      predictions: topPredictions,
-      detections,
-      timestamp: new Date(),
-      imageUrl,
-    };
-    setHistory((prev) => [historyItem, ...prev]);
-  }, []);
+      // Add to history with full detection data (bounding boxes + predictions)
+      const historyItem: HistoryItem = {
+        id: Date.now().toString(),
+        predictions: topPredictions,
+        detections: detections, // Save full detection data including bboxes
+        timestamp: new Date(),
+        imageUrl: imageUrl,
+      };
+      setHistory((prev) => [historyItem, ...prev]);
+    },
+    []
+  );
 
   const handleHistoryItemClick = (item: HistoryItem) => {
     const result: DetectionResult = {

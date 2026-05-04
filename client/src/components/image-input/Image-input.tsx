@@ -91,7 +91,6 @@ export function ImageInput({
 
     try {
       isDetectingRef.current = true;
-
       capture.width = video.videoWidth;
       capture.height = video.videoHeight;
       capture.getContext('2d')?.drawImage(video, 0, 0);
