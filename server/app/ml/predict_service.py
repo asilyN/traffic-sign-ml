@@ -4,11 +4,9 @@ import json
 import warnings
 from io import BytesIO
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 
 import numpy as np
-import torch
-import torch.nn as nn
 from PIL import Image, UnidentifiedImageError
 
 try:
@@ -146,9 +144,30 @@ class PredictorService:
 
         instruction_text = str(meta.get("instruction", ""))
 
+        # Get top-3 predictions for other_predictions
+        top_k = 3
+        top_k_indices = np.argsort(probs)[-top_k:][::-1]
+        other_predictions = []
+        for idx in top_k_indices:
+            class_idx = int(idx)
+            if class_idx == pred_idx:
+                # Skip the top prediction as it's already the main prediction
+                continue
+            pred_class_id = self._idx_to_class_id.get(class_idx, class_idx + 1)
+            pred_meta = self._label_metadata.get(
+                pred_class_id,
+                {"class_name": f"class_{pred_class_id}", "category": "unknown"},
+            )
+            other_predictions.append({
+                "class_id": pred_class_id,
+                "class_name": str(pred_meta.get("class_name", f"class_{pred_class_id}")),
+                "confidence": round(float(probs[class_idx]), 4),
+            })
+
         return {
             "prediction":  str(meta.get("class_name", f"class_{class_id}")),
             "confidence":  round(confidence, 4),
             "label_index": class_id,   # original 1-based dataset class id
             "category":    str(meta.get("category", "unknown")),
+            "other_predictions": other_predictions,
         }

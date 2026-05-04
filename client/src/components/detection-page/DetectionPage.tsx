@@ -7,7 +7,7 @@ import { ChevronLeft } from 'lucide-react';
 import { ImageInput } from '@/src/components/image-input';
 import { DetectionResults } from '@/src/components/detection-result';
 import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
-import { predictImage, type Detection } from '@/src/lib/api';
+import { detectImage, type Detection } from '@/src/lib/api';
 import { FONT_INTER, FONT_SYNE } from '@/lib/landing-page';
 
 interface DetectionResult {
@@ -16,6 +16,8 @@ interface DetectionResult {
     class_name: string;
     confidence: number;
     category?: string;
+    bbox?: [number, number, number, number];
+    detection_confidence?: number;
   }>;
   status: 'success' | 'fail';
 }
@@ -87,17 +89,24 @@ export function DetectorPage() {
     setErrorMessage(null);
     setUploadPredictions(null);
 
-    // Fetch predictions for preview
+    // Fetch detections for preview
     if (imageUrl && file && file.size > 0) {
       try {
-        const prediction = await predictImage(file);
-        const topPredictions = [
-          { class_name: prediction.prediction, confidence: prediction.confidence },
-          ...(prediction.other_predictions?.slice(0, 2) ?? []),
-        ].slice(0, 3);
-        setUploadPredictions(topPredictions);
+        const detectionResult = await detectImage(file);
+        if (detectionResult.detections && detectionResult.detections.length > 0) {
+          // Convert detections to predictions format for preview
+          const topPredictions = detectionResult.detections
+            .sort((a, b) => b.classification_confidence - a.classification_confidence)
+            .slice(0, 3)
+            .map((det) => ({
+              class_name: det.class_name,
+              confidence: det.classification_confidence,
+              category: det.category,
+            }));
+          setUploadPredictions(topPredictions);
+        }
       } catch (error) {
-        console.error('Failed to fetch predictions for preview:', error);
+        console.error('Failed to fetch detections for preview:', error);
         setUploadPredictions(null);
       }
     }
@@ -126,26 +135,38 @@ export function DetectorPage() {
     setErrorMessage(null);
 
     try {
-      const prediction = await predictImage(selectedFile);
-      // Get top 3 predictions (including the main one)
-      const topPredictions = [
-        { class_name: prediction.prediction, confidence: prediction.confidence },
-        ...(prediction.other_predictions?.slice(0, 2) ?? []),
-      ].slice(0, 3);
+      const detectionResult = await detectImage(selectedFile);
+      
+      if (detectionResult.detections && detectionResult.detections.length > 0) {
+        // Convert detections to predictions format
+        const topPredictions = detectionResult.detections
+          .sort((a, b) => b.classification_confidence - a.classification_confidence)
+          .slice(0, 3)
+          .map((det) => ({
+            class_name: det.class_name,
+            confidence: det.classification_confidence,
+            category: det.category,
+            bbox: det.bbox,
+            detection_confidence: det.detection_confidence,
+          }));
 
-      const result: DetectionResult = {
-        predictions: topPredictions,
-        status: 'success',
-      };
-      setCurrentResult(result);
+        const result: DetectionResult = {
+          predictions: topPredictions,
+          status: 'success',
+        };
+        setCurrentResult(result);
 
-      const historyItem: HistoryItem = {
-        id: Date.now().toString(),
-        predictions: topPredictions,
-        timestamp: new Date(),
-        imageUrl: selectedImage,
-      };
-      setHistory((prev) => [historyItem, ...prev]);
+        const historyItem: HistoryItem = {
+          id: Date.now().toString(),
+          predictions: topPredictions,
+          detections: detectionResult.detections,
+          timestamp: new Date(),
+          imageUrl: selectedImage,
+        };
+        setHistory((prev) => [historyItem, ...prev]);
+      } else {
+        setErrorMessage('No traffic signs detected in the image. Please try another image.');
+      }
     } catch (error) {
       // Don't show error if request was intentionally aborted
       if (error instanceof Error && error.name === 'AbortError') {

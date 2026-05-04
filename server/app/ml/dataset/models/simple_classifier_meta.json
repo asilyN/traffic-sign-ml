@@ -1,0 +1,359 @@
+{
+  "num_classes": 48,
+  "image_size": 48,
+  "label_to_idx": {
+    "1": 0,
+    "2": 1,
+    "3": 2,
+    "4": 3,
+    "5": 4,
+    "6": 5,
+    "7": 6,
+    "8": 7,
+    "9": 8,
+    "10": 9,
+    "11": 10,
+    "12": 11,
+    "13": 12,
+    "14": 13,
+    "15": 14,
+    "16": 15,
+    "17": 16,
+    "18": 17,
+    "19": 18,
+    "20": 19,
+    "21": 20,
+    "22": 21,
+    "23": 22,
+    "24": 23,
+    "25": 24,
+    "26": 25,
+    "27": 26,
+    "28": 27,
+    "29": 28,
+    "30": 29,
+    "31": 30,
+    "32": 31,
+    "33": 32,
+    "34": 33,
+    "35": 34,
+    "36": 35,
+    "37": 36,
+    "38": 37,
+    "39": 38,
+    "40": 39,
+    "41": 40,
+    "42": 41,
+    "43": 42,
+    "44": 43,
+    "45": 44,
+    "46": 45,
+    "47": 46,
+    "48": 47
+  },
+  "idx_to_label": {
+    "0": 1,
+    "1": 2,
+    "2": 3,
+    "3": 4,
+    "4": 5,
+    "5": 6,
+    "6": 7,
+    "7": 8,
+    "8": 9,
+    "9": 10,
+    "10": 11,
+    "11": 12,
+    "12": 13,
+    "13": 14,
+    "14": 15,
+    "15": 16,
+    "16": 17,
+    "17": 18,
+    "18": 19,
+    "19": 20,
+    "20": 21,
+    "21": 22,
+    "22": 23,
+    "23": 24,
+    "24": 25,
+    "25": 26,
+    "26": 27,
+    "27": 28,
+    "28": 29,
+    "29": 30,
+    "30": 31,
+    "31": 32,
+    "32": 33,
+    "33": 34,
+    "34": 35,
+    "35": 36,
+    "36": 37,
+    "37": 38,
+    "38": 39,
+    "39": 40,
+    "40": 41,
+    "41": 42,
+    "42": 43,
+    "43": 44,
+    "44": 45,
+    "45": 46,
+    "46": 47,
+    "47": 48
+  },
+  "norm_mean": [
+    0.48500001430511475,
+    0.4560000002384186,
+    0.4059999883174896
+  ],
+  "norm_std": [
+    0.2290000021457672,
+    0.2240000069141388,
+    0.22499999403953552
+  ],
+  "dropout1": 0.4,
+  "dropout2": 0.2,
+  "spatial_dropout": 0.1,
+  "label_metadata": {
+    "1": {
+      "class_id": 1,
+      "class_name": "Stop",
+      "category": "prohibitory"
+    },
+    "2": {
+      "class_id": 2,
+      "class_name": "No Entry",
+      "category": "prohibitory"
+    },
+    "3": {
+      "class_id": 3,
+      "class_name": "Left Curve Ahead",
+      "category": "warning"
+    },
+    "4": {
+      "class_id": 4,
+      "class_name": "Right Curve Ahead",
+      "category": "warning"
+    },
+    "5": {
+      "class_id": 5,
+      "class_name": "Reverse Turn Ahead",
+      "category": "warning"
+    },
+    "6": {
+      "class_id": 6,
+      "class_name": "Slippery Road",
+      "category": "warning"
+    },
+    "7": {
+      "class_id": 7,
+      "class_name": "Road Work",
+      "category": "warning"
+    },
+    "8": {
+      "class_id": 8,
+      "class_name": "Pedestrian Crossing",
+      "category": "warning"
+    },
+    "9": {
+      "class_id": 9,
+      "class_name": "Children Crossing",
+      "category": "warning"
+    },
+    "10": {
+      "class_id": 10,
+      "class_name": "Bike Lane",
+      "category": "informational"
+    },
+    "11": {
+      "class_id": 11,
+      "class_name": "Turn Right",
+      "category": "mandatory"
+    },
+    "12": {
+      "class_id": 12,
+      "class_name": "Turn Left",
+      "category": "mandatory"
+    },
+    "13": {
+      "class_id": 13,
+      "class_name": "Straight Ahead Only",
+      "category": "mandatory"
+    },
+    "14": {
+      "class_id": 14,
+      "class_name": "Pass on Right",
+      "category": "mandatory"
+    },
+    "15": {
+      "class_id": 15,
+      "class_name": "Pass on Left",
+      "category": "mandatory"
+    },
+    "16": {
+      "class_id": 16,
+      "class_name": "Roundabout",
+      "category": "mandatory"
+    },
+    "17": {
+      "class_id": 17,
+      "class_name": "U-Turn",
+      "category": "mandatory"
+    },
+    "18": {
+      "class_id": 18,
+      "class_name": "Speed Limit (60 km/h)",
+      "category": "prohibitory"
+    },
+    "19": {
+      "class_id": 19,
+      "class_name": "Speed Limit (70 km/h)",
+      "category": "prohibitory"
+    },
+    "20": {
+      "class_id": 20,
+      "class_name": "No Blowing of Horn",
+      "category": "prohibitory"
+    },
+    "21": {
+      "class_id": 21,
+      "class_name": "No U-Turn",
+      "category": "prohibitory"
+    },
+    "22": {
+      "class_id": 22,
+      "class_name": "Speed Limit (15 km/h)",
+      "category": "prohibitory"
+    },
+    "23": {
+      "class_id": 23,
+      "class_name": "No Left Turn",
+      "category": "prohibitory"
+    },
+    "24": {
+      "class_id": 24,
+      "class_name": "No Right Turn",
+      "category": "prohibitory"
+    },
+    "25": {
+      "class_id": 25,
+      "class_name": "No Straight Proceeding",
+      "category": "prohibitory"
+    },
+    "26": {
+      "class_id": 26,
+      "class_name": "No Parking",
+      "category": "prohibitory"
+    },
+    "27": {
+      "class_id": 27,
+      "class_name": "Intersection Ahead",
+      "category": "warning"
+    },
+    "28": {
+      "class_id": 28,
+      "class_name": "Side Road Junction (Right)",
+      "category": "warning"
+    },
+    "29": {
+      "class_id": 29,
+      "class_name": "Speed Limit (20 km/h)",
+      "category": "prohibitory"
+    },
+    "30": {
+      "class_id": 30,
+      "class_name": "Speed Limit (40 km/h)",
+      "category": "prohibitory"
+    },
+    "31": {
+      "class_id": 31,
+      "class_name": "Pass on Either Side",
+      "category": "mandatory"
+    },
+    "32": {
+      "class_id": 32,
+      "class_name": "Side Road Junction (Diagonal)",
+      "category": "warning"
+    },
+    "33": {
+      "class_id": 33,
+      "class_name": "Speed Limit (30 km/h)",
+      "category": "prohibitory"
+    },
+    "34": {
+      "class_id": 34,
+      "class_name": "No Entry for Four-Wheeled Vehicles",
+      "category": "prohibitory"
+    },
+    "35": {
+      "class_id": 35,
+      "class_name": "Hospital",
+      "category": "informational"
+    },
+    "36": {
+      "class_id": 36,
+      "class_name": "Do Not Block Intersection",
+      "category": "prohibitory"
+    },
+    "37": {
+      "class_id": 37,
+      "class_name": "Railroad Crossing",
+      "category": "warning"
+    },
+    "38": {
+      "class_id": 38,
+      "class_name": "Parking Area",
+      "category": "informational"
+    },
+    "39": {
+      "class_id": 39,
+      "class_name": "No Stopping / No Waiting",
+      "category": "prohibitory"
+    },
+    "40": {
+      "class_id": 40,
+      "class_name": "T-Junction",
+      "category": "warning"
+    },
+    "41": {
+      "class_id": 41,
+      "class_name": "Give Way",
+      "category": "prohibitory"
+    },
+    "42": {
+      "class_id": 42,
+      "class_name": "No Bicycle",
+      "category": "prohibitory"
+    },
+    "43": {
+      "class_id": 43,
+      "class_name": "Danger",
+      "category": "warning"
+    },
+    "44": {
+      "class_id": 44,
+      "class_name": "No Loading and Unloading Anytime",
+      "category": "prohibitory"
+    },
+    "45": {
+      "class_id": 45,
+      "class_name": "Narrow Road Ahead",
+      "category": "warning"
+    },
+    "46": {
+      "class_id": 46,
+      "class_name": "No Overtake",
+      "category": "prohibitory"
+    },
+    "47": {
+      "class_id": 47,
+      "class_name": "Street Light Ahead",
+      "category": "warning"
+    },
+    "48": {
+      "class_id": 48,
+      "class_name": "One Way",
+      "category": "mandatory"
+    }
+  }
+}

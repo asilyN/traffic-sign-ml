@@ -9,6 +9,8 @@ interface DetectionResult {
     class_name: string;
     confidence: number;
     category?: string;
+    bbox?: [number, number, number, number];
+    detection_confidence?: number;
   }>;
   status: 'success' | 'fail';
 }
@@ -84,6 +86,11 @@ export function DetectionResults({ result }: DetectionResultsProps) {
                     <h3 className="text-xl font-bold text-[#0F172A] tracking-tight">
                       {topPrediction.class_name}
                     </h3>
+                    {topPrediction.category && (
+                      <span className="text-xs font-medium text-[#64748B] capitalize px-2 py-1 rounded-full bg-[#F8FAFC]">
+                        {topPrediction.category}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -106,6 +113,14 @@ export function DetectionResults({ result }: DetectionResultsProps) {
                     <span className="text-[#64748B]">Confidence </span>
                     <span className="font-semibold text-[#F97316]">{pct.toFixed(1)}%</span>
                   </div>
+                  {topPrediction.detection_confidence !== undefined && (
+                    <div className="rounded-xl bg-[#F8FAFC] border border-[#E8ECF2] px-3 py-2 text-xs">
+                      <span className="text-[#64748B]">Detection Confidence </span>
+                      <span className="font-semibold text-[#F97316]">
+                        {(topPrediction.detection_confidence * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="border-t border-[#EEF2F6] pt-4">

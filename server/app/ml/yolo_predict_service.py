@@ -10,9 +10,9 @@ from PIL import Image
 
 
 class YoloPredictorService:
-    def __init__(self, pt_path: Path | None = None) -> None:
+    def __init__(self, model_path: Path | None = None) -> None:
         server_root = Path(__file__).resolve().parents[2]
-        self.pt_path = pt_path or (server_root / "app" / "ml" /  "models" / "simple_classifier.pt")  # ← updated
+        self.model_path = model_path or (server_root / "app" / "ml" / "dataset" / "models" / "simple_classifier.h5")
         self._models: dict[str, Any] | None = None
 
         # Resolve the detection_classifier module path once at init
@@ -35,7 +35,7 @@ class YoloPredictorService:
         if self._models is not None:
             return
         dc = self._import_detection_classifier()
-        self._models = dc.load_models(pt_path=self.pt_path)
+        self._models = dc.load_models(pt_path=self.model_path)
 
     def predict_from_bytes(self, image_bytes: bytes, conf_threshold: float = 0.25) -> dict:
         self._ensure_loaded()

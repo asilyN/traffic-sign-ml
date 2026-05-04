@@ -2,14 +2,14 @@
 """
 Traffic Sign Detection + Classification Pipeline
 =================================================
-Integrates YOLOv8 (detection) → TrafficSignCNN (classification).
+Integrates YOLOv8 (detection) → Keras CNN (classification).
 
 Pipeline
 --------
   1. Load a full image (PIL or numpy)
   2. YOLO detects bounding boxes of traffic signs
   3. Each crop is resized to 48×48 and normalised (ImageNet priors)
-  4. TrafficSignCNN classifies each crop
+  4. Keras CNN classifies each crop
   5. Structured JSON is returned
 
 Quick start
@@ -26,7 +26,7 @@ Quick start
 CLI usage
 ---------
   python traffic_sign_pipeline.py --image road_scene.jpg
-  python traffic_sign_pipeline.py --image road_scene.jpg --conf 0.35 --device cpu
+  python traffic_sign_pipeline.py --image road_scene.jpg --conf 0.35
 """
 
 from __future__ import annotations
@@ -40,8 +40,7 @@ from typing import Any
 import numpy as np
 from PIL import Image, UnidentifiedImageError
 
-import torch
-import torch.nn as nn
+import tensorflow as tf
 
 # ---------------------------------------------------------------------------
 # Normalisation constants (MUST match training in train_simple_classifier.py)
@@ -58,87 +57,8 @@ CNN_INPUT_SIZE = 48          # px — fixed by training
 
 _HERE = Path(__file__).resolve().parent
 
-DEFAULT_PT_PATH     = _HERE / "models" / "simple_classifier.pt"
+DEFAULT_PT_PATH     = _HERE / "models" / "simple_classifier.h5"
 DEFAULT_YOLO_WEIGHTS = "yolov8n.pt"   # downloaded automatically on first run
-
-
-# ---------------------------------------------------------------------------
-# CNN model definition
-# (Must exactly mirror train_simple_classifier.py so state_dict loads cleanly)
-# ---------------------------------------------------------------------------
-
-class _ResBlock4(nn.Module):
-    """Residual conv block with 1×1 projection shortcut (block 4)."""
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.conv = nn.Sequential(
-            nn.Conv2d(128, 256, kernel_size=3, padding=1),
-            nn.BatchNorm2d(256),
-            nn.ReLU(inplace=True),
-        )
-        self.shortcut = nn.Conv2d(128, 256, kernel_size=1, bias=False)
-        self.pool     = nn.AdaptiveAvgPool2d((2, 2))
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        return self.pool(self.conv(x) + self.shortcut(x))
-
-
-class TrafficSignCNN(nn.Module):
-    def __init__(
-        self,
-        num_classes: int,
-        dropout1: float = 0.4,
-        dropout2: float = 0.2,
-        spatial_dropout: float = 0.1,
-    ) -> None:
-        super().__init__()
-
-        self.block1 = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=5, padding=2),
-            nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-        )
-
-        self.block2 = nn.Sequential(
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),   # ← this was missing
-            nn.MaxPool2d(2, 2),
-        )
-
-        self.block3 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),   # ← this was missing
-            nn.MaxPool2d(2, 2),
-        )
-
-        self.block4 = _ResBlock4()
-        self.spatial_drop = nn.Dropout2d(p=spatial_dropout)
-        self.classifier = nn.Sequential(
-            nn.Dropout(p=dropout1),
-            nn.Linear(256 * 2 * 2, 512),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout2),
-            nn.Linear(512, num_classes),
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.block1(x)
-        x = self.block2(x)
-        x = self.block3(x)
-        x = self.block4(x)
-        x = self.spatial_drop(x)
-        x = x.view(x.size(0), -1)
-        return self.classifier(x)
 
 
 # ---------------------------------------------------------------------------
@@ -158,10 +78,10 @@ def _crop_and_preprocess(
     image_rgb: Image.Image,
     x1: int, y1: int, x2: int, y2: int,
     size: int = CNN_INPUT_SIZE,
-) -> torch.Tensor:
+) -> np.ndarray:
     """
     Crop a bounding-box region from the full image, resize to `size`×`size`,
-    apply ImageNet normalisation, and return a (1, 3, size, size) tensor.
+    apply ImageNet normalisation, and return a (1, size, size, 3) numpy array.
 
     Normalisation: (pixel/255 − mean) / std  — identical to training.
     """
@@ -178,8 +98,7 @@ def _crop_and_preprocess(
 
     arr = np.asarray(crop, dtype=np.float32) / 255.0   # [0, 1]
     arr = (arr - NORM_MEAN) / (NORM_STD + 1e-7)        # normalise
-    tensor = torch.from_numpy(arr.transpose(2, 0, 1))  # HWC → CHW
-    return tensor.unsqueeze(0)                          # (1, C, H, W)
+    return np.expand_dims(arr, axis=0)                  # (1, H, W, C)
 
 
 # ---------------------------------------------------------------------------
@@ -192,34 +111,26 @@ def load_models(
     device: str | None = None,
 ) -> dict[str, Any]:
     """
-    Load the YOLO detector and the CNN classifier once.
+    Load the YOLO detector and the Keras CNN classifier once.
 
     Returns a dict that is unpacked as **kwargs into detect_and_classify().
 
     Parameters
     ----------
-    pt_path      : Path to `simple_classifier.pt` produced by training script.
+    pt_path      : Path to `simple_classifier.h5` produced by training script.
     yolo_weights : YOLOv8 weight name/path. "yolov8n.pt" is auto-downloaded.
-    device       : "cuda", "cpu", or None (auto-select).
+    device       : Ignored (kept for API compatibility).
 
     Returns
     -------
     {
         "yolo"         : ultralytics.YOLO instance,
-        "cnn"          : TrafficSignCNN (eval mode, on device),
+        "cnn"          : Keras model (loaded),
         "idx_to_label" : {int → original class_id},
         "label_meta"   : {class_id → {"class_name", "category"}},
         "image_size"   : int (48),
-        "device"       : torch.device,
     }
     """
-    # ── device ────────────────────────────────────────────────────────────────
-    if device is None:
-        _device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    else:
-        _device = torch.device(device)
-    print(f"[load_models] device={_device}")
-
     # ── YOLO ──────────────────────────────────────────────────────────────────
     try:
         from ultralytics import YOLO  # type: ignore
@@ -240,21 +151,20 @@ def load_models(
         )
 
     print(f"[load_models] Loading CNN from: {pt_path}")
-    ckpt = torch.load(pt_path, map_location="cpu")
+    cnn = tf.keras.models.load_model(str(pt_path))
 
-    num_classes  = ckpt["num_classes"]
-    image_size   = ckpt.get("image_size", CNN_INPUT_SIZE)
-    idx_to_label = {int(k): int(v) for k, v in ckpt["idx_to_label"].items()}
+    # Load metadata JSON if it exists
+    meta_path = pt_path.parent / "simple_classifier_meta.json"
+    idx_to_label: dict[int, int] = {}
+    image_size = CNN_INPUT_SIZE
 
-    cnn = TrafficSignCNN(
-        num_classes=num_classes,
-        dropout1=ckpt.get("dropout1", 0.4),
-        dropout2=ckpt.get("dropout2", 0.2),
-        spatial_dropout=ckpt.get("spatial_dropout", 0.1),
-    )
-    cnn.load_state_dict(ckpt["state_dict"])
-    cnn.eval()
-    cnn.to(_device)
+    if meta_path.exists():
+        import json as _json
+        meta_json = _json.loads(meta_path.read_text(encoding="utf-8"))
+        idx_to_label = {int(k): int(v) for k, v in meta_json.get("idx_to_label", {}).items()}
+        image_size = meta_json.get("image_size", CNN_INPUT_SIZE)
+
+    num_classes = cnn.output_shape[-1]  # Get number of classes from model output
 
     # ── label metadata ────────────────────────────────────────────────────────
     # Attempt to load from labels.json next to the checkpoint; fall back to empty.
@@ -287,7 +197,6 @@ def load_models(
         "idx_to_label":  idx_to_label,
         "label_meta":    label_meta,
         "image_size":    image_size,
-        "device":        _device,
     }
 
 
@@ -299,11 +208,11 @@ def detect_and_classify(
     image: Any,
     *,
     yolo: Any,
-    cnn: TrafficSignCNN,
+    cnn: Any,
     idx_to_label: dict[int, int],
     label_meta: dict[int, dict],
     image_size: int = CNN_INPUT_SIZE,
-    device: torch.device | str = "cpu",
+    device: str | None = None,
     conf_threshold: float = 0.25,
     yolo_classes: list[int] | None = None,
     top_k: int = 5,
@@ -315,11 +224,11 @@ def detect_and_classify(
     ----------
     image           : PIL Image or H×W×3 numpy uint8 array.
     yolo            : Loaded YOLO model (from load_models).
-    cnn             : Loaded TrafficSignCNN (from load_models).
+    cnn             : Loaded Keras model (from load_models).
     idx_to_label    : CNN output index → original dataset class ID.
     label_meta      : class ID → {"class_name", "category"}.
     image_size      : CNN input resolution (default 48).
-    device          : torch.device used during CNN inference.
+    device          : Ignored (kept for API compatibility).
     conf_threshold  : Minimum YOLO detection confidence (default 0.25).
     yolo_classes    : YOLO class IDs to keep (None = keep all detections).
     top_k           : Number of top predictions to include in other_predictions (default 5).
@@ -344,9 +253,6 @@ def detect_and_classify(
       ]
     }
     """
-    if isinstance(device, str):
-        device = torch.device(device)
-
     # ── 1. Ensure PIL RGB ─────────────────────────────────────────────────────
     image_pil = _pil_to_rgb(image)
     W, H = image_pil.size
@@ -374,55 +280,52 @@ def detect_and_classify(
 
     detections: list[dict] = []
 
-    cnn.eval()
-    with torch.no_grad():
-        for (x1, y1, x2, y2), det_conf in zip(boxes_xyxy, confs):
-            # ── 3. Crop ───────────────────────────────────────────────────────
-            ix1, iy1, ix2, iy2 = int(x1), int(y1), int(x2), int(y2)
+    for (x1, y1, x2, y2), det_conf in zip(boxes_xyxy, confs):
+        # ── 3. Crop ───────────────────────────────────────────────────────
+        ix1, iy1, ix2, iy2 = int(x1), int(y1), int(x2), int(y2)
 
-            # ── 4. Preprocess (MUST match training) ───────────────────────────
-            tensor = _crop_and_preprocess(
-                image_pil, ix1, iy1, ix2, iy2, size=image_size
-            ).to(device)
+        # ── 4. Preprocess (MUST match training) ───────────────────────────
+        tensor = _crop_and_preprocess(
+            image_pil, ix1, iy1, ix2, iy2, size=image_size
+        )
 
-            # ── 5. CNN classification ─────────────────────────────────────────
-            logits = cnn(tensor)                        # (1, num_classes)
-            probs  = torch.softmax(logits, dim=1)       # (1, num_classes)
-            pred_idx   = int(probs.argmax(dim=1).item())
-            cls_conf   = float(probs[0, pred_idx].item())
+        # ── 5. CNN classification ─────────────────────────────────────────
+        logits = cnn.predict(tensor, verbose=0)     # (1, num_classes)
+        probs  = logits[0]                           # (num_classes,)
+        pred_idx   = int(np.argmax(probs))
+        cls_conf   = float(probs[pred_idx])
 
-            # ── 6. Map back to original dataset class ID ──────────────────────
-            pred_class = idx_to_label.get(pred_idx, pred_idx)
-            meta       = label_meta.get(
-                pred_class,
-                {"class_name": f"class_{pred_class}", "category": "unknown"},
+        # ── 6. Map back to original dataset class ID ──────────────────────
+        pred_class = idx_to_label.get(pred_idx, pred_idx)
+        meta       = label_meta.get(
+            pred_class,
+            {"class_name": f"class_{pred_class}", "category": "unknown"},
+        )
+
+        # ── 7. Get top-k predictions for other_predictions ────────────────
+        top_k_indices = np.argsort(probs)[-min(top_k, len(probs)):][::-1]
+        other_predictions = []
+        for class_idx in top_k_indices:
+            class_id = idx_to_label.get(int(class_idx), int(class_idx))
+            class_meta = label_meta.get(
+                class_id,
+                {"class_name": f"class_{class_id}", "category": "unknown"},
             )
-
-            # ── 7. Get top-k predictions for other_predictions ────────────────
-            top_k_values, top_k_indices = torch.topk(probs[0], min(top_k, probs.shape[1]))
-            other_predictions = []
-            for idx, (conf_val, pred_idx_k) in enumerate(zip(top_k_values, top_k_indices)):
-                class_idx = int(pred_idx_k.item())
-                class_id = idx_to_label.get(class_idx, class_idx)
-                class_meta = label_meta.get(
-                    class_id,
-                    {"class_name": f"class_{class_id}", "category": "unknown"},
-                )
-                other_predictions.append({
-                    "class_id": class_id,
-                    "class_name": class_meta["class_name"],
-                    "confidence": round(float(conf_val.item()), 4),
-                })
-
-            detections.append({
-                "bbox":                      [ix1, iy1, ix2, iy2],
-                "detection_confidence":      round(float(det_conf), 4),
-                "predicted_class":           pred_class,
-                "class_name":               meta["class_name"],
-                "category":                 meta["category"],
-                "classification_confidence": round(cls_conf, 4),
-                "other_predictions":        other_predictions,
+            other_predictions.append({
+                "class_id": class_id,
+                "class_name": class_meta["class_name"],
+                "confidence": round(float(probs[int(class_idx)]), 4),
             })
+
+        detections.append({
+            "bbox":                      [ix1, iy1, ix2, iy2],
+            "detection_confidence":      round(float(det_conf), 4),
+            "predicted_class":           pred_class,
+            "class_name":               meta["class_name"],
+            "category":                 meta["category"],
+            "classification_confidence": round(cls_conf, 4),
+            "other_predictions":        other_predictions,
+        })
 
     return {"detections": detections}
 
@@ -483,14 +386,12 @@ def _parse_args() -> argparse.Namespace:
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     p.add_argument("--image", required=True, help="Path to input image.")
-    p.add_argument("--pt-path", default=str(DEFAULT_PT_PATH),
-                   help="Path to simple_classifier.pt checkpoint.")
+    p.add_argument("--h5-path", default=str(DEFAULT_PT_PATH),
+                   help="Path to simple_classifier.h5 checkpoint.")
     p.add_argument("--yolo-weights", default=DEFAULT_YOLO_WEIGHTS,
                    help="YOLOv8 weight file or name (auto-downloaded).")
     p.add_argument("--conf", type=float, default=0.25,
                    help="YOLO detection confidence threshold.")
-    p.add_argument("--device", default=None,
-                   help="'cuda' or 'cpu'. Auto-selected if omitted.")
     p.add_argument("--save-annotated", default=None,
                    help="Optional path to save annotated image (requires opencv).")
     return p.parse_args()
@@ -510,9 +411,8 @@ def main() -> None:
 
     # ── load models once ──────────────────────────────────────────────────────
     models = load_models(
-        pt_path=args.pt_path,
+        pt_path=args.h5_path,
         yolo_weights=args.yolo_weights,
-        device=args.device,
     )
 
     # ── run pipeline ──────────────────────────────────────────────────────────
