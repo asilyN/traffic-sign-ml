@@ -107,7 +107,7 @@ export async function fetchLabels(): Promise<LabelsResponse> {
     return cachedLabels;
   }
 
-  const res = await fetch(`${API_BASE}/app/ml/labels.json`);
+  const res = await fetch('/labels.json');
   cachedLabels = await handleResponse<LabelsResponse>(res);
   return cachedLabels;
 }
