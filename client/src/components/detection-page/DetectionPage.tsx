@@ -1,12 +1,14 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import type { CSSProperties } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import { ImageInput } from '@/src/components/image-input';
 import { DetectionResults } from '@/src/components/detection-result';
 import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
 import { predictImage, type Detection } from '@/src/lib/api';
+import { FONT_INTER, FONT_SYNE } from '@/lib/landing-page';
 
 interface DetectionResult {
   predictions: Array<{
@@ -29,7 +31,16 @@ export function DetectorPage() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleImageSelect = (imageUrl: string | null, file: File | null) => {
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const isMountedRef = useRef(true);
+
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const handleImageSelect = useCallback((imageUrl: string | null, file: File | null) => {
     setSelectedImage(imageUrl);
     setSelectedFile(file);
     setCurrentResult(null);
@@ -129,7 +140,7 @@ export function DetectorPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
+    <div className="min-h-screen bg-[#FAFAFA] flex flex-col" style={{ fontFamily: FONT_INTER }}>
       <header className="bg-white border-b border-[#E5E7EB]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-3">
           <div className="flex items-center justify-between gap-4">
@@ -140,7 +151,7 @@ export function DetectorPage() {
               <ChevronLeft className="w-5 h-5" aria-hidden />
               Back
             </Link>
-            <div className="font-semibold text-lg tracking-tight">
+            <div className="font-semibold text-lg tracking-tight" style={{ fontFamily: FONT_SYNE }}>
               <span className="text-[#0F172A]">Traffic</span>
               <span className="text-[#F97316]">Scan</span>
             </div>
