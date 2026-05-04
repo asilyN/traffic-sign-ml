@@ -4,34 +4,49 @@ from flask import jsonify, request
 
 from app.api import api_bp
 from app.ml.predict_service import PredictionError, PredictorService
-from app.ml.yolo_predict_service import YoloPredictorService
 
 
 predictor = PredictorService()
 ALLOWED_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".ppm", ".webp"}
 
-
-yolo_predictor = YoloPredictorService() 
-
-try:
-    yolo_predictor._ensure_loaded()
-    print("YOLO predictor loaded OK")
-except Exception as exc:
-    import traceback
-    print("YOLO STARTUP ERROR:")
-    traceback.print_exc()
-
 @api_bp.route("/v1/detect", methods=["POST"])
 def detect():
+    """Direct classification endpoint (no YOLO8 required)."""
     if "file" not in request.files:
         return jsonify({"error": 'Missing file. Use multipart/form-data key "file".'}), 400
 
     file = request.files["file"]
+    if file.filename is None or file.filename.strip() == "":
+        return jsonify({"error": "No file selected."}), 400
+
+    file_ext = Path(file.filename).suffix.lower()
+    if file_ext not in ALLOWED_IMAGE_EXTENSIONS:
+        allowed = ", ".join(sorted(ALLOWED_IMAGE_EXTENSIONS))
+        return jsonify({"error": f"Unsupported file type. Allowed types: {allowed}"}), 400
+
+    if file.mimetype and not file.mimetype.startswith("image/"):
+        return jsonify({"error": f"Unsupported content type: {file.mimetype}"}), 400
 
     try:
         image_bytes = file.read()
-        result = yolo_predictor.predict_from_bytes(image_bytes)
-        return jsonify(result), 200
+        # Use direct CNN classification instead of YOLO8
+        prediction = predictor.predict_from_bytes(image_bytes)
+        
+        # Convert to detection format (single detection with full image as bbox)
+        detection = {
+            "bbox": [0, 0, 1, 1],  # Normalized coordinates for full image
+            "class_name": prediction["prediction"],
+            "category": prediction["category"],
+            "detection_confidence": prediction["confidence"],  # Use CNN confidence
+            "classification_confidence": prediction["confidence"],
+            "other_predictions": prediction.get("other_predictions", []),
+        }
+        
+        return jsonify({"detections": [detection]}), 200
+    except PredictionError as exc:
+        return jsonify({"error": str(exc)}), 400
+    except FileNotFoundError as exc:
+        return jsonify({"error": str(exc)}), 503
     except Exception as exc:
         import traceback
         print("=" * 60)

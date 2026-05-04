@@ -7,7 +7,7 @@ import { ChevronLeft } from 'lucide-react';
 import { ImageInput } from '@/src/components/image-input';
 import { DetectionResults } from '@/src/components/detection-result';
 import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
-import { detectImage, type Detection } from '@/src/lib/api';
+import { detectImage, predictImage, type Detection } from '@/src/lib/api';
 import { FONT_INTER, FONT_SYNE } from '@/lib/landing-page';
 
 interface DetectionResult {
@@ -117,38 +117,44 @@ export function DetectorPage() {
     setErrorMessage(null);
 
     try {
-      const detectionResult = await detectImage(selectedFile);
+      // Use direct prediction (CNN only) for uploaded images
+      const predictionResult = await predictImage(selectedFile);
       
-      if (detectionResult.detections && detectionResult.detections.length > 0) {
-        // Convert detections to predictions format
-        const topPredictions = detectionResult.detections
-          .sort((a, b) => b.classification_confidence - a.classification_confidence)
-          .slice(0, 3)
-          .map((det) => ({
-            class_name: det.class_name,
-            confidence: det.classification_confidence,
-            category: det.category,
-            bbox: det.bbox,
-            detection_confidence: det.detection_confidence,
-          }));
+      // Convert prediction to detection format for consistency
+      const detection = {
+        bbox: [0, 0, 1, 1] as [number, number, number, number],
+        class_name: predictionResult.prediction,
+        category: predictionResult.category,
+        detection_confidence: predictionResult.confidence,
+        classification_confidence: predictionResult.confidence,
+        other_predictions: predictionResult.other_predictions,
+      };
 
-        const result: DetectionResult = {
-          predictions: topPredictions,
-          status: 'success',
-        };
-        setCurrentResult(result);
+      const result: DetectionResult = {
+        predictions: [
+          {
+            class_name: detection.class_name,
+            confidence: detection.classification_confidence,
+            category: detection.category,
+          },
+          ...detection.other_predictions.slice(0, 2).map((pred) => ({
+            class_name: pred.class_name,
+            confidence: pred.confidence,
+            category: predictionResult.category,
+          })),
+        ],
+        status: 'success',
+      };
+      setCurrentResult(result);
 
-        const historyItem: HistoryItem = {
-          id: Date.now().toString(),
-          predictions: topPredictions,
-          detections: detectionResult.detections,
-          timestamp: new Date(),
-          imageUrl: selectedImage,
-        };
-        setHistory((prev) => [historyItem, ...prev]);
-      } else {
-        setErrorMessage('No traffic signs detected in the image. Please try another image.');
-      }
+      const historyItem: HistoryItem = {
+        id: Date.now().toString(),
+        predictions: result.predictions,
+        detections: [detection],
+        timestamp: new Date(),
+        imageUrl: selectedImage,
+      };
+      setHistory((prev) => [historyItem, ...prev]);
     } catch (error) {
       // Don't show error if request was intentionally aborted
       if (error instanceof Error && error.name === 'AbortError') {

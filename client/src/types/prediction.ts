@@ -8,5 +8,6 @@ export interface PredictionResult {
   prediction: string;
   confidence: number;
   label_index?: number;
-  other_predictions?: OtherPrediction[];
+  category: string;
+  other_predictions: OtherPrediction[];
 }
