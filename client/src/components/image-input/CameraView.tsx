@@ -84,27 +84,27 @@ export function CameraView({
         )}
       </button>
 
-      {cameraActive && !cameraError && detections.length > 0 && (
-        <div className="space-y-2 pt-1">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
-            Live detection ({detections.length})
-          </p>
-          <div className="space-y-2 max-h-55 overflow-y-auto pr-1">
-            {[...detections]
-              .sort((a, b) => b.classification_confidence - a.classification_confidence)
-              .slice(0, 8)
-              .map((det, i) => (
-                <DetectionListItem
-                  key={`${det.class_name}-${det.bbox.join(',')}-${i}`}
-                  detection={det}
-                  index={i}
-                  isHovered={hoveredLiveIndex === i}
-                  onHover={onHoverDetection}
-                />
-              ))}
-          </div>
-        </div>
-      )}
+       {cameraActive && !cameraError && detections.length > 0 && (
+         <div className="space-y-2 pt-1">
+           <p className="text-[11px] font-semibold uppercase tracking-wider text-[#64748B]">
+             Top Predictions
+           </p>
+           <div className="space-y-2 max-h-55 overflow-y-auto pr-1">
+             {[...detections]
+               .sort((a, b) => b.classification_confidence - a.classification_confidence)
+               .slice(0, 3)
+               .map((det, i) => (
+                 <DetectionListItem
+                   key={`${det.class_name}-${det.bbox.join(',')}-${i}`}
+                   detection={det}
+                   index={i}
+                   isHovered={hoveredLiveIndex === i}
+                   onHover={onHoverDetection}
+                 />
+               ))}
+           </div>
+         </div>
+       )}
     </div>
   );
 }
