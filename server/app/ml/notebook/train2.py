@@ -278,7 +278,6 @@ def build_train_transform(size: int, max_rotation: float = 12.0,
         return None
     translate_frac = 0.10
     transforms = [
-        T.ToTensor(),
         T.RandomRotation(degrees=max_rotation,
                          interpolation=T.InterpolationMode.BILINEAR, fill=0),
         T.ColorJitter(brightness=0.3, contrast=0.3, saturation=0.1, hue=0.02),
@@ -287,6 +286,7 @@ def build_train_transform(size: int, max_rotation: float = 12.0,
     ]
     if use_blur:
         transforms.append(T.GaussianBlur(kernel_size=3, sigma=(0.1, 1.0)))
+    transforms.append(T.ToTensor())
     transforms.append(T.Normalize(mean=NORM_MEAN.tolist(), std=NORM_STD.tolist()))
     return T.Compose(transforms)
 
@@ -677,7 +677,10 @@ def build_keras_model(num_classes: int, dropout1: float = 0.4,
     main     = layers.ReLU(name="b4_relu")(main)
     shortcut = layers.Conv2D(256, 1, use_bias=False, name="b4_sc")(x)
     x        = layers.Add(name="b4_add")([main, shortcut])
-    x        = layers.GlobalAveragePooling2D(name="gap")(x)
+    x        = layers.Resizing(2, 2, interpolation="area", name="b4_pool")(x)
+    x        = layers.SpatialDropout2D(spatial_dropout, name="spatial_drop")(x)
+    x        = layers.Permute((3, 1, 2), name="b4_permute")(x)
+    x        = layers.Flatten(name="b4_flatten")(x)
 
     # Classifier head
     x = layers.Dropout(dropout1, name="drop1")(x)
@@ -702,10 +705,8 @@ def transfer_weights_to_keras(pt_model: TrafficSignCNN, keras_model) -> None:
     Dense:      PyTorch (out, in)          ->  Keras (in, out)
     BatchNorm:  gamma, beta, running_mean, running_var (same order in both)
 
-    NOTE: GlobalAveragePooling2D (Keras) vs AdaptiveAvgPool2d(2,2)+flatten
-    (PyTorch) produce different spatial reductions, so fc1/logits Dense weights
-    will not be numerically identical.  All conv and BN weights transfer exactly.
-    For full numeric parity, retrain natively in Keras.
+    NOTE: Keras uses NHWC, so we permute to NCHW before flattening to match
+    PyTorch's flatten ordering. Conv/BN/FC weights transfer directly.
     """
     def pt_to_keras_conv(w: torch.Tensor) -> np.ndarray:
         return w.numpy().transpose(2, 3, 1, 0)  # OIHW -> HWIO
