@@ -4,16 +4,22 @@ import { Clock } from 'lucide-react';
 
 export interface HistoryItem {
   id: string;
-  signName: string;
-  confidence: number;
-  timestamp: Date;
-  imageUrl: string;
-  category: string;
-  otherPredictions?: Array<{
-    class_id: number;
+  predictions: Array<{
     class_name: string;
     confidence: number;
+    category?: string;
   }>;
+  detections?: Array<{
+    bbox: [number, number, number, number];
+    class_name: string;
+    classification_confidence: number;
+    other_predictions?: Array<{
+      class_name: string;
+      confidence: number;
+    }>;
+  }>;
+  timestamp: Date;
+  imageUrl: string;
 }
 
 interface DetectionHistoryProps {
@@ -55,19 +61,26 @@ export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps
               <div className="w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
                 <img
                   src={item.imageUrl}
-                  alt={item.signName}
+                  alt={item.predictions[0]?.class_name || 'Detection'}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="flex-1 text-left">
-                <h4 className="text-[#111827] group-hover:text-[#2563EB] transition-colors">
-                  {item.signName}
+              <div className="flex-1 text-left min-w-0">
+                <h4 className="text-[#111827] group-hover:text-[#2563EB] transition-colors truncate">
+                  {item.predictions[0]?.class_name || 'Unknown'}
                 </h4>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-[#6B7280]">{item.confidence}%</span>
+                <div className="flex items-center gap-2 mt-1 text-sm">
+                  <span className="text-[#6B7280]">
+                    {(item.predictions[0]?.confidence * 100).toFixed(0)}%
+                  </span>
                   <span className="text-[#6B7280]">•</span>
                   <span className="text-[#6B7280]">{formatTime(item.timestamp)}</span>
                 </div>
+                {item.predictions.length > 1 && (
+                  <div className="text-xs text-[#9CA3AF] mt-1 truncate">
+                    +{item.predictions.length - 1} more predictions
+                  </div>
+                )}
               </div>
             </button>
           ))}

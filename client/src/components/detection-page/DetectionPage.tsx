@@ -1,21 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Navbar } from '@/src/components/navbar';
 import { ImageInput } from '@/src/components/image-input';
 import { DetectionResults } from '@/src/components/detection-result';
 import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
-import { predictImage } from '@/src/lib/api';
+import { predictImage, Detection } from '@/src/lib/api';
 
 interface DetectionResult {
-  signName: string;
-  confidence: number;
-  category: string;
-  otherPredictions?: Array<{
-    class_id: number;
+  predictions: Array<{
+    class_id?: number;
     class_name: string;
     confidence: number;
+    category?: string;
   }>;
+  status: 'success' | 'fail';
 }
 
 export function DetectorPage() {
@@ -41,26 +40,23 @@ export function DetectorPage() {
 
     try {
       const prediction = await predictImage(selectedFile);
+      // Get top 3 predictions (including the main one)
+      const topPredictions = [
+        { class_name: prediction.prediction, confidence: prediction.confidence },
+        ...(prediction.other_predictions?.slice(0, 2) ?? []),
+      ].slice(0, 3);
+
       const result: DetectionResult = {
-        signName: prediction.prediction,
-        confidence: Math.round(prediction.confidence * 100),
-        category: 'ML Prediction',
-        otherPredictions: prediction.other_predictions?.map((p) => ({
-          class_id: p.class_id,
-          class_name: p.class_name,
-          confidence: Math.round(p.confidence * 100),
-        })),
+        predictions: topPredictions,
+        status: 'success',
       };
       setCurrentResult(result);
 
       const historyItem: HistoryItem = {
         id: Date.now().toString(),
-        signName: result.signName,
-        confidence: result.confidence,
+        predictions: topPredictions,
         timestamp: new Date(),
         imageUrl: selectedImage,
-        category: result.category,
-        otherPredictions: result.otherPredictions,
       };
       setHistory((prev) => [historyItem, ...prev]);
     } catch (error) {
@@ -72,14 +68,44 @@ export function DetectorPage() {
     }
   };
 
+  // Handle manual frame capture from camera
+  const handleFrameCapture = useCallback(
+    (imageUrl: string, detections: Detection[]) => {
+      if (detections.length === 0) return;
+
+      // Get top 3 predictions
+      const topPredictions = detections.slice(0, 3).map((det) => ({
+        class_name: det.class_name,
+        confidence: det.classification_confidence,
+        category: det.category,
+      }));
+
+      const result: DetectionResult = {
+        predictions: topPredictions,
+        status: 'success',
+      };
+      setCurrentResult(result);
+
+      // Add to history with full detection data (bounding boxes + predictions)
+      const historyItem: HistoryItem = {
+        id: Date.now().toString(),
+        predictions: topPredictions,
+        detections: detections, // Save full detection data including bboxes
+        timestamp: new Date(),
+        imageUrl: imageUrl,
+      };
+      setHistory((prev) => [historyItem, ...prev]);
+    },
+    []
+  );
+
   const handleHistoryItemClick = (item: HistoryItem) => {
+    const result: DetectionResult = {
+      predictions: item.predictions,
+      status: 'success',
+    };
+    setCurrentResult(result);
     setSelectedImage(item.imageUrl);
-    setCurrentResult({
-      signName: item.signName,
-      confidence: item.confidence,
-      category: item.category,
-      otherPredictions: item.otherPredictions,
-    });
   };
 
   return (
@@ -94,6 +120,7 @@ export function DetectorPage() {
               onImageSelect={handleImageSelect}
               onDetect={handleDetect}
               isDetecting={isDetecting}
+              onFrameCapture={handleFrameCapture}
             />
             {errorMessage && (
               <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-red-700">
