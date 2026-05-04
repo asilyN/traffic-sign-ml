@@ -1,6 +1,6 @@
 'use client';
 
-import { Clock } from 'lucide-react';
+import { Clock, Trash2 } from 'lucide-react';
 
 export interface HistoryItem {
   id: string;
@@ -25,9 +25,10 @@ export interface HistoryItem {
 interface DetectionHistoryProps {
   history: HistoryItem[];
   onItemClick: (item: HistoryItem) => void;
+  onDelete: (id: string) => void;
 }
 
-export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps) {
+export function DetectionHistory({ history, onItemClick, onDelete }: DetectionHistoryProps) {
   const formatTime = (date: Date) => {
     const now = new Date();
     const diff = now.getTime() - date.getTime();
@@ -51,20 +52,16 @@ export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps
 
       {history.length === 0 ? (
         <div className="text-center py-10 px-4">
-          <Clock
-            className="w-11 h-11 text-[#CBD5E1] mx-auto mb-3"
-            strokeWidth={1.25}
-          />
+          <Clock className="w-11 h-11 text-[#CBD5E1] mx-auto mb-3" strokeWidth={1.25} />
           <p className="text-[#64748B] text-sm">No detections yet.</p>
         </div>
       ) : (
         <div className="space-y-2 max-h-[min(420px,55vh)] overflow-y-auto pr-1">
           {history.map((item) => (
-            <button
+            <div
               key={item.id}
-              type="button"
               onClick={() => onItemClick(item)}
-              className="w-full flex items-center gap-3 p-3 rounded-xl border border-[#EEF2F6] bg-[#FAFBFC] hover:border-[#F97316]/40 hover:bg-white hover:shadow-sm transition-all text-left group"
+              className="flex items-center gap-3 p-3 rounded-xl border border-[#EEF2F6] bg-[#FAFBFC] hover:border-[#F97316]/40 hover:bg-white hover:shadow-sm transition-all text-left group cursor-pointer relative"
             >
               <div className="w-14 h-14 shrink-0 rounded-xl overflow-hidden bg-[#EEF2F6] ring-1 ring-black/4">
                 <img
@@ -90,7 +87,18 @@ export function DetectionHistory({ history, onItemClick }: DetectionHistoryProps
                   </div>
                 )}
               </div>
-            </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(item.id);
+                }}
+                className="shrink-0 p-1.5 rounded-lg text-[#9CA3AF] hover:text-red-600 hover:bg-red-50 transition-colors"
+                title="Delete detection"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
           ))}
         </div>
       )}

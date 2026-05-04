@@ -30,14 +30,57 @@ export function DetectorPage() {
   const [currentResult, setCurrentResult] = useState<DetectionResult | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [uploadPredictions, setUploadPredictions] = useState<
-    Array<{
-      class_name: string;
-      confidence: number;
-    }> | null
-  >(null);
+  const [uploadPredictions, setUploadPredictions] = useState<Array<{
+    class_name: string;
+    confidence: number;
+  }> | null>(null);
 
-  const handleImageSelect = async (imageUrl: string, file: File) => {
+  const abortControllerRef = useRef<AbortController | null>(null);
+  const isMountedRef = useRef(true);
+
+  // Load history from localStorage on mount
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    try {
+      const savedHistory = localStorage.getItem('detectionHistory');
+      if (savedHistory) {
+        const parsed = JSON.parse(savedHistory);
+        // Convert ISO strings back to Date objects
+        const historyWithDates = parsed.map((item: any) => ({
+          ...item,
+          timestamp: new Date(item.timestamp),
+        }));
+        setHistory(historyWithDates);
+      }
+    } catch (error) {
+      console.error('Failed to load history from localStorage:', error);
+    }
+  }, []);
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    try {
+      // Convert Date objects to ISO strings for serialization
+      const historyToSave = history.map((item) => ({
+        ...item,
+        timestamp: item.timestamp.toISOString(),
+      }));
+      localStorage.setItem('detectionHistory', JSON.stringify(historyToSave));
+    } catch (error) {
+      console.error('Failed to save history to localStorage:', error);
+    }
+  }, [history]);
+
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  const handleImageSelect = async (imageUrl: string | null, file: File | null) => {
     setSelectedImage(imageUrl);
     setSelectedFile(file);
     setCurrentResult(null);
@@ -45,7 +88,7 @@ export function DetectorPage() {
     setUploadPredictions(null);
 
     // Fetch predictions for preview
-    if (imageUrl && file.size > 0) {
+    if (imageUrl && file && file.size > 0) {
       try {
         const prediction = await predictImage(file);
         const topPredictions = [
@@ -58,6 +101,14 @@ export function DetectorPage() {
         setUploadPredictions(null);
       }
     }
+  };
+
+  const handleSwitchToCamera = () => {
+    setSelectedImage(null);
+    setSelectedFile(null);
+    setCurrentResult(null);
+    setErrorMessage(null);
+    setUploadPredictions(null);
   };
 
   const handleDetect = async () => {
@@ -114,35 +165,32 @@ export function DetectorPage() {
   };
 
   // Handle manual frame capture from camera
-  const handleFrameCapture = useCallback(
-    (imageUrl: string, detections: Detection[]) => {
-      if (detections.length === 0) return;
+  const handleFrameCapture = useCallback((imageUrl: string, detections: Detection[]) => {
+    if (detections.length === 0) return;
 
-      // Get top 3 predictions
-      const topPredictions = detections.slice(0, 3).map((det) => ({
-        class_name: det.class_name,
-        confidence: det.classification_confidence,
-        category: det.category,
-      }));
+    // Get top 3 predictions
+    const topPredictions = detections.slice(0, 3).map((det) => ({
+      class_name: det.class_name,
+      confidence: det.classification_confidence,
+      category: det.category,
+    }));
 
-      const result: DetectionResult = {
-        predictions: topPredictions,
-        status: 'success',
-      };
-      setCurrentResult(result);
+    const result: DetectionResult = {
+      predictions: topPredictions,
+      status: 'success',
+    };
+    setCurrentResult(result);
 
-      // Add to history with full detection data (bounding boxes + predictions)
-      const historyItem: HistoryItem = {
-        id: Date.now().toString(),
-        predictions: topPredictions,
-        detections: detections, // Save full detection data including bboxes
-        timestamp: new Date(),
-        imageUrl: imageUrl,
-      };
-      setHistory((prev) => [historyItem, ...prev]);
-    },
-    []
-  );
+    // Add to history with full detection data (bounding boxes + predictions)
+    const historyItem: HistoryItem = {
+      id: Date.now().toString(),
+      predictions: topPredictions,
+      detections: detections, // Save full detection data including bboxes
+      timestamp: new Date(),
+      imageUrl: imageUrl,
+    };
+    setHistory((prev) => [historyItem, ...prev]);
+  }, []);
 
   const handleHistoryItemClick = (item: HistoryItem) => {
     const result: DetectionResult = {
@@ -151,6 +199,10 @@ export function DetectorPage() {
     };
     setCurrentResult(result);
     setSelectedImage(item.imageUrl);
+  };
+
+  const handleDeleteHistory = (id: string) => {
+    setHistory((prev) => prev.filter((item) => item.id !== id));
   };
 
   return (
@@ -210,7 +262,11 @@ export function DetectorPage() {
 
           <div className="space-y-6 lg:sticky lg:top-8">
             <DetectionResults result={currentResult} />
-            <DetectionHistory history={history} onItemClick={handleHistoryItemClick} />
+            <DetectionHistory
+              history={history}
+              onItemClick={handleHistoryItemClick}
+              onDelete={handleDeleteHistory}
+            />
           </div>
         </div>
       </main>

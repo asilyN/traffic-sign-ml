@@ -59,10 +59,9 @@ export function DetectionResults({ result }: DetectionResultsProps) {
           <div className="mx-auto mb-4 inline-flex rounded-2xl bg-[#FFF7ED] p-4 ring-1 ring-[#F97316]/15">
             <Scan className="w-10 h-10 text-[#F97316]" strokeWidth={1.75} />
           </div>
-          <p className="text-[#64748B] text-sm leading-relaxed max-w-[260px] mx-auto">
+          <p className="text-[#64748B] text-sm leading-relaxed max-w-65 mx-auto">
             Capture or upload a sign, then tap{' '}
-            <span className="font-semibold text-[#0F172A]">Capture &amp; Detect</span>
-            {' '}or{' '}
+            <span className="font-semibold text-[#0F172A]">Capture &amp; Detect</span> or{' '}
             <span className="font-semibold text-[#0F172A]">Detect Sign</span>.
           </p>
         </div>
@@ -85,17 +84,6 @@ export function DetectionResults({ result }: DetectionResultsProps) {
                     <h3 className="text-xl font-bold text-[#0F172A] tracking-tight">
                       {topPrediction.class_name}
                     </h3>
-                    <span
-                      className={`${badgeBg} text-white text-sm font-bold px-2.5 py-0.5 rounded-lg`}
-                    >
-                      {pct.toFixed(1)}%
-                    </span>
-                  </div>
-                  <div className="h-2 rounded-full bg-[#EEF2F6] overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-[#F97316] transition-[width] duration-300"
-                      style={{ width: `${Math.min(100, pct)}%` }}
-                    />
                   </div>
                 </div>
 
@@ -103,9 +91,7 @@ export function DetectionResults({ result }: DetectionResultsProps) {
                   <div className="rounded-xl bg-sky-50 border border-sky-100 px-4 py-3 flex gap-3">
                     <Info className="w-5 h-5 text-sky-600 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-sm font-semibold text-sky-950 mb-1">
-                        What to do:
-                      </p>
+                      <p className="text-sm font-semibold text-sky-950 mb-1">What to do:</p>
                       <p className="text-sm text-sky-900 leading-snug">{topInstruction}</p>
                     </div>
                   </div>
@@ -123,9 +109,7 @@ export function DetectionResults({ result }: DetectionResultsProps) {
                 </div>
 
                 <div className="border-t border-[#EEF2F6] pt-4">
-                  <h4 className="text-sm font-semibold text-[#0F172A] mb-3">
-                    Top Predictions
-                  </h4>
+                  <h4 className="text-sm font-semibold text-[#0F172A] mb-3">Top Predictions</h4>
                   <ol className="space-y-2">
                     {result.predictions.slice(0, 3).map((pred, idx) => {
                       const isTop = idx === 0;
