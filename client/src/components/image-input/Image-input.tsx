@@ -1,6 +1,6 @@
 'use client';
 
-import { Upload, Loader2, X, FlipHorizontal } from 'lucide-react';
+import { Upload, Loader2, FlipHorizontal } from 'lucide-react';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { detectImage, Detection } from '@/src/lib/api';
 
@@ -300,16 +300,6 @@ export function ImageInput({
               ref={canvasRef}
               className="absolute inset-0 w-full h-full pointer-events-none"
             />
-            <button
-              onClick={() => {
-                // Clear selected image by calling onImageSelect with empty values
-                onImageSelect('', new File([], ''));
-                stopCamera();
-              }}
-              className="absolute top-2 right-2 p-1.5 bg-black/60 text-white rounded-full hover:bg-black/80 transition-colors"
-            >
-              <X className="w-4 h-4" />
-            </button>
             <button
               onClick={() => {
                 const next = facingMode === 'environment' ? 'user' : 'environment';
