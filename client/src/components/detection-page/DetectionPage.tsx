@@ -12,7 +12,11 @@ interface DetectionResult {
   signName: string;
   confidence: number;
   category: string;
-  instruction?: string;
+  otherPredictions?: Array<{
+    class_id: number;
+    class_name: string;
+    confidence: number;
+  }>;
 }
 
 // Max history items to keep in memory (prevent unbounded growth)
@@ -86,8 +90,12 @@ export function DetectorPage() {
       const result: DetectionResult = {
         signName: prediction.prediction,
         confidence: Math.round(prediction.confidence * 100),
-        category: prediction.category ?? 'unknown',
-        instruction: instruction || undefined,
+        category: 'ML Prediction',
+        otherPredictions: prediction.other_predictions?.map((p) => ({
+          class_id: p.class_id,
+          class_name: p.class_name,
+          confidence: Math.round(p.confidence * 100),
+        })),
       };
       setCurrentResult(result);
 
@@ -97,24 +105,9 @@ export function DetectorPage() {
         confidence: result.confidence,
         timestamp: new Date(),
         category: result.category,
-        instruction: result.instruction,
-        thumbnail: undefined, // Will be set asynchronously
+        otherPredictions: result.otherPredictions,
       };
-
-      // Add to history first (will show without thumbnail initially)
-      setHistory((prev) => [historyItem, ...prev].slice(0, MAX_HISTORY_ITEMS));
-
-      // Generate thumbnail asynchronously to avoid blocking
-      generateThumbnail(selectedFile)
-        .then((thumb) => {
-          setHistory((prev) =>
-            prev.map((item) => (item.id === historyItem.id ? { ...item, thumbnail: thumb } : item))
-          );
-        })
-        .catch((err) => {
-          console.warn('Failed to generate thumbnail:', err);
-          // History item will still show without thumbnail (badge fallback)
-        });
+      setHistory((prev) => [historyItem, ...prev]);
     } catch (error) {
       // Don't show error if request was intentionally aborted
       if (error instanceof Error && error.name === 'AbortError') {
@@ -139,7 +132,7 @@ export function DetectorPage() {
       signName: item.signName,
       confidence: item.confidence,
       category: item.category,
-      instruction: item.instruction,
+      otherPredictions: item.otherPredictions,
     });
   }, []);
 

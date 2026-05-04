@@ -6,7 +6,11 @@ interface DetectionResult {
   signName: string;
   confidence: number;
   category: string;
-  instruction?: string;
+  otherPredictions?: Array<{
+    class_id: number;
+    class_name: string;
+    confidence: number;
+  }>;
 }
 
 interface DetectionResultsProps {
@@ -78,6 +82,20 @@ export function DetectionResults({ result }: DetectionResultsProps) {
             ) : null}
           </div>
         </div>
+
+        {result.otherPredictions && result.otherPredictions.length > 0 && (
+          <div className="border-t border-gray-200 pt-4">
+            <h4 className="text-[#111827] font-medium mb-3">Other Predictions</h4>
+            <div className="space-y-2">
+              {result.otherPredictions.map((pred, idx) => (
+                <div key={idx} className="flex justify-between items-center">
+                  <span className="text-[#6B7280]">{pred.class_name}</span>
+                  <span className="text-[#111827] font-medium">{(pred.confidence * 100).toFixed(1)}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

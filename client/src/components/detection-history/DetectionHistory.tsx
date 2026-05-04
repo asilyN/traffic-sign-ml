@@ -8,8 +8,11 @@ export interface HistoryItem {
   confidence: number;
   timestamp: Date;
   category: string;
-  instruction?: string;
-  thumbnail?: string; // Small compressed image preview (optional)
+  otherPredictions?: Array<{
+    class_id: number;
+    class_name: string;
+    confidence: number;
+  }>;
 }
 
 interface DetectionHistoryProps {

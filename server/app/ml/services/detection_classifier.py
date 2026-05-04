@@ -138,100 +138,6 @@ class TrafficSignCNN(nn.Module):
         x = self.block4(x)
         x = self.spatial_drop(x)
         x = x.view(x.size(0), -1)
-        return self.classifier(x)    
-    
-    def __init__(
-        self,
-        num_classes: int,
-        dropout1: float = 0.4,
-        dropout2: float = 0.2,
-        spatial_dropout: float = 0.1,
-    ) -> None:
-        super().__init__()
-        self.block1 = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=5, padding=2),
-            nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-        )
-        self.block2 = nn.Sequential(
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),  # ← extra layer
-            nn.BatchNorm2d(64),                            # ← extra layer
-            nn.MaxPool2d(2, 2),
-        )
-        self.block3 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1), # ← extra layer
-            nn.BatchNorm2d(128),                            # ← extra layer
-            nn.MaxPool2d(2, 2),
-        )
-        self.block4      = _ResBlock4()
-        self.spatial_drop = nn.Dropout2d(p=spatial_dropout)
-        self.classifier  = nn.Sequential(
-            nn.Dropout(p=dropout1),
-            nn.Linear(256 * 2 * 2, 512),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout2),
-            nn.Linear(512, num_classes),
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.block1(x)
-        x = self.block2(x)
-        x = self.block3(x)
-        x = self.block4(x)
-        x = self.spatial_drop(x)
-        x = x.view(x.size(0), -1)
-        return self.classifier(x)   
-
-    def __init__(
-        self,
-        num_classes: int,
-        dropout1: float = 0.4,
-        dropout2: float = 0.2,
-        spatial_dropout: float = 0.1,
-    ) -> None:
-        super().__init__()
-        self.block1 = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=5, padding=2),
-            nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-        )
-        self.block2 = nn.Sequential(
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-        )
-        self.block3 = nn.Sequential(
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(2, 2),
-        )
-        self.block4      = _ResBlock4()
-        self.spatial_drop = nn.Dropout2d(p=spatial_dropout)
-        self.classifier  = nn.Sequential(
-            nn.Dropout(p=dropout1),
-            nn.Linear(256 * 2 * 2, 512),
-            nn.ReLU(inplace=True),
-            nn.Dropout(p=dropout2),
-            nn.Linear(512, num_classes),
-        )
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        x = self.block1(x)
-        x = self.block2(x)
-        x = self.block3(x)
-        x = self.block4(x)
-        x = self.spatial_drop(x)
-        x = x.view(x.size(0), -1)
         return self.classifier(x)
 
 
@@ -400,6 +306,7 @@ def detect_and_classify(
     device: torch.device | str = "cpu",
     conf_threshold: float = 0.25,
     yolo_classes: list[int] | None = None,
+    top_k: int = 5,
 ) -> dict[str, list[dict]]:
     """
     Run the full detection → classification pipeline on one image.
@@ -415,6 +322,7 @@ def detect_and_classify(
     device          : torch.device used during CNN inference.
     conf_threshold  : Minimum YOLO detection confidence (default 0.25).
     yolo_classes    : YOLO class IDs to keep (None = keep all detections).
+    top_k           : Number of top predictions to include in other_predictions (default 5).
 
     Returns
     -------
@@ -427,6 +335,10 @@ def detect_and_classify(
           "class_name":                str,
           "category":                  str,
           "classification_confidence": float,   # CNN softmax prob
+          "other_predictions":         [       # top-k alternative predictions
+            {"class_id": int, "class_name": str, "confidence": float},
+            ...
+          ]
         },
         ...
       ]
@@ -486,6 +398,22 @@ def detect_and_classify(
                 {"class_name": f"class_{pred_class}", "category": "unknown"},
             )
 
+            # ── 7. Get top-k predictions for other_predictions ────────────────
+            top_k_values, top_k_indices = torch.topk(probs[0], min(top_k, probs.shape[1]))
+            other_predictions = []
+            for idx, (conf_val, pred_idx_k) in enumerate(zip(top_k_values, top_k_indices)):
+                class_idx = int(pred_idx_k.item())
+                class_id = idx_to_label.get(class_idx, class_idx)
+                class_meta = label_meta.get(
+                    class_id,
+                    {"class_name": f"class_{class_id}", "category": "unknown"},
+                )
+                other_predictions.append({
+                    "class_id": class_id,
+                    "class_name": class_meta["class_name"],
+                    "confidence": round(float(conf_val.item()), 4),
+                })
+
             detections.append({
                 "bbox":                      [ix1, iy1, ix2, iy2],
                 "detection_confidence":      round(float(det_conf), 4),
@@ -493,6 +421,7 @@ def detect_and_classify(
                 "class_name":               meta["class_name"],
                 "category":                 meta["category"],
                 "classification_confidence": round(cls_conf, 4),
+                "other_predictions":        other_predictions,
             })
 
     return {"detections": detections}
