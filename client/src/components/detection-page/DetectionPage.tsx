@@ -4,10 +4,10 @@ import type { CSSProperties } from 'react';
 import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
-import { ImageInput } from '@/src/components/image-input';
-import { DetectionResults } from '@/src/components/detection-result';
-import { DetectionHistory, HistoryItem } from '@/src/components/detection-history';
-import { detectImage, predictImage, type Detection } from '@/src/lib/api';
+import { ImageInput } from '@/components/image-input';
+import { DetectionResults } from '@/components/detection-result';
+import { DetectionHistory, HistoryItem } from '@/components/detection-history';
+import { detectImage, predictImage, type Detection } from '@/lib/api';
 import { FONT_INTER, FONT_SYNE } from '@/lib/landing-page';
 
 interface DetectionResult {
