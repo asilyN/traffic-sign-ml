@@ -103,7 +103,7 @@ class PredictorService:
         try:
             with Image.open(BytesIO(image_bytes)) as img:
                 img = img.convert("RGB").resize(
-                    (self._image_size, self._image_size), Image.BILINEAR
+                    (self._image_size, self._image_size), Image.Resampling.BILINEAR
                 )
                 arr = np.asarray(img, dtype=np.float32) / 255.0
         except (UnidentifiedImageError, OSError, ValueError) as exc:
@@ -121,11 +121,13 @@ class PredictorService:
         import tensorflow as tf
 
         x = self._preprocess(image_bytes)
+        model = self._model
+        assert model is not None
 
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             # Model outputs raw logits — apply softmax to get probabilities
-            logits = self._model.predict(x, verbose=0)[0]   # (num_classes,)
+            logits = model.predict(x, verbose=0)[0]   # (num_classes,)
 
         probs      = tf.nn.softmax(logits).numpy()
         pred_idx   = int(np.argmax(probs))         # 0-based model output index

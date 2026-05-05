@@ -51,7 +51,7 @@ def detect():
     try:
         image_bytes = file.read()
         # Use direct CNN classification instead of YOLO8
-        prediction = predictor.predict_from_bytes(image_bytes)
+        prediction = get_predictor().predict_from_bytes(image_bytes)
         
         # Convert to detection format (single detection with full image as bbox)
         detection = {
